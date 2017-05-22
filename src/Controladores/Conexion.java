@@ -12,7 +12,7 @@ public class Conexion {
             Class.forName("com.mysql.jdbc.Driver");
             String BaseDeDatos = "jdbc:mysql://localhost:3306/cetec";
 
-            conexion = DriverManager.getConnection(BaseDeDatos, "root", "sprock999");
+            conexion = DriverManager.getConnection(BaseDeDatos, "cetec", "cetec");
             if (conexion != null) {
                 System.out.println("Conexion exitosa!");
             } else {
