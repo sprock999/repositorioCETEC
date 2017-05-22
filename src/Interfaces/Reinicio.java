@@ -187,7 +187,7 @@ public class Reinicio extends javax.swing.JFrame {
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
         if(txt_usuario.getText().equals(usuario) && txt_pass.getText().equals(password)){
             try {
-                ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe","/c","\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql\" --user=root --password=mysql cetec < " + this.getClass().getResource("/Backup/cetecSQL.sql").getPath().substring(1));
+                ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe","/c","\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql\" --user=cetec --password=cetec cetec < " + this.getClass().getResource("/Backup/cetecSQL.sql").getPath().substring(1));
                 Process backup = mysqldump.start();         
                 System.exit(0);
             } catch (IOException ex) {
