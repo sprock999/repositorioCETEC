@@ -3,10 +3,3 @@ Interfaz funcional RecuperacionDeDatos v1.0 -Usben
 Interfaz funcional Reinicio v1.0 -Usben
 Interfaz funcional Recuperacion v1.1 -Usben
     Fallo 01 - Solo reconoce la sesion "direccion" - corregido
-
-Prueba Yo Joseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-waka
-we
-por la mosca de una varana
-Lo que yo quiera 2
-jotsis

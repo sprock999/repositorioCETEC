@@ -193,6 +193,9 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="fecha_registro">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="dd/M/yyyy"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
@@ -295,6 +298,9 @@
                   <Image iconType="3" name="/Imagenes/registrar.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_registrarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_salir">
               <Properties>

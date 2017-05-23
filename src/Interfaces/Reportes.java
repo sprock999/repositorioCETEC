@@ -1,6 +1,9 @@
 package Interfaces;
 
+import Controladores.ManejadorReportes;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
+import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 
 /**
@@ -11,7 +14,13 @@ public class Reportes extends javax.swing.JFrame {
 
     ImageIcon img;
     ImageIcon icon;
+    
+    String no_reporte, no_profesor, actividad;
+    int dia_reporte, mes_reporte, año_reporte;
+    
+    ManejadorReportes reporte;
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public Reportes() {
         initComponents();
         this.setTitle("Reportes");
@@ -28,6 +37,9 @@ public class Reportes extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
+        
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_registro.getDateEditor();
+        editor.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -73,6 +85,8 @@ public class Reportes extends javax.swing.JFrame {
         txt_no_reporte.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         txt_no_empleado.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+
+        fecha_registro.setDateFormatString("dd/M/yyyy");
 
         jLabel5.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel5.setText("Actividad:");
@@ -142,6 +156,11 @@ public class Reportes extends javax.swing.JFrame {
         jLabel12.setText("Salir");
 
         btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrar.png"))); // NOI18N
+        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarActionPerformed(evt);
+            }
+        });
 
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
 
@@ -208,6 +227,19 @@ public class Reportes extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
+        no_reporte = txt_no_reporte.getText();
+        String fecha[] = new SimpleDateFormat("dd/M/yyyy").format(fecha_registro.getCalendar().getTime()).split("/");
+        dia_reporte = Integer.parseInt(fecha[0]);
+        mes_reporte = Integer.parseInt(fecha[1]);
+        año_reporte = Integer.parseInt(fecha[2]);
+        no_profesor = txt_no_reporte.getText();
+        actividad = txt_actividad.getText();
+        
+        reporte = new ManejadorReportes(no_reporte, no_profesor, actividad, dia_reporte, mes_reporte, año_reporte);
+        reporte.Registrar();
+    }//GEN-LAST:event_btn_registrarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
