@@ -85,6 +85,27 @@ public class ManejadorGestionDeAlumnos {
         return salida;
     }
     
+    public boolean buscarTutor(String noTutor) {
+        String salida = "";
+        String consulta = "SELECT * FROM tutor "
+                + "WHERE No_tutor = '" + noTutor + "';";
+        ResultSet res = baseDatos.consultar(consulta);
+        try {
+            while (res.next()) {
+                Vector v = new Vector();
+                salida = res.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+             return  false;
+        }
+        if (salida.equals("")) {
+            return  false;
+        }else{
+            return true;
+        }
+    }
+    
      public void actualizar(){
         try{
             String sentenciaPer = "", sentenciaAlum = "";
