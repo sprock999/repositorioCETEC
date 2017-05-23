@@ -46,10 +46,11 @@ public class ManejadorRegistrarTutor{
             
             sentenciaTutor = "insert into tutor values("
                     + "'" + tutor.getNo_tutor() + "',"
+                    + "'" + tutor.getPersona().getCURP() + "',"
                     + "'" + tutor.getTelefono() + "',"
                     + "'" + tutor.getE_mail() + "',"
                     + "'" + tutor.getParentesco() + "',"
-                    + "'" + tutor.getOcupacion() + "," + 1 + ");";
+                    + "'" + tutor.getOcupacion() + "',1);";
             
             baseDatos.ejecutar(sentenciaPer);
             baseDatos.ejecutar(sentenciaTutor);

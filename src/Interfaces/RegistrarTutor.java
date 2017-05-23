@@ -1,9 +1,12 @@
 package Interfaces;
 
+import Controladores.ManejadorRegistrarTutor;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Color;
 import java.awt.Image;
+import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -15,6 +18,10 @@ public class RegistrarTutor extends javax.swing.JFrame {
 
     ImageIcon img;
     ImageIcon icon;
+    String no_tutor, primer_nom, segundo_nom, apellido_pat, 
+            apellido_mat, curp, telefono, email, parentesco, ocupacion;
+    int dia_nac, mes_nac, año_nac;
+    ManejadorRegistrarTutor registrartutor;
     
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public RegistrarTutor() {
@@ -520,7 +527,6 @@ public class RegistrarTutor extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel1.setText("No. De Tutor:");
 
-        txt_no_tutor.setEditable(false);
         txt_no_tutor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -553,6 +559,11 @@ public class RegistrarTutor extends javax.swing.JFrame {
         jLabel12.setText("Salir");
 
         btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrar.png"))); // NOI18N
+        btn_registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrarActionPerformed(evt);
+            }
+        });
 
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
 
@@ -622,6 +633,68 @@ public class RegistrarTutor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
+//        txt_no_tutor.getBackground().equals(Color.green) && 
+        if(txt_primer_nombre.getBackground().equals(Color.green) && txt_segundo_nombre.getBackground().equals(Color.green)
+                && txt_apell_paterno.getBackground().equals(Color.green) && txt_apell_materno.getBackground().equals(Color.green) && txt_curp.getBackground().equals(Color.green)
+                && txt_telefono.getBackground().equals(Color.green) && txt_Email.getBackground().equals(Color.green) && txt_parentezco.getBackground().equals(Color.green)
+                && txt_ocupacion.getBackground().equals(Color.green) && fecha_nacimiento.getDate() != null){
+            no_tutor = txt_no_tutor.getText();
+            primer_nom = txt_primer_nombre.getText();
+            segundo_nom = txt_segundo_nombre.getText();
+            apellido_pat = txt_apell_paterno.getText();
+            apellido_mat = txt_apell_materno.getText();
+            curp = txt_curp.getText();
+            telefono = txt_telefono.getText();
+            email = txt_Email.getText();
+            parentesco = txt_parentezco.getText();
+            ocupacion = txt_ocupacion.getText();
+            String fecha[] = new SimpleDateFormat("dd/M/yyyy").format(fecha_nacimiento.getCalendar().getTime()).split("/");
+            dia_nac = Integer.parseInt(fecha[0]);
+            mes_nac = Integer.parseInt(fecha[1]);
+            año_nac = Integer.parseInt(fecha[2]);
+
+            registrartutor = new ManejadorRegistrarTutor(no_tutor, primer_nom, segundo_nom, apellido_pat, apellido_mat, curp, telefono, email, parentesco, ocupacion, dia_nac, mes_nac, año_nac);
+            registrartutor.Registrar();
+        }else{
+            String error = "El o los siguientes campos con incorrecto o estan vacios";
+            if(!txt_no_tutor.getBackground().equals(Color.green)){
+                error += "\nNumero de tutor";
+            } 
+            if(!txt_primer_nombre.getBackground().equals(Color.green)){
+                error += "\nPrimer Nombre";
+            }
+            if(!txt_segundo_nombre.getBackground().equals(Color.green)){
+                error += "\nSegundo Nombre";
+            }
+            if(!txt_apell_paterno.getBackground().equals(Color.green)){
+                error += "\nApellido Paterno";
+            }
+            if(!txt_apell_materno.getBackground().equals(Color.green)){
+                error += "\nApellido Materno";
+            }
+            if(!txt_curp.getBackground().equals(Color.green)){
+                error += "\nCURP";
+            }
+            if(!txt_telefono.getBackground().equals(Color.green)){
+                error += "\nNumero Telefonico";
+            }
+            if(!txt_Email.getBackground().equals(Color.green)){
+                error += "\nCorreo Electronico";
+            }
+            if(!txt_parentezco.getBackground().equals(Color.green)){
+                error += "\nParentesco";
+            }
+            if(!txt_ocupacion.getBackground().equals(Color.green)){
+                error += "\nOcupacion";
+            }
+            if(fecha_nacimiento.getDate() == null){                
+                error += "\nFecha de Nacimineto";
+            }
+            JOptionPane.showMessageDialog(null, error);
+        }
+    }//GEN-LAST:event_btn_registrarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
