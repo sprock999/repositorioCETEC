@@ -44,8 +44,9 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         try{
             ResultSet datos = conexion.consultar("select no_horario from horario");
             datos.next();
-            numero = datos.getInt(1) + 1;
+            numero = Integer.parseInt(datos.getString(1)) + 1;
         }catch(Exception e){
+            numero = 1;
             System.out.println(e.getMessage());
         }
         
@@ -318,14 +319,14 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         try{
-            int no_horario = Integer.parseInt(txt_no_horario.getText());
+            String no_horario = txt_no_horario.getText();
             String hora_entrada = combo_hora_entrada.getSelectedItem().toString();
             String hora_salida = combo_hora_salida.getSelectedItem().toString();
-            int no_empleado = Integer.parseInt(txt_no_profesor.getText());
+            String no_empleado = txt_no_profesor.getText();
             int total_alumnos = Integer.parseInt(txt_no_alumnos.getText());
             int cupo_alumnos = 0;
             //int estado = 1;
-            conexion.ejecutar("INSERT INTO horario values ("+no_horario+",'"+hora_entrada+"','"+hora_salida+"',"+no_empleado+","+total_alumnos+","+cupo_alumnos+")");
+            conexion.ejecutar("INSERT INTO horario values ('"+no_horario+"','"+hora_entrada+"','"+hora_salida+"','"+no_empleado+"',"+cupo_alumnos+","+total_alumnos+")");
             JOptionPane.showMessageDialog(null,"Horario Agregado exitosamente","OK",JOptionPane.INFORMATION_MESSAGE);
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());
