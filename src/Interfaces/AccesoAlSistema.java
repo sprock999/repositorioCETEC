@@ -226,7 +226,7 @@ public class AccesoAlSistema extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_passFocusLost
 
     public void validar(JTextField jt){
-        if(!jt.getText().matches("[a-zA-Z]+")){
+        if(!jt.getText().matches("[a-z\\sA-Z\\s]+")){
             JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
             //jt.setBackground(Color.red);
             jt.requestFocus();
