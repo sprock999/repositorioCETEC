@@ -38,6 +38,7 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
         btn_salir.setIcon(icon);
         
         despido = new ManejadorDespidoDeEmpleados();
+        fecha_nacimiento.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -286,11 +287,20 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        despido.setNo_empleado(txt_no_empleado.getText());
+        
+        String campoDato = txt_no_empleado.getText();
+        if (campoDato.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese El No. Del Empleado", "Campo Vacio", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        despido.setNo_empleado(campoDato);
         
         String[] datos = despido.getDatos();
 
         if ( datos[0] == null) {
+            limpiarCampos();
             JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado", 
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -311,12 +321,27 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_buscarActionPerformed
 
+    public void limpiarCampos(){
+        txt_no_empleado.setText("");
+        txt_primer_nombre.setText("");
+        txt_segundo_nombre.setText("");
+        txt_apell_paterno.setText("");
+        txt_apell_materno.setText("");
+        fecha_nacimiento.setDate(null);
+    }
+    
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        
+         String campoDato = txt_no_empleado.getText();
+         if (campoDato.equals("")) {
+             JOptionPane.showMessageDialog(null, "Ingrese El No. Del Empleado", "Campo Vacio", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         int resp = JOptionPane.showConfirmDialog(null, "¿Esta Seguro De Eliminar Al Empleado?", "Alerta!", 
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (resp == 0) {
-            if (despido.despedir()) {
+            if (despido.despedir(campoDato)) {
+                limpiarCampos();
                 JOptionPane.showMessageDialog(null, "Empleado Eliminado", "eliminado...", 
                     JOptionPane.INFORMATION_MESSAGE);
             }
