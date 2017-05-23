@@ -46,7 +46,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
         
-         modelo = (DefaultTableModel) tabla_empleados.getModel();
+        modelo = (DefaultTableModel) tabla_empleados.getModel();
         gestionEmpleados = new ManejadorGestionDeEmpleados();
     }
 
@@ -193,9 +193,6 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
         tabla_empleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
             },
             new String [] {
