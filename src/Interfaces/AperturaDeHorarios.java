@@ -4,6 +4,7 @@ package Interfaces;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import Controladores.Conexion;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -40,17 +41,11 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         conexion = new Conexion();
         conexion.conectar();
         
-        int numero = 0;
-        try{
-            ResultSet datos = conexion.consultar("select no_horario from horario");
-            datos.next();
-            numero = Integer.parseInt(datos.getString(1)) + 1;
-        }catch(Exception e){
-            numero = 1;
-            System.out.println(e.getMessage());
-        }
+        crearNoHorario();
         
-        txt_no_horario.setText(Integer.toString(numero));
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_inicio.getDateEditor();
+        editor.setEditable(false);
+        
     }
 
     
@@ -328,11 +323,32 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
             //int estado = 1;
             conexion.ejecutar("INSERT INTO horario values ('"+no_horario+"','"+hora_entrada+"','"+hora_salida+"','"+no_empleado+"',"+cupo_alumnos+","+total_alumnos+")");
             JOptionPane.showMessageDialog(null,"Horario Agregado exitosamente","OK",JOptionPane.INFORMATION_MESSAGE);
+            limpiar();
+            crearNoHorario();
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
 
+    public void limpiar(){
+        txt_no_alumnos.setText("");
+        txt_no_horario.setText("");
+        txt_no_profesor.setText("");
+    }
+    
+    public void crearNoHorario(){
+        try{
+            ResultSet datos = conexion.consultar("select no_horario from horario");
+            datos.next();
+            int numero = Integer.parseInt(datos.getString(1)) + 1;
+            txt_no_horario.setText(Integer.toString(numero));
+        }catch(Exception e){
+            int numero = 1;
+            txt_no_horario.setText(Integer.toString(numero));
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

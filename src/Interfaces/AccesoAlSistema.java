@@ -3,9 +3,12 @@ package Interfaces;
 
 import java.awt.Color;
 import java.awt.Image;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -33,6 +36,10 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/login.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_ingresar.getWidth(), btn_ingresar.getHeight(), Image.SCALE_DEFAULT));
         btn_ingresar.setIcon(icon);
+        
+        new Controladores.ControladorGrafico().getDocument(txt_usuario);
+        new Controladores.ControladorGrafico().getDocument(txt_pass);
+        
     }
 
     /**
@@ -73,18 +80,8 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         label_usuario.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
 
         txt_usuario.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        txt_usuario.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_usuarioFocusLost(evt);
-            }
-        });
 
         txt_pass.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        txt_pass.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_passFocusLost(evt);
-            }
-        });
 
         label_pass.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
 
@@ -205,33 +202,19 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         if(!txt_usuario.getText().equals("") || !txt_pass.getText().equals("")){
             switch (txt_usuario.getText()) {
                 case DIRECCION:
-                    Entrar(DIRECCION, "direccion");
+                    Entrar("direccion", DIRECCION);
                     break;
                 case TRABAJO_SOCIAL:
-                    Entrar(TRABAJO_SOCIAL, "social");
+                    Entrar("social", TRABAJO_SOCIAL);
                     break;
                 case ACADEMICO:
-                    Entrar(ACADEMICO, "coordinacion");
+                    Entrar("coordinacion", ACADEMICO);
                     break;
             }
         }
     }//GEN-LAST:event_btn_ingresarActionPerformed
 
-    private void txt_usuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_usuarioFocusLost
-        validar(txt_usuario);
-    }//GEN-LAST:event_txt_usuarioFocusLost
-
-    private void txt_passFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_passFocusLost
-        validar(txt_pass);
-    }//GEN-LAST:event_txt_passFocusLost
-
-    public void validar(JTextField jt){
-        if(!jt.getText().matches("[a-z\\sA-Z\\s]+")){
-            JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
-            //jt.setBackground(Color.red);
-            jt.requestFocus();
-        }
-    }
+    
     
     public void Entrar(String pass,String user){
         if (txt_pass.getText().equals(pass.toLowerCase())) {

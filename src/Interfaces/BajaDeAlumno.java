@@ -305,9 +305,9 @@ public class BajaDeAlumno extends javax.swing.JFrame {
                 txt_apell_paterno.setText(consulta.getString(3));
                 txt_apell_materno.setText(consulta.getString(4));
                 txt_fecha_nac.setText(consulta.getString(5)+"-"+consulta.getString(6)+"-"+consulta.getString(7));                
-                JOptionPane.showMessageDialog(null,"Alumno dado de baja exitosamente","OK",JOptionPane.INFORMATION_MESSAGE);
             }catch(Exception e){
                 System.out.println(e.getMessage());
+                JOptionPane.showMessageDialog(null,"Alumno no encontrado");
             }            
         }else{
             System.out.println("no paso");
@@ -330,6 +330,7 @@ public class BajaDeAlumno extends javax.swing.JFrame {
                 txt_apell_materno.setText("");
                 txt_fecha_nac.setText(""); 
                 txt_no_control.setText("");
+                JOptionPane.showMessageDialog(null,"Alumno dado de baja exitosamente","OK",JOptionPane.INFORMATION_MESSAGE);
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
