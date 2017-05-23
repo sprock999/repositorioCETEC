@@ -1,7 +1,11 @@
 package Interfaces;
 
+import com.toedter.calendar.JTextFieldDateEditor;
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -12,6 +16,7 @@ public class RegistrarTutor extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
     
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public RegistrarTutor() {
         initComponents();
         this.setTitle("Registrar Tutor");
@@ -24,6 +29,306 @@ public class RegistrarTutor extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
+        
+        txt_primer_nombre.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_primer_nombre.setBackground(Color.green);
+                }else{
+                    txt_primer_nombre.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_primer_nombre.setBackground(Color.green);
+                }else{
+                    txt_primer_nombre.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_primer_nombre.setBackground(Color.green);
+                }else{
+                    txt_primer_nombre.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_primer_nombre.getText();
+                return texto.matches("[a-zñA-ZÑ]{3,30}");
+            }
+        });
+        txt_segundo_nombre.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_segundo_nombre.setBackground(Color.green);
+                }else{
+                    txt_segundo_nombre.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_segundo_nombre.setBackground(Color.green);
+                }else{
+                    txt_segundo_nombre.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_segundo_nombre.setBackground(Color.green);
+                }else{
+                    txt_segundo_nombre.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_segundo_nombre.getText();
+                return texto.matches("[a-zñA-ZÑ ]{3,30}|");
+            }
+        });
+        txt_apell_paterno.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_apell_paterno.setBackground(Color.green);
+                }else{
+                    txt_apell_paterno.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_apell_paterno.setBackground(Color.green);
+                }else{
+                    txt_apell_paterno.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_apell_paterno.setBackground(Color.green);
+                }else{
+                    txt_apell_paterno.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_apell_paterno.getText();
+                return texto.matches("[a-zñA-ZÑ ]{4,50}");
+            }
+        });
+        txt_apell_materno.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_apell_materno.setBackground(Color.green);
+                }else{
+                    txt_apell_materno.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_apell_materno.setBackground(Color.green);
+                }else{
+                    txt_apell_materno.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_apell_materno.setBackground(Color.green);
+                }else{
+                    txt_apell_materno.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_apell_materno.getText();
+                return texto.matches("[a-zñA-ZÑ ]{4,50}");
+            }
+        });
+        txt_curp.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_curp.setBackground(Color.green);
+                }else{
+                    txt_curp.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_curp.setBackground(Color.green);
+                }else{
+                    txt_curp.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_curp.setBackground(Color.green);
+                }else{
+                    txt_curp.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_curp.getText();
+                return texto.matches("[A-Z]{4}[0-9]{6}[HM][A-Z]{2}[A-Z0-9]{5}");
+            }
+        });
+        txt_telefono.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_telefono.setBackground(Color.green);
+                }else{
+                    txt_telefono.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_telefono.setBackground(Color.green);
+                }else{
+                    txt_telefono.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_telefono.setBackground(Color.green);
+                }else{
+                    txt_telefono.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_telefono.getText();
+                return texto.matches("[0-9]{10}");
+            }
+        });
+        txt_Email.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_Email.setBackground(Color.green);
+                }else{
+                    txt_Email.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_Email.setBackground(Color.green);
+                }else{
+                    txt_Email.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_Email.setBackground(Color.green);
+                }else{
+                    txt_Email.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_Email.getText();
+                return texto.matches("[a-zA-Z._]+@[a-zA-Z]+.([Cc][Oo][Mm]|[Oo][Rr][Gg]|[Nn][Ee][Tt]|([Cc][Oo][Mm].[a-zA-Z]))");
+            }
+        });
+        txt_parentezco.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_parentezco.setBackground(Color.green);
+                }else{
+                    txt_parentezco.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_parentezco.setBackground(Color.green);
+                }else{
+                    txt_parentezco.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_parentezco.setBackground(Color.green);
+                }else{
+                    txt_parentezco.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_parentezco.getText();
+                return texto.matches("[a-zñA-ZÑ ]+");
+            }
+        });
+        txt_ocupacion.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_ocupacion.setBackground(Color.green);
+                }else{
+                    txt_ocupacion.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_ocupacion.setBackground(Color.green);
+                }else{
+                    txt_ocupacion.setBackground(Color.red);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                if(verificar()){
+                    txt_ocupacion.setBackground(Color.green);
+                }else{
+                    txt_ocupacion.setBackground(Color.red);
+                }
+            }
+            
+            public boolean verificar(){
+                String texto = txt_ocupacion.getText();
+                return texto.matches("[a-zñA-ZÑ ]+");
+            }
+        });
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editor.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -95,6 +400,8 @@ public class RegistrarTutor extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel9.setText("CURP:");
+
+        fecha_nacimiento.setDateFormatString("dd/M/yyyy");
 
         jLabel13.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel13.setText("Telefono:");
@@ -341,10 +648,8 @@ public class RegistrarTutor extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegistrarTutor().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new RegistrarTutor().setVisible(true);
         });
     }
 

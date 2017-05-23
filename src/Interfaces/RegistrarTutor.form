@@ -288,6 +288,9 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="fecha_nacimiento">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="dd/M/yyyy"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel13">
               <Properties>
