@@ -212,11 +212,6 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         txt_no_empleado.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         txt_salario.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txt_salario.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_salarioFocusLost(evt);
-            }
-        });
 
         combo_estudios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         combo_estudios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Secundaria", "Bachillerato", "Licenciatura", "Posgrado" }));
@@ -355,12 +350,8 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
-    private void txt_salarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_salarioFocusLost
-        Validar(txt_salario, "\\d+([.]\\d+)*");
-    }//GEN-LAST:event_txt_salarioFocusLost
-
     private void txt_primer_nombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_primer_nombreFocusLost
-        Validar(txt_primer_nombre, "[a-zA-Z]+");
+        Validar(txt_primer_nombre, "[a-zA-Z]+||[ñÑ]+||([a-zA-z]+\\s*");
     }//GEN-LAST:event_txt_primer_nombreFocusLost
 
     private void txt_segundo_nombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_segundo_nombreFocusLost
@@ -423,13 +414,16 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
     
     public void crearNoContorl(){
         try{
+            System.out.println("No error");
             ResultSet consulta = conexion.consultar("select no_profesor from profesor");
-            int no_empleado = 0;
+            int no_empleado = 1;
             while(consulta.next()){
                  no_empleado = consulta.getInt(1) + 1;
             }
             txt_no_empleado.setText(Integer.toString(no_empleado));
         }catch(Exception e){
+            System.out.println("Error");
+            txt_no_empleado.setText("1");
             System.out.println(e.getMessage());
         }
     }
