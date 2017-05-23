@@ -45,12 +45,15 @@ public class ManejadorDespidoDeEmpleados {
         return salida;
     }
 
-    public boolean despedir() {
+    public boolean despedir(String noEmpleado) {
         String sentenciaEmp = "";
 
-        sentenciaEmp = "DELETE a1, a2 FROM profesor AS a1 INNER JOIN persona AS a2 "
-                + "WHERE a1.CURP = a2.CURP AND a1.No_Profesor LIKE "
-                + "'" + no_empleado + "';";
+//        sentenciaEmp = "DELETE a1, a2 FROM profesor AS a1 INNER JOIN persona AS a2 "
+//                + "WHERE a1.CURP = a2.CURP AND a1.No_Profesor LIKE "
+//                + "'" + noEmpleado + "';";
+
+          sentenciaEmp = "UPDATE profesor SET Estado = 0 WHERE "
+                + "No_Profesor = '" + noEmpleado + "';";
 
         baseDatos.ejecutar(sentenciaEmp);
         return true;
