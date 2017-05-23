@@ -190,7 +190,7 @@ public class RecuperacionDeDatos extends javax.swing.JFrame {
 
     private void btn_abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_abrirActionPerformed
         try {
-            ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe","/c","\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql\" --user=root --password=mysql cetec < " + txt_ruta.getText());
+            ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe","/c","\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql\" --user=cetec --password=mysql cetec < " + txt_ruta.getText());
             Process backup = mysqldump.start();
             System.exit(0);
         } catch (IOException ex) {
