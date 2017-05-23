@@ -21,7 +21,7 @@ public class ManejadorDespidoDeEmpleados {
         String[] salida = new String[7];
         String consulta = "SELECT Primer_Nom, Segun_Nom, Apellido_P, Apellido_M, Dia_Nac, "
                 + "Mes_Nac, Año_Nac FROM profesor INNER JOIN persona ON "
-                + "profesor.CURP = persona.CURP where profesor.No_Profesor = '" + no_empleado + "';";
+                + "profesor.CURP = persona.CURP where profesor.No_Profesor = '" + no_empleado + "' && Estado = 1;";
         ResultSet res = baseDatos.consultar(consulta);
         try {
             while (res.next()) {
@@ -33,9 +33,6 @@ public class ManejadorDespidoDeEmpleados {
                 salida[4] = Integer.toString(res.getInt(5));
                 salida[5] = Integer.toString(res.getInt(6));
                 salida[6] = Integer.toString(res.getInt(7));
-            }
-            for (int i = 0; i < salida.length; i++) {
-                System.out.println(salida[i] + "\n");
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);

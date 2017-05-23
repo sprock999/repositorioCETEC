@@ -1,4 +1,3 @@
-
 package Interfaces;
 
 import Controladores.ManejadorFusionDeGrupos;
@@ -16,31 +15,33 @@ import javax.swing.table.TableModel;
 public class FusionDeGrupos extends javax.swing.JFrame {
 
     ManejadorFusionDeGrupos fusion;
-    
+
     DefaultTableModel modelo, modeloD;
-    
+
+    String seleccionadoUno = "", seleccionadoDos = "";
+
     ImageIcon img;
     ImageIcon icon;
-    
+
     public FusionDeGrupos() {
         initComponents();
         this.setTitle("Fusión De Grupos");
         this.setLocationRelativeTo(null);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/fusionar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_fusionar.getWidth(), btn_fusionar.getHeight(), Image.SCALE_DEFAULT));
-        btn_fusionar.setIcon(icon);        
-        
+        btn_fusionar.setIcon(icon);
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
+
         fusion = new ManejadorFusionDeGrupos();
-        
+
         modelo = (DefaultTableModel) tabla_horarios.getModel();
         modeloD = (DefaultTableModel) tabla_disponibles.getModel();
     }
@@ -74,15 +75,17 @@ public class FusionDeGrupos extends javax.swing.JFrame {
 
         tabla_disponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
                 "No. Horario", "Hora De Entrada", "Hora De Salida", "No. Profesor", "No. Alumnos"
             }
         ));
+        tabla_disponibles.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_disponiblesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tabla_disponibles);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -118,9 +121,6 @@ public class FusionDeGrupos extends javax.swing.JFrame {
 
         tabla_horarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
@@ -256,18 +256,51 @@ public class FusionDeGrupos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        
+
         modelo.setRowCount(0);
         modeloD.setRowCount(0);
-        
+
         fusion.setNo_horario(txt_no_horario.getText());
-        
-        tabla_horarios.setModel(fusion.getDatos(modelo));
-        
+
+        DefaultTableModel model = fusion.getDatos(modelo);
+
+        if (model == null) {
+            JOptionPane.showMessageDialog(this, "Horario No Encontrado", "No encontrado!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            tabla_horarios.setModel(model);
+        }
+
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_fusionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fusionarActionPerformed
-        
+
+        if (txt_no_horario.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Busque Un horario...",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (seleccionadoUno.equals("") || seleccionadoDos.equals("")) {
+                JOptionPane.showMessageDialog(this, "Seleccione Los Horarios A Fusionar...",
+                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+            } else {
+                if (fusion.horariosAceptados(seleccionadoUno, seleccionadoDos)) {
+                    fusion.fusionarHorario(seleccionadoUno, seleccionadoDos);
+                    JOptionPane.showMessageDialog(this, "Horarios Funcionados...", "Fusionados",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    modelo.setRowCount(0);
+                    modeloD.setRowCount(0);
+                    seleccionadoUno = "";
+                    seleccionadoDos = "";
+                } else {
+                    modelo.setRowCount(0);
+                    modeloD.setRowCount(0);
+                    seleccionadoUno = "";
+                    seleccionadoDos = "";
+                    JOptionPane.showMessageDialog(this, "La Cantidad De Alumnos Excede\n La Capacidad De Grupo",
+                            "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
     }//GEN-LAST:event_btn_fusionarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
@@ -275,16 +308,26 @@ public class FusionDeGrupos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void tabla_horariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_horariosMouseClicked
-        
+
         modeloD.setRowCount(0);
         Point point = evt.getPoint();
         int row = tabla_horarios.rowAtPoint(point);
         int column = tabla_horarios.columnAtPoint(point);
         TableModel model = tabla_horarios.getModel();
         //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
-        
+        seleccionadoUno = txt_no_horario.getText();
         tabla_disponibles.setModel(fusion.getDisponibles(modeloD));
     }//GEN-LAST:event_tabla_horariosMouseClicked
+
+    private void tabla_disponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_disponiblesMouseClicked
+        Point point = evt.getPoint();
+        int row = tabla_disponibles.rowAtPoint(point);
+        int column = tabla_disponibles.columnAtPoint(point);
+        TableModel model = tabla_disponibles.getModel();
+
+        seleccionadoDos = model.getValueAt(row, 0).toString();
+        //JOptionPane.showMessageDialog(this, seleccionadoDos);
+    }//GEN-LAST:event_tabla_disponiblesMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

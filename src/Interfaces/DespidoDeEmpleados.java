@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Controladores.ManejadorDespidoDeEmpleados;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -38,7 +39,9 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
         btn_salir.setIcon(icon);
         
         despido = new ManejadorDespidoDeEmpleados();
-        fecha_nacimiento.setEnabled(false);
+        
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editor.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")

@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Controladores.ManejadorGestionDeAlumnos;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
 import java.awt.Point;
 import java.text.SimpleDateFormat;
@@ -528,6 +529,8 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         txt_no_tutor.setEditable(true);
         
         fecha_nacimiento.setEnabled(true);
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editor.setEditable(false);
         btn_buscar_tutor.setEnabled(true);
     }
     
