@@ -1,7 +1,14 @@
 package Interfaces;
 
+import Controladores.ManejadorGestionDeAlumnos;
 import java.awt.Image;
+import java.awt.Point;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -9,6 +16,14 @@ import javax.swing.ImageIcon;
  */
 public class GestionDeAlumnos extends javax.swing.JFrame {
 
+    ManejadorGestionDeAlumnos modificarAlumno;
+    
+    DefaultTableModel modelo;
+    
+    String no_control, no_tutor, primer_nom, segundo_nom, apellido_pat, 
+            apellido_mat, curp;
+    int dia_nac, mes_nac, año_nac; 
+    
     ImageIcon img;
     ImageIcon icon;
     
@@ -36,6 +51,9 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
+        
+        modelo = (DefaultTableModel) tabla_alumnos.getModel();
+        modificarAlumno = new ManejadorGestionDeAlumnos();
     }
 
     @SuppressWarnings("unchecked")
@@ -184,9 +202,19 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
                 "No. Control", "Nombre(s)", "Apellido Paterno", "Apellido Materno", "Tutor"
             }
         ));
+        tabla_alumnos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_alumnosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla_alumnos);
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -229,6 +257,11 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         jLabel12.setText("Salir");
 
         btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
 
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
 
@@ -347,6 +380,73 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
+        no_control = txt_no_control.getText();
+        no_tutor = txt_no_tutor.getText();
+        primer_nom = txt_primer_nombre.getText();
+        segundo_nom = txt_segundo_nombre.getText();
+        apellido_pat = txt_apell_paterno.getText();
+        apellido_mat = txt_apell_materno.getText();
+        curp = txt_curp.getText();
+        Date time = null;
+        String fecha_nac = "";
+        if (fecha_nacimiento.getCalendar() != null) {
+            time = fecha_nacimiento.getCalendar().getTime();
+            SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+            fecha_nac = formato.format(time);
+        }
+        System.out.println(":::::::::::::::::::::::." + fecha_nac);
+        String[] fechaArray = fecha_nac.split("-");
+        dia_nac = Integer.parseInt(fechaArray[0]);
+        mes_nac = Integer.parseInt(fechaArray[1]);
+        año_nac = Integer.parseInt(fechaArray[2]);
+        
+        modificarAlumno.AsignarDatos(no_tutor, primer_nom, segundo_nom, apellido_pat, 
+                apellido_mat, curp, dia_nac, mes_nac, año_nac);
+        modificarAlumno.actualizar();
+    }//GEN-LAST:event_btn_modificarActionPerformed
+
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        modelo.setRowCount(0);
+        
+        modificarAlumno.setNo_control(txt_no_control.getText());
+        
+        tabla_alumnos.setModel(modificarAlumno.getAlumno(modelo));
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void tabla_alumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_alumnosMouseClicked
+        modelo.setRowCount(0);
+        Point point = evt.getPoint();
+        int row = tabla_alumnos.rowAtPoint(point);
+        int column = tabla_alumnos.columnAtPoint(point);
+        TableModel model = tabla_alumnos.getModel();
+        //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
+        
+        //modificarAlumno.getDatos();
+        String[] datos = modificarAlumno.getDatos();
+
+        if ( datos[0] == null) {
+            JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado", 
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            txt_curp.setText(datos[0]);
+            txt_no_tutor.setText(datos[1]);
+            txt_primer_nombre.setText(datos[2]);
+            txt_segundo_nombre.setText(datos[3]);
+            txt_apell_paterno.setText(datos[4]);
+            txt_apell_materno.setText(datos[5]);
+
+            try {
+                String dato = datos[6] + "-" + datos[6] + "-" + datos[8];
+                SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+                Date fechaDate = formato.parse(dato);
+                //Date time = new Date(fecha);
+                fecha_nacimiento.setDate(fechaDate);
+            } catch (Exception e) {
+            }
+        }
+    }//GEN-LAST:event_tabla_alumnosMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
