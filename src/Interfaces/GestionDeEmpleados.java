@@ -1,8 +1,14 @@
-
 package Interfaces;
 
+import Controladores.ManejadorGestionDeEmpleados;
 import java.awt.Image;
+import java.awt.Point;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -10,6 +16,16 @@ import javax.swing.ImageIcon;
  */
 public class GestionDeEmpleados extends javax.swing.JFrame {
 
+    ManejadorGestionDeEmpleados gestionEmpleados;
+    
+    DefaultTableModel modelo;
+    
+    String no_empleado, primer_nom, segundo_nom, apellido_pat, 
+            apellido_mat, curp, grado_estudios;
+    int salario, dia_nac, mes_nac, año_nac; 
+    
+    int correcto = 0;
+    
     ImageIcon img;
     ImageIcon icon;
     
@@ -29,6 +45,9 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
+        
+         modelo = (DefaultTableModel) tabla_empleados.getModel();
+        gestionEmpleados = new ManejadorGestionDeEmpleados();
     }
 
     @SuppressWarnings("unchecked")
@@ -88,18 +107,25 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel8.setText("Apellido Materno:");
 
+        txt_apell_paterno.setEditable(false);
         txt_apell_paterno.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
+        txt_primer_nombre.setEditable(false);
         txt_primer_nombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
+        txt_segundo_nombre.setEditable(false);
         txt_segundo_nombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
+        txt_apell_materno.setEditable(false);
         txt_apell_materno.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
+        txt_curp.setEditable(false);
         txt_curp.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel9.setText("CURP:");
+
+        fecha_nacimiento.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -173,12 +199,22 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "No. Empleado", "Nombre(s)", "Apellido Paterno", "Apellido Materno", "Salario", "Grado De Estudios"
+                "No. Empleado", "Nombre(s)", "Apellido Paterno", "Apellido Materno", "Grado De Estudios", "Salario"
             }
         ));
+        tabla_empleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_empleadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla_empleados);
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -221,6 +257,11 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         jLabel12.setText("Salir");
 
         btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
 
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
 
@@ -264,10 +305,17 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel14.setText("Grado De Estudios:");
 
+        txt_salario.setEditable(false);
         txt_salario.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         combo_estudios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        combo_estudios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Secundaria", "Bachillerato", "Universidad", "Posgrado" }));
+        combo_estudios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primaria ", "Secundaria ", "Bachillerato ", "Licenciatura ", "Maestría ", "Doctorado" }));
+        combo_estudios.setEnabled(false);
+        combo_estudios.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_estudiosItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -342,6 +390,165 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        modelo.setRowCount(0);
+        String dato = txt_no_empleado.getText();
+        
+        if (dato.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese El No. De Empleado", "Campo Vacio", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        gestionEmpleados.setNo_empleado(dato);
+        
+        DefaultTableModel model = gestionEmpleados.getEmpleado(modelo);
+        if (model.getRowCount() < 1 ) {
+            deshabilitarComonentes();
+            limpiarCampos();
+            correcto = 0;
+            JOptionPane.showMessageDialog(null, "No Se Encontró El Empleado", "No Encontrado!", 
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            tabla_empleados.setModel(model);
+            correcto = 2;
+        }
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    private void tabla_empleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_empleadosMouseClicked
+        modelo.setRowCount(0);
+        Point point = evt.getPoint();
+        int row = tabla_empleados.rowAtPoint(point);
+        int column = tabla_empleados.columnAtPoint(point);
+        TableModel model = tabla_empleados.getModel();
+        //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
+        
+        //modificarAlumno.getDatos();
+        String[] datos = gestionEmpleados.getDatos();
+
+        if ( datos[0] == null) {
+            JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado!", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            correcto = 2;
+        } else {
+            habilitarComonentes();
+            
+            txt_curp.setText(datos[0]);
+            combo_estudios.setSelectedItem(datos[1]);
+            txt_salario.setText(datos[2]);
+            txt_primer_nombre.setText(datos[3]);
+            txt_segundo_nombre.setText(datos[4]);
+            txt_apell_paterno.setText(datos[5]);
+            txt_apell_materno.setText(datos[6]);
+
+            try {
+                String dato = datos[7] + "-" + datos[8] + "-" + datos[9];
+                SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+                Date fechaDate = formato.parse(dato);
+                //Date time = new Date(fecha);
+                fecha_nacimiento.setDate(fechaDate);
+                
+                correcto = 1;
+            } catch (Exception e) {
+            }
+        }
+    }//GEN-LAST:event_tabla_empleadosMouseClicked
+
+    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
+        //String seleccionado = combo_estudios.getSelectedItem().toString();
+        //System.out.println(seleccionado);
+        //combo_estudios.setSelectedItem("Doctorado");
+        
+        if (correcto == 0) {
+            JOptionPane.showMessageDialog(null, "Busque Un Empleado", "Advertencia!", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }else{
+            if (correcto == 2) {
+                JOptionPane.showMessageDialog(null, "Seleccione Un Empleado", "Advertencia!", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }  
+        }
+        
+        no_empleado = txt_no_empleado.getText();
+        salario = Integer.parseInt(txt_salario.getText());
+        grado_estudios = combo_estudios.getSelectedItem().toString();
+        primer_nom = txt_primer_nombre.getText();
+        segundo_nom = txt_segundo_nombre.getText();
+        apellido_pat = txt_apell_paterno.getText();
+        apellido_mat = txt_apell_materno.getText();
+        curp = txt_curp.getText();
+        Date time = null;
+        String fecha_nac = "";
+        if (fecha_nacimiento.getCalendar() != null) {
+            time = fecha_nacimiento.getCalendar().getTime();
+            SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+            fecha_nac = formato.format(time);
+        }
+        
+        String[] fechaArray = fecha_nac.split("-");
+        dia_nac = Integer.parseInt(fechaArray[0]);
+        mes_nac = Integer.parseInt(fechaArray[1]);
+        año_nac = Integer.parseInt(fechaArray[2]);
+        
+        if (no_empleado.equals("") || salario < 0 || primer_nom.equals("")
+                || apellido_pat.equals("") || apellido_mat.equals("") || curp.equals("") 
+                || fecha_nacimiento.getCalendar() == null ) {
+            JOptionPane.showMessageDialog(null, "Ingresa Los Datos solicitados", "Advertencia", 
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        gestionEmpleados.asignarDatos(primer_nom, segundo_nom, apellido_pat, apellido_mat, 
+                curp, grado_estudios, salario, dia_nac, mes_nac, año_nac);
+        gestionEmpleados.actualizar();
+        limpiarCampos();
+        deshabilitarComonentes();
+        correcto = 0;
+    }//GEN-LAST:event_btn_modificarActionPerformed
+
+    private void combo_estudiosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_estudiosItemStateChanged
+//        if (evt.getSource() == combo_estudios) {
+//            String seleccionado = combo_estudios.getSelectedItem().toString();
+//            System.out.println(seleccionado);
+//        }
+    }//GEN-LAST:event_combo_estudiosItemStateChanged
+
+    public void limpiarCampos(){
+        txt_no_empleado.setText("");
+        txt_primer_nombre.setText("");
+        txt_segundo_nombre.setText("");
+        txt_apell_paterno.setText("");
+        txt_apell_materno.setText("");
+        txt_curp.setText("");
+        txt_salario.setText("");
+        fecha_nacimiento.setDate(null);
+    }
+    
+    public void habilitarComonentes(){
+        txt_primer_nombre.setEditable(true);
+        txt_segundo_nombre.setEditable(true);
+        txt_apell_paterno.setEditable(true);
+        txt_apell_materno.setEditable(true);
+        txt_curp.setEditable(true);
+        txt_salario.setEditable(true);
+        
+        fecha_nacimiento.setEnabled(true);
+        combo_estudios.setEnabled(true);
+    }
+    
+    public void deshabilitarComonentes(){
+        txt_primer_nombre.setEditable(false);
+        txt_segundo_nombre.setEditable(false);
+        txt_apell_paterno.setEditable(false);
+        txt_apell_materno.setEditable(false);
+        txt_curp.setEditable(false);
+        txt_salario.setEditable(false);
+        
+        fecha_nacimiento.setEnabled(false);
+        combo_estudios.setEnabled(false);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

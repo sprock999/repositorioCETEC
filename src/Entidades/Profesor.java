@@ -7,9 +7,10 @@ package Entidades;
  */
 public class Profesor {
     Persona persona;
-    String no_profesor, grado_estudios, salario;
+    String no_profesor, grado_estudios; 
+    int salario;
 
-    public Profesor(Persona persona, String no_profesor, String grado_estudios, String salario) {
+    public Profesor(Persona persona, String no_profesor, String grado_estudios, int salario) {
         this.persona = persona;
         this.no_profesor = no_profesor;
         this.grado_estudios = grado_estudios;
@@ -40,11 +41,11 @@ public class Profesor {
         this.grado_estudios = grado_estudios;
     }
 
-    public String getSalario() {
+    public int getSalario() {
         return salario;
     }
 
-    public void setSalario(String salario) {
+    public void setSalario(int salario) {
         this.salario = salario;
     }
     
