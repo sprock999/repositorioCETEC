@@ -193,7 +193,7 @@ public class CopiaDeSeguridad extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_explorarActionPerformed
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
-        ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe","/c","\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump\" --user=cetec --password=mysql cetec > " + txt_ruta.getText());
+        ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe","/c","\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysqldump\" --user=cetec --password=cetec cetec > " + txt_ruta.getText());
         try {
             Process backup = mysqldump.start();
             System.exit(0);
