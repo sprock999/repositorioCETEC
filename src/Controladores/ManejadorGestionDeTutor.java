@@ -16,7 +16,7 @@ public class ManejadorGestionDeTutor {
 
     String no_tutor, primer_nom, segundo_nom, apellido_pat,
             apellido_mat, curp, telefono, e_mail, parectezco, ocupacion;
-    int dia_nac, mes_nac, año_nac;
+    int dia_nac, mes_nac, año_nac, estado;
 
     public void asignarDatos(String primer_nom, String segundo_nom,
             String apellido_pat, String apellido_mat, String curp, String telefono,
@@ -39,7 +39,7 @@ public class ManejadorGestionDeTutor {
     public DefaultTableModel getTutor(DefaultTableModel modelo) {
         String consulta = "SELECT No_Tutor, Primer_Nom, Apellido_P, Apellido_M, Telefono, Email, Ocupacion "
                 + " FROM tutor INNER JOIN persona on tutor.CURP = persona.CURP "
-                + " WHERE tutor.No_Tutor = '" + getNo_tutor() + "';";
+                + " WHERE tutor.No_Tutor = '" + getNo_tutor() + "' && Estado = 1;";
         ResultSet res = baseDatos.consultar(consulta);
         try {
             while (res.next()) {

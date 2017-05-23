@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Controladores.ManejadorInscribirAlumno;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +46,9 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
+        
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editor.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
