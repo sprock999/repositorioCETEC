@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Controladores.Conexion;
+import com.sun.glass.events.KeyEvent;
 import java.awt.Image;
 import java.sql.ResultSet;
 import javax.swing.ImageIcon;
@@ -38,6 +39,9 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         btn_salir.setIcon(icon);
         conexion = new Conexion();
         conexion.conectar();
+        
+        //new Controladores.ControladorGrafico().getDocument(txt_segundo_nombre, "[a-Zñ\\sA-ZÑ\\s]+");
+        new Controladores.ControladorGrafico().getDocument(txt_no_control, "\\d+");
     }
     
     @SuppressWarnings("unchecked")
@@ -167,9 +171,9 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         });
 
         txt_no_control.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txt_no_control.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_no_controlFocusLost(evt);
+        txt_no_control.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_no_controlKeyPressed(evt);
             }
         });
 
@@ -293,27 +297,6 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         new GestionDeAlumnos().setVisible(true);
     }//GEN-LAST:event_btn_buscarActionPerformed
 
-    private void txt_no_controlFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_no_controlFocusLost
-        if(validarControl(txt_no_control)){
-            System.out.println("paso validacion");
-            int no_control = Integer.parseInt(txt_no_control.getText());
-            try{
-                ResultSet consulta = conexion.consultar("select primer_nom, segun_nom, apellido_P, apellido_M, dia_nac, mes_nac, año_nac from persona join alumno where persona.curp = alumno.curp && no_control = '"+no_control+"' && estado = " + ACTIVO);
-                consulta.next();
-                txt_primer_nombre.setText(consulta.getString(1));
-                txt_segundo_nombre.setText(consulta.getString(2));
-                txt_apell_paterno.setText(consulta.getString(3));
-                txt_apell_materno.setText(consulta.getString(4));
-                txt_fecha_nac.setText(consulta.getString(5)+"-"+consulta.getString(6)+"-"+consulta.getString(7));                
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-                JOptionPane.showMessageDialog(null,"Alumno no encontrado");
-            }            
-        }else{
-            System.out.println("no paso");
-        }
-    }//GEN-LAST:event_txt_no_controlFocusLost
-
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         conexion.cerrarConexion();
         System.exit(0);
@@ -338,6 +321,29 @@ public class BajaDeAlumno extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Error No. Control vacio","ERROR",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void txt_no_controlKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_no_controlKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if (validarControl(txt_no_control)) {
+                System.out.println("paso validacion");
+                int no_control = Integer.parseInt(txt_no_control.getText());
+                try {
+                    ResultSet consulta = conexion.consultar("select primer_nom, segun_nom, apellido_P, apellido_M, dia_nac, mes_nac, año_nac from persona join alumno where persona.curp = alumno.curp && no_control = '" + no_control + "' && estado = " + ACTIVO);
+                    consulta.next();
+                    txt_primer_nombre.setText(consulta.getString(1));
+                    txt_segundo_nombre.setText(consulta.getString(2));
+                    txt_apell_paterno.setText(consulta.getString(3));
+                    txt_apell_materno.setText(consulta.getString(4));
+                    txt_fecha_nac.setText(consulta.getString(5) + "-" + consulta.getString(6) + "-" + consulta.getString(7));
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    JOptionPane.showMessageDialog(null, "Alumno no encontrado","ERROR",JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                System.out.println("no paso");
+            }
+        }
+    }//GEN-LAST:event_txt_no_controlKeyPressed
 
     public boolean validarControl(JTextField campo){
         if(!campo.getText().matches("\\d+")){

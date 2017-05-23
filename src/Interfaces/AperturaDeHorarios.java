@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import Controladores.ControladorGrafico;
 /**
  *
  * @author jose_
@@ -45,6 +46,9 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_inicio.getDateEditor();
         editor.setEditable(false);
+        
+        new ControladorGrafico().getDocument(txt_no_alumnos,"\\d+");
+        new ControladorGrafico().getDocument(txt_no_profesor,"\\d+");
         
     }
 

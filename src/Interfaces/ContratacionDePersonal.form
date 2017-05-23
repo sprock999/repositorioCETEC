@@ -205,9 +205,6 @@
                   <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_apell_paternoFocusLost"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txt_primer_nombre">
               <Properties>
@@ -215,9 +212,6 @@
                   <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_primer_nombreFocusLost"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txt_segundo_nombre">
               <Properties>
@@ -225,9 +219,6 @@
                   <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_segundo_nombreFocusLost"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txt_apell_materno">
               <Properties>
@@ -235,9 +226,6 @@
                   <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_apell_maternoFocusLost"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txt_curp">
               <Properties>
@@ -247,6 +235,7 @@
               </Properties>
               <Events>
                 <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_curpFocusLost"/>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_curpKeyPressed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">

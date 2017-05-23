@@ -17,33 +17,41 @@ import javax.swing.event.DocumentListener;
  */
 public class ControladorGrafico {
     
-    public void validar(JTextField jt){
-        if(!jt.getText().matches("[a-zA-Z]+||[a-z\\sA-Z\\s]+")){
-            //JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
-            jt.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-            jt.requestFocus();
-        }else{
-            jt.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+    public void validar(JTextField jt,String expresion){
+        try{
+            if (!jt.getText().matches(expresion)) {
+                //JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
+                jt.setBorder(BorderFactory.createLineBorder(Color.red, 2));
+                jt.requestFocus();
+            } else {
+                jt.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
     }
     
-    public void getDocument(JTextField jt){
+    public void getDocument(JTextField jt,String expresion){
+        try{
         jt.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validar(jt);
-            }
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    validar(jt, expresion);
+                }
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validar(jt);
-            }
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    validar(jt, expresion);
+                }
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validar(jt);
-            }
-        });
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    validar(jt, expresion);
+                }
+            });
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
     
 }

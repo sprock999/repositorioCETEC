@@ -4,6 +4,7 @@ package Interfaces;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import Controladores.Conexion;
+import com.sun.glass.events.KeyEvent;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,17 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editor.setEditable(false);
+        
+        try{
+            new Controladores.ControladorGrafico().getDocument(txt_primer_nombre, "[a-zA-Z]+");
+            new Controladores.ControladorGrafico().getDocument(txt_salario, "[\\d.]+");
+            new Controladores.ControladorGrafico().getDocument(txt_segundo_nombre, "[a-zñ\\sA-ZÑ\\s]+");
+            new Controladores.ControladorGrafico().getDocument(txt_apell_paterno, "[a-zñ\\sA-ZÑ\\s]+");
+            new Controladores.ControladorGrafico().getDocument(txt_apell_materno, "[a-zñ\\sA-ZÑ\\s]+");
+            new Controladores.ControladorGrafico().getDocument(txt_curp, "[a-zA-Z]{4}\\d{6}[a-zA-Z]{6}\\d{2}");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
         
     }
     
@@ -103,37 +115,22 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         jLabel8.setText("Apellido Materno:");
 
         txt_apell_paterno.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txt_apell_paterno.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_apell_paternoFocusLost(evt);
-            }
-        });
 
         txt_primer_nombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txt_primer_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_primer_nombreFocusLost(evt);
-            }
-        });
 
         txt_segundo_nombre.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txt_segundo_nombre.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_segundo_nombreFocusLost(evt);
-            }
-        });
 
         txt_apell_materno.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txt_apell_materno.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_apell_maternoFocusLost(evt);
-            }
-        });
 
         txt_curp.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txt_curp.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_curpFocusLost(evt);
+            }
+        });
+        txt_curp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_curpKeyPressed(evt);
             }
         });
 
@@ -350,27 +347,6 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
-    private void txt_primer_nombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_primer_nombreFocusLost
-        Validar(txt_primer_nombre, "[a-zA-Z]+||[ñÑ]+||([a-zA-z]+\\s*");
-    }//GEN-LAST:event_txt_primer_nombreFocusLost
-
-    private void txt_segundo_nombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_segundo_nombreFocusLost
-        Validar(txt_segundo_nombre, "[a-zA-Z]*");
-    }//GEN-LAST:event_txt_segundo_nombreFocusLost
-
-    private void txt_apell_paternoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_apell_paternoFocusLost
-        Validar(txt_apell_paterno, "[a-zA-Z]+");
-    }//GEN-LAST:event_txt_apell_paternoFocusLost
-
-    private void txt_apell_maternoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_apell_maternoFocusLost
-        Validar(txt_apell_materno, "[a-zA-Z]+");
-    }//GEN-LAST:event_txt_apell_maternoFocusLost
-
-    private void txt_curpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_curpFocusLost
-        txt_curp.setText(txt_curp.getText().toUpperCase());
-        Validar(txt_curp, "[A-Z]{4}\\d{6}[A-Z]{6}\\d{2}");
-    }//GEN-LAST:event_txt_curpFocusLost
-
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         try{
             String curp = txt_curp.getText();
@@ -391,7 +367,7 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
             String[] fechaArray = fecha.split("-");
             int dia = Integer.parseInt(fechaArray[0]);
             int mes = Integer.parseInt(fechaArray[1]);
-            int año = Integer.parseInt(fechaArray[2]);            
+            int año = Integer.parseInt(fechaArray[2]);
             conexion.ejecutar("insert into persona values('"+curp+"','"+primer_nombre+"','"+segundo_nombre+"','"+apellidoP+"','"+apellidoM+"',"+dia+","+mes+","+año+")");
             conexion.ejecutar("insert into profesor values('"+no_profesor+"','"+curp+"','"+grado_estudios+"',"+salario+",1)");
             limpiar();
@@ -400,6 +376,16 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    private void txt_curpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_curpKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            txt_curp.setText(txt_curp.getText().toUpperCase());
+        }
+    }//GEN-LAST:event_txt_curpKeyPressed
+
+    private void txt_curpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_curpFocusLost
+        txt_curp.setText(txt_curp.getText().toUpperCase());
+    }//GEN-LAST:event_txt_curpFocusLost
 
     
     public void limpiar(){
