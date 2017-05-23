@@ -35,7 +35,7 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         conexion = new Conexion();
         conexion.conectar();
         try{
-            ResultSet consulta = conexion.consultar("select no_empleado from empleado");
+            ResultSet consulta = conexion.consultar("select no_profesor from profesor");
             consulta.next();
             int no_empleado = consulta.getInt(1) + 1;
             txt_no_empleado.setText(Integer.toString(no_empleado));
@@ -403,9 +403,9 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
             String[] fechaArray = fecha.split("-");
             int dia = Integer.parseInt(fechaArray[0]);
             int mes = Integer.parseInt(fechaArray[1]);
-            int año = Integer.parseInt(fechaArray[2]);
+            int año = Integer.parseInt(fechaArray[2]);            
             conexion.ejecutar("insert into persona values('"+curp+"','"+primer_nombre+"','"+segundo_nombre+"','"+apellidoP+"','"+apellidoM+"',"+dia+","+mes+","+año+")");
-            conexion.ejecutar("insert into profesor values('"+no_profesor+"','"+curp+"','"+grado_estudios+","+salario+",1)");
+            conexion.ejecutar("insert into profesor values('"+no_profesor+"','"+curp+"','"+grado_estudios+"',"+salario+",1)");
         }catch(Exception e){
             System.out.println(e.getMessage());
         }

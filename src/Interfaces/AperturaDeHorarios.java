@@ -122,7 +122,7 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         jLabel5.setText("No. de Profesor:");
 
         combo_hora_entrada.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        combo_hora_entrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10:00", "11:00", "12:00" }));
+        combo_hora_entrada.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00" }));
 
         jLabel4.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel4.setText("Hora De Salida:");
@@ -131,7 +131,7 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         jLabel6.setText("No. De Alumnos:");
 
         combo_hora_salida.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        combo_hora_salida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10:00", "11:00", "12:00" }));
+        combo_hora_salida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00" }));
 
         txt_no_alumnos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txt_no_alumnos.addFocusListener(new java.awt.event.FocusAdapter() {

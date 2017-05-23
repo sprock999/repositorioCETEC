@@ -298,13 +298,14 @@ public class BajaDeAlumno extends javax.swing.JFrame {
             System.out.println("paso validacion");
             int no_control = Integer.parseInt(txt_no_control.getText());
             try{
-                ResultSet consulta = conexion.consultar("select primer_nombre, segundo_nombre, apellidoP, apellidoM, fecha_nacimiento from persona join alumno where persona.curp = alumno.curp && no_control = "+no_control+" && estado = " + ACTIVO);
+                ResultSet consulta = conexion.consultar("select primer_nom, segun_nom, apellido_P, apellido_M, dia_nac, mes_nac, año_nac from persona join alumno where persona.curp = alumno.curp && no_control = '"+no_control+"' && estado = " + ACTIVO);
                 consulta.next();
                 txt_primer_nombre.setText(consulta.getString(1));
                 txt_segundo_nombre.setText(consulta.getString(2));
                 txt_apell_paterno.setText(consulta.getString(3));
                 txt_apell_materno.setText(consulta.getString(4));
-                txt_fecha_nac.setText(consulta.getString(5));                
+                txt_fecha_nac.setText(consulta.getString(5)+"-"+consulta.getString(6)+"-"+consulta.getString(7));                
+                JOptionPane.showMessageDialog(null,"Alumno dado de baja exitosamente","OK",JOptionPane.INFORMATION_MESSAGE);
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }            
@@ -322,7 +323,7 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         if(!txt_no_control.equals("")){
             int no_control = Integer.parseInt(txt_no_control.getText());
             try{
-                conexion.ejecutar("update alumno set estado = 0 where no_control = " + no_control);
+                conexion.ejecutar("update alumno set estado = "+INACTIVO+" where no_control = '" + no_control + "'");
                 txt_primer_nombre.setText("");
                 txt_segundo_nombre.setText("");
                 txt_apell_paterno.setText("");
