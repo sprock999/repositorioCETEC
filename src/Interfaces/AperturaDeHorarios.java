@@ -43,7 +43,7 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         int numero = 0;
         try{
             ResultSet datos = conexion.consultar("select no_horario from horario");
-            datos.next();
+            datos.last();
             numero = Integer.parseInt(datos.getString(1)) + 1;
         }catch(Exception e){
             numero = 1;
