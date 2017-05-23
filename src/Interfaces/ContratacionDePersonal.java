@@ -4,6 +4,7 @@ package Interfaces;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import Controladores.Conexion;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,14 +35,10 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
 
         conexion = new Conexion();
         conexion.conectar();
-        try{
-            ResultSet consulta = conexion.consultar("select no_profesor from profesor");
-            consulta.next();
-            int no_empleado = consulta.getInt(1) + 1;
-            txt_no_empleado.setText(Integer.toString(no_empleado));
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        crearNoContorl();
+        
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editor.setEditable(false);
         
     }
     
@@ -222,7 +219,7 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         });
 
         combo_estudios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        combo_estudios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Secundaria", "Bachillerato", "Universidad", "Posgrado" }));
+        combo_estudios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Secundaria", "Bachillerato", "Licenciatura", "Posgrado" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -406,11 +403,37 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
             int año = Integer.parseInt(fechaArray[2]);            
             conexion.ejecutar("insert into persona values('"+curp+"','"+primer_nombre+"','"+segundo_nombre+"','"+apellidoP+"','"+apellidoM+"',"+dia+","+mes+","+año+")");
             conexion.ejecutar("insert into profesor values('"+no_profesor+"','"+curp+"','"+grado_estudios+"',"+salario+",1)");
+            limpiar();
+            crearNoContorl();
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
 
+    
+    public void limpiar(){
+        txt_apell_materno.setText("");
+        txt_apell_paterno.setText("");
+        txt_curp.setText("");
+        txt_no_empleado.setText("");
+        txt_primer_nombre.setText("");
+        txt_salario.setText("");
+        txt_segundo_nombre.setText("");
+    }
+    
+    public void crearNoContorl(){
+        try{
+            ResultSet consulta = conexion.consultar("select no_profesor from profesor");
+            int no_empleado = 0;
+            while(consulta.next()){
+                 no_empleado = consulta.getInt(1) + 1;
+            }
+            txt_no_empleado.setText(Integer.toString(no_empleado));
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -374,7 +374,7 @@
                   <StringArray count="4">
                     <StringItem index="0" value="Secundaria"/>
                     <StringItem index="1" value="Bachillerato"/>
-                    <StringItem index="2" value="Universidad"/>
+                    <StringItem index="2" value="Licenciatura"/>
                     <StringItem index="3" value="Posgrado"/>
                   </StringArray>
                 </Property>
