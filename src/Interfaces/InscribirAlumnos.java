@@ -1,5 +1,7 @@
 package Interfaces;
 
+import Controladores.ControladorGrafico;
+import Controladores.ManejadorFocus;
 import Controladores.ManejadorInscribirAlumno;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
@@ -49,6 +51,18 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editor.setEditable(false);
+        
+        String regexCurp ="[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}" + 
+                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" + 
+                "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
+        
+        new ControladorGrafico().getDocument(txt_primer_nombre,"\\d+");
+        new ManejadorFocus(txt_no_tutor, "\\d+");
+        //new ManejadorFocus(txt_primer_nombre, "\\w+");
+        new ManejadorFocus(txt_segundo_nombre, "\\w+");
+        new ManejadorFocus(txt_apell_paterno, "\\w+");
+        new ManejadorFocus(txt_apell_materno, "\\w+");
+        new ManejadorFocus(txt_curp, regexCurp);
     }
 
     @SuppressWarnings("unchecked")

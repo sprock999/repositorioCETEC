@@ -16,24 +16,28 @@ import javax.swing.event.DocumentListener;
  * @author lobat
  */
 public class ControladorGrafico {
-    
-    public void validar(JTextField jt,String expresion){
-        try{
-            if (!jt.getText().matches(expresion)) {
-                //JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
-                jt.setBorder(BorderFactory.createLineBorder(Color.red, 2));
-                jt.requestFocus();
+
+    public void validar(JTextField jt, String expresion) {
+        try {
+            if (jt.getText().equals("")) {
+                jt.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
             } else {
-                jt.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+                if (!jt.getText().matches(expresion)) {
+                    //JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
+                    jt.setBorder(BorderFactory.createLineBorder(Color.red, 2));
+                    //jt.requestFocus();
+                } else {
+                    jt.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+                }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void getDocument(JTextField jt,String expresion){
-        try{
-        jt.getDocument().addDocumentListener(new DocumentListener() {
+
+    public void getDocument(JTextField jt, String expresion) {
+        try {
+            jt.getDocument().addDocumentListener(new DocumentListener() {
                 @Override
                 public void insertUpdate(DocumentEvent e) {
                     validar(jt, expresion);
@@ -49,9 +53,9 @@ public class ControladorGrafico {
                     validar(jt, expresion);
                 }
             });
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
+
 }
