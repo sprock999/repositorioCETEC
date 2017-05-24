@@ -49,7 +49,6 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         
         new ControladorGrafico().getDocument(txt_no_alumnos,"\\d+");
         new ControladorGrafico().getDocument(txt_no_profesor,"\\d+");
-        
     }
 
     
