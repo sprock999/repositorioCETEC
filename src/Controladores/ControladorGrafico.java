@@ -8,6 +8,7 @@ package Controladores;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -57,5 +58,8 @@ public class ControladorGrafico {
             System.out.println(e.getMessage());
         }
     }
-
+    
+    public boolean getColor(JTextField jt){
+        return ((LineBorder) jt.getBorder()).getLineColor().equals(new Color(0,255,0));
+    }
 }
