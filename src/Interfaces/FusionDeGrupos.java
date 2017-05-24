@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Controladores.ManejadorFocus;
 import Controladores.ManejadorFusionDeGrupos;
 import java.awt.Image;
 import java.awt.Point;
@@ -33,17 +34,19 @@ public class FusionDeGrupos extends javax.swing.JFrame {
         btn_buscar.setIcon(icon);
 
         img = new ImageIcon(getClass().getResource("/Imagenes/fusionar.png"));
-        icon = new ImageIcon(img.getImage().getScaledInstance(btn_fusionar.getWidth(), btn_fusionar.getHeight(), Image.SCALE_DEFAULT));
+        icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_fusionar.setIcon(icon);
 
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
-        icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
+        icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
 
         fusion = new ManejadorFusionDeGrupos();
 
         modelo = (DefaultTableModel) tabla_horarios.getModel();
         modeloD = (DefaultTableModel) tabla_disponibles.getModel();
+        
+        new ManejadorFocus(txt_no_horario, "\\d+");
     }
 
     @SuppressWarnings("unchecked")
@@ -61,8 +64,6 @@ public class FusionDeGrupos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_horarios = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         btn_fusionar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
 
@@ -168,13 +169,8 @@ public class FusionDeGrupos extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 20), new java.awt.Color(177, 91, 6))); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
-        jLabel10.setText("Fusionar");
-
-        jLabel12.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
-        jLabel12.setText("Salir");
-
         btn_fusionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/fusionar.png"))); // NOI18N
+        btn_fusionar.setText("Fusionar");
         btn_fusionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_fusionarActionPerformed(evt);
@@ -182,6 +178,7 @@ public class FusionDeGrupos extends javax.swing.JFrame {
         });
 
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
+        btn_salir.setText("Salir");
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_salirActionPerformed(evt);
@@ -193,28 +190,19 @@ public class FusionDeGrupos extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addGap(30, 30, 30))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_fusionar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_fusionar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_fusionar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel12)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_fusionar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -366,8 +354,6 @@ public class FusionDeGrupos extends javax.swing.JFrame {
     private javax.swing.JButton btn_fusionar;
     private javax.swing.JButton btn_salir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

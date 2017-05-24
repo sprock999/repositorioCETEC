@@ -1,6 +1,8 @@
 package Interfaces;
 
+import Controladores.ManejadorFocus;
 import Controladores.ManejadorGestionDeEmpleados;
+import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
 import java.awt.Point;
 import java.text.SimpleDateFormat;
@@ -39,15 +41,30 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         btn_buscar.setIcon(icon);
         
         img = new ImageIcon(getClass().getResource("/Imagenes/modificar.png"));
-        icon = new ImageIcon(img.getImage().getScaledInstance(btn_modificar.getWidth(), btn_modificar.getHeight(), Image.SCALE_DEFAULT));
+        icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_modificar.setIcon(icon);
         
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
-        icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
+        icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
         
         modelo = (DefaultTableModel) tabla_empleados.getModel();
         gestionEmpleados = new ManejadorGestionDeEmpleados();
+        
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editor.setEditable(false);
+        
+        String regexCurp ="[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}" + 
+                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" + 
+                "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
+        
+        new ManejadorFocus(txt_no_empleado, "\\d+");
+        new ManejadorFocus(txt_primer_nombre, "\\w+");
+        new ManejadorFocus(txt_segundo_nombre, "\\w+");
+        new ManejadorFocus(txt_apell_paterno, "\\w+");
+        new ManejadorFocus(txt_apell_materno, "\\w+");
+        new ManejadorFocus(txt_curp, regexCurp);
+        new ManejadorFocus(txt_salario, "\\d+");
     }
 
     @SuppressWarnings("unchecked")
@@ -75,8 +92,6 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         tabla_empleados = new javax.swing.JTable();
         btn_buscar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         btn_modificar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
@@ -247,13 +262,8 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 20), new java.awt.Color(177, 91, 6))); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
-        jLabel10.setText("Modificar");
-
-        jLabel12.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
-        jLabel12.setText("Salir");
-
         btn_modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
+        btn_modificar.setText("Modificar");
         btn_modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_modificarActionPerformed(evt);
@@ -261,36 +271,31 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         });
 
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel12)
-                        .addGap(30, 30, 30))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addContainerGap(327, Short.MAX_VALUE)
+                .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel12)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel5.setBackground(new java.awt.Color(204, 204, 255));
@@ -499,6 +504,8 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         gestionEmpleados.asignarDatos(primer_nom, segundo_nom, apellido_pat, apellido_mat, 
                 curp, grado_estudios, salario, dia_nac, mes_nac, año_nac);
         gestionEmpleados.actualizar();
+         JOptionPane.showMessageDialog(null, "Datos Del Empleado Actualizado", "Actualizado...", 
+                    JOptionPane.INFORMATION_MESSAGE);
         limpiarCampos();
         deshabilitarComonentes();
         correcto = 0;
@@ -510,6 +517,10 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 //            System.out.println(seleccionado);
 //        }
     }//GEN-LAST:event_combo_estudiosItemStateChanged
+
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btn_salirActionPerformed
 
     public void limpiarCampos(){
         txt_no_empleado.setText("");
@@ -585,8 +596,6 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> combo_estudios;
     private com.toedter.calendar.JDateChooser fecha_nacimiento;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel4;
