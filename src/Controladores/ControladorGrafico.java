@@ -27,7 +27,7 @@ public class ControladorGrafico {
                     jt.setBorder(BorderFactory.createLineBorder(Color.red, 2));
                     //jt.requestFocus();
                 } else {
-                    jt.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+                    jt.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
                 }
             }
         } catch (Exception e) {
