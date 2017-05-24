@@ -335,7 +335,7 @@ public class RegistrarTutor extends javax.swing.JFrame {
             }
         });
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
-        editor.setEnabled(false);
+        editor.setEditable(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -560,6 +560,11 @@ public class RegistrarTutor extends javax.swing.JFrame {
 
         btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
         btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -680,6 +685,10 @@ public class RegistrarTutor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, error);
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btn_salirActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
