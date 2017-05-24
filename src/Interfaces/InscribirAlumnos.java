@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.border.Border;
 
 /**
  *
@@ -56,13 +57,14 @@ public class InscribirAlumnos extends javax.swing.JFrame {
                 "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" + 
                 "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
         
-        new ControladorGrafico().getDocument(txt_primer_nombre,"\\d+");
-        new ManejadorFocus(txt_no_tutor, "\\d+");
-        //new ManejadorFocus(txt_primer_nombre, "\\w+");
-        new ManejadorFocus(txt_segundo_nombre, "\\w+");
-        new ManejadorFocus(txt_apell_paterno, "\\w+");
-        new ManejadorFocus(txt_apell_materno, "\\w+");
-        new ManejadorFocus(txt_curp, regexCurp);
+        new ControladorGrafico().getDocument(txt_no_control, "\\d+");
+        new ControladorGrafico().getDocument(txt_no_tutor, "\\d+");
+        new ControladorGrafico().getDocument(txt_primer_nombre,"[a-zA-Z]+");
+        new ControladorGrafico().getDocument(txt_segundo_nombre,"[a-zA-Z]+");
+        new ControladorGrafico().getDocument(txt_apell_paterno, "[a-zA-Z]+");
+        new ControladorGrafico().getDocument(txt_apell_materno, "[a-zA-Z]+");
+        new ControladorGrafico().getDocument(editor, "\\d{1,2}/\\d{1,2}/\\d{4}");
+        new ControladorGrafico().getDocument(txt_curp, regexCurp);
     }
 
     @SuppressWarnings("unchecked")
@@ -359,7 +361,12 @@ public class InscribirAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        System.exit(0);
+        
+        Border borde = txt_primer_nombre.getBorder();
+        
+        
+        
+        //System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     
