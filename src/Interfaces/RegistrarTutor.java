@@ -340,10 +340,10 @@ public class RegistrarTutor extends javax.swing.JFrame {
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
 //        txt_no_tutor.getBackground().equals(Color.green) && 
-        if(txt_primer_nombre.getBackground().equals(Color.green) && txt_segundo_nombre.getBackground().equals(Color.green)
-                && txt_apell_paterno.getBackground().equals(Color.green) && txt_apell_materno.getBackground().equals(Color.green) && txt_curp.getBackground().equals(Color.green)
-                && txt_telefono.getBackground().equals(Color.green) && txt_Email.getBackground().equals(Color.green) && txt_parentezco.getBackground().equals(Color.green)
-                && txt_ocupacion.getBackground().equals(Color.green) && fecha_nacimiento.getDate() != null){
+        if(new ControladorGrafico().getColor(txt_primer_nombre) && new ControladorGrafico().getColor(txt_segundo_nombre)
+                && new ControladorGrafico().getColor(txt_apell_paterno) && new ControladorGrafico().getColor(txt_apell_materno) && new ControladorGrafico().getColor(txt_curp)
+                && new ControladorGrafico().getColor(txt_telefono) && new ControladorGrafico().getColor(txt_Email) && new ControladorGrafico().getColor(txt_parentezco)
+                && new ControladorGrafico().getColor(txt_ocupacion) && fecha_nacimiento.getDate() != null){
             no_tutor = txt_no_tutor.getText();
             primer_nom = txt_primer_nombre.getText();
             segundo_nom = txt_segundo_nombre.getText();
@@ -363,34 +363,34 @@ public class RegistrarTutor extends javax.swing.JFrame {
             registrartutor.Registrar();
         }else{
             String error = "El o los siguientes campos con incorrecto o estan vacios";
-            if(!txt_no_tutor.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_no_tutor)){
                 error += "\nNumero de tutor";
             } 
-            if(!txt_primer_nombre.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_primer_nombre)){
                 error += "\nPrimer Nombre";
             }
-            if(!txt_segundo_nombre.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_segundo_nombre)){
                 error += "\nSegundo Nombre";
             }
-            if(!txt_apell_paterno.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_apell_paterno)){
                 error += "\nApellido Paterno";
             }
-            if(!txt_apell_materno.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_apell_materno)){
                 error += "\nApellido Materno";
             }
-            if(!txt_curp.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_curp)){
                 error += "\nCURP";
             }
-            if(!txt_telefono.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_telefono)){
                 error += "\nNumero Telefonico";
             }
-            if(!txt_Email.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_Email)){
                 error += "\nCorreo Electronico";
             }
-            if(!txt_parentezco.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_parentezco)){
                 error += "\nParentesco";
             }
-            if(!txt_ocupacion.getBackground().equals(Color.green)){
+            if(!new ControladorGrafico().getColor(txt_ocupacion)){
                 error += "\nOcupacion";
             }
             if(fecha_nacimiento.getDate() == null){                
