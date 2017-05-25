@@ -62,4 +62,8 @@ public class ControladorGrafico {
     public boolean getColor(JTextField jt){
         return ((LineBorder) jt.getBorder()).getLineColor().equals(new Color(0,255,0));
     }
+    
+    public boolean estaVacio(JTextField jt){
+        return ((LineBorder) jt.getBorder()).getLineColor().equals(new Color(0,0,255));
+    }
 }

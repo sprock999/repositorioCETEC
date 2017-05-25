@@ -1,14 +1,18 @@
 package Interfaces;
 
+import Controladores.ControladorGrafico;
 import Controladores.ManejadorFocus;
 import Controladores.ManejadorGestionDeAlumnos;
 import com.toedter.calendar.JTextFieldDateEditor;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -19,61 +23,75 @@ import javax.swing.table.TableModel;
 public class GestionDeAlumnos extends javax.swing.JFrame {
 
     ManejadorGestionDeAlumnos modificarAlumno;
-    
+    ControladorGrafico ctrlNoControl, ctrlPrimerNombre, ctrlSegundoNombre, ctrlApellPaterno,
+            ctrlApellMaterno, ctrlFechaNac, ctrlCurp, ctrlNoTutor;
+
+    JTextFieldDateEditor editorFecha;
     DefaultTableModel modelo;
-    
-    String no_control, no_tutor, primer_nom, segundo_nom, apellido_pat, 
+
+    String no_control, no_tutor, primer_nom, segundo_nom, apellido_pat,
             apellido_mat, curp;
-    int dia_nac, mes_nac, año_nac; 
-    
+    int dia_nac, mes_nac, año_nac;
+
     int correcto = 0;
-    
+
     ImageIcon img;
     ImageIcon icon;
-    
+
     public GestionDeAlumnos() {
         initComponents();
-         this.setTitle("Gestion De Alumnos");
+        this.setTitle("Gestion De Alumnos");
         this.setLocationRelativeTo(null);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
-        
-         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar_tutor.getWidth(), btn_buscar_tutor.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar_tutor.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar tutor.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_registrar_tutor.getWidth(), btn_registrar_tutor.getHeight(), Image.SCALE_DEFAULT));
         btn_registrar_tutor.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/modificar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_modificar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
+
         modelo = (DefaultTableModel) tabla_alumnos.getModel();
         modificarAlumno = new ManejadorGestionDeAlumnos();
-        
-        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
-        editor.setEditable(false);
-        
-        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}" + 
-                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" + 
-                "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
-        
-        new ManejadorFocus(txt_no_control, "\\d+");
-        new ManejadorFocus(txt_primer_nombre, "\\w+");
-        new ManejadorFocus(txt_segundo_nombre, "\\w+");
-        new ManejadorFocus(txt_apell_paterno, "\\w+");
-        new ManejadorFocus(txt_apell_materno, "\\w+");
-        new ManejadorFocus(txt_curp, regexCurp);
-        new ManejadorFocus(txt_no_tutor, "\\d+");
-        //new ManejadorFocus(editor, "\\w+");
+
+        editorFecha = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editorFecha.setEditable(false);
+
+        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}"
+                + "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)"
+                + "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
+
+        ctrlNoControl = new ControladorGrafico();
+        ctrlPrimerNombre = new ControladorGrafico();
+        ctrlSegundoNombre = new ControladorGrafico();
+        ctrlApellPaterno = new ControladorGrafico();
+        ctrlApellMaterno = new ControladorGrafico();
+        ctrlFechaNac = new ControladorGrafico();
+        ctrlCurp = new ControladorGrafico();
+        ctrlNoTutor = new ControladorGrafico();
+
+        ctrlNoControl.getDocument(txt_no_control, "\\d+");
+        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zA-Z]+");
+        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zA-Z]+");
+        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zA-Z]+");
+        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zA-Z]+");
+        ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
+        ctrlCurp.getDocument(txt_curp, regexCurp);
+        ctrlNoTutor.getDocument(txt_no_tutor, "\\d+");
+
+        bordes();
     }
 
     @SuppressWarnings("unchecked")
@@ -149,6 +167,8 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel9.setText("CURP:");
+
+        fecha_nacimiento.setEnabled(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -400,19 +420,19 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
-        
+
         if (correcto == 0) {
-            JOptionPane.showMessageDialog(null, "Busque Un Alumno", "Advertencia!", 
+            JOptionPane.showMessageDialog(null, "Busque Un Alumno", "Advertencia!",
                     JOptionPane.WARNING_MESSAGE);
             return;
-        }else{
+        } else {
             if (correcto == 2) {
-                JOptionPane.showMessageDialog(null, "Seleccione Un Alumno", "Advertencia!", 
-                    JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Seleccione Un Alumno", "Advertencia!",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
-            }  
+            }
         }
-        
+
         no_control = txt_no_control.getText();
         no_tutor = txt_no_tutor.getText();
         primer_nom = txt_primer_nombre.getText();
@@ -427,53 +447,72 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
             SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
             fecha_nac = formato.format(time);
         }
-        
+
         String[] fechaArray = fecha_nac.split("-");
         dia_nac = Integer.parseInt(fechaArray[0]);
         mes_nac = Integer.parseInt(fechaArray[1]);
         año_nac = Integer.parseInt(fechaArray[2]);
-        
-        if (no_control.equals("") || no_tutor.equals("") || primer_nom.equals("")
-                || apellido_pat.equals("") || apellido_mat.equals("") || curp.equals("") 
-                || fecha_nacimiento.getCalendar() == null ) {
-            JOptionPane.showMessageDialog(null, "Ingresa Todos Los Datos solicitados", "Advertencia", 
+
+        try {
+            if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
+                    && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
+                    && ctrlCurp.getColor(txt_curp) && ctrlNoTutor.getColor(txt_no_tutor)) {
+                if (!ctrlSegundoNombre.estaVacio(txt_segundo_nombre)) {
+                    if (!ctrlSegundoNombre.getColor(txt_segundo_nombre)) {
+                        JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                                JOptionPane.WARNING_MESSAGE);
+                        return;
+                    }
+                }
+
+                if (!modificarAlumno.buscarTutor(txt_no_tutor.getText())) {
+                    JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No encontrado!",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                modificarAlumno.AsignarDatos(no_tutor, primer_nom, segundo_nom, apellido_pat,
+                        apellido_mat, curp, dia_nac, mes_nac, año_nac);
+                modificarAlumno.actualizar();
+                JOptionPane.showMessageDialog(null, "Datos Del Alumno Actualizado", "Actualizado...",
+                        JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+                deshabilitarComponentes();
+                correcto = 0;
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
                     JOptionPane.WARNING_MESSAGE);
-            return;
         }
-        
-        modificarAlumno.AsignarDatos(no_tutor, primer_nom, segundo_nom, apellido_pat, 
-                apellido_mat, curp, dia_nac, mes_nac, año_nac);
-        modificarAlumno.actualizar();
-        JOptionPane.showMessageDialog(null, "Datos Del Alumno Actualizado", "Actualizado...", 
-                    JOptionPane.INFORMATION_MESSAGE);
-        limpiarCampos();
-        deshabilitarComonentes();
-        correcto = 0;
     }//GEN-LAST:event_btn_modificarActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         modelo.setRowCount(0);
         String dato = txt_no_control.getText();
-        
+
         if (dato.equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese El No. De Control", "Campo Vacio", 
+            JOptionPane.showMessageDialog(null, "Ingrese El No. De Control", "Campo Vacio",
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         modificarAlumno.setNo_control(dato);
-        
+
         DefaultTableModel model = modificarAlumno.getAlumno(modelo);
-        if (model.getRowCount() < 1 ) {
-            deshabilitarComonentes();
+        if (model.getRowCount() < 1) {
+            deshabilitarComponentes();
             limpiarCampos();
             correcto = 0;
-            JOptionPane.showMessageDialog(null, "No Se Encontró El Alumno", "No Encontrado!", 
+            JOptionPane.showMessageDialog(null, "No Se Encontró El Alumno", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             tabla_alumnos.setModel(model);
             correcto = 2;
         }
-        
+
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void tabla_alumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_alumnosMouseClicked
@@ -483,17 +522,17 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         int column = tabla_alumnos.columnAtPoint(point);
         TableModel model = tabla_alumnos.getModel();
         //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
-        
+
         //modificarAlumno.getDatos();
         String[] datos = modificarAlumno.getDatos();
 
-        if ( datos[0] == null) {
-            JOptionPane.showMessageDialog(null, "Aumno No Encontrado", "No Encontrado!", 
+        if (datos[0] == null) {
+            JOptionPane.showMessageDialog(null, "Aumno No Encontrado", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
             correcto = 2;
         } else {
             habilitarComonentes();
-            
+
             txt_curp.setText(datos[0]);
             txt_no_tutor.setText(datos[1]);
             txt_primer_nombre.setText(datos[2]);
@@ -507,14 +546,25 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
                 Date fechaDate = formato.parse(dato);
                 //Date time = new Date(fecha);
                 fecha_nacimiento.setDate(fechaDate);
-                
+
                 correcto = 1;
             } catch (Exception e) {
             }
         }
     }//GEN-LAST:event_tabla_alumnosMouseClicked
 
-    public void limpiarCampos(){
+    public void bordes() {
+        txt_no_control.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        txt_primer_nombre.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        txt_segundo_nombre.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        txt_apell_paterno.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        txt_apell_materno.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        editorFecha.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        txt_curp.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+        txt_no_tutor.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
+    }
+
+    public void limpiarCampos() {
         txt_no_control.setText("");
         txt_no_tutor.setText("");
         txt_primer_nombre.setText("");
@@ -524,50 +574,67 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         txt_curp.setText("");
         fecha_nacimiento.setDate(null);
     }
-    
-    public void habilitarComonentes(){
+
+    public void habilitarComonentes() {
         txt_primer_nombre.setEditable(true);
         txt_segundo_nombre.setEditable(true);
         txt_apell_paterno.setEditable(true);
         txt_apell_materno.setEditable(true);
         txt_curp.setEditable(true);
         txt_no_tutor.setEditable(true);
-        
+
         fecha_nacimiento.setEnabled(true);
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editor.setEditable(false);
         btn_buscar_tutor.setEnabled(true);
     }
-    
-    public void deshabilitarComonentes(){
+
+    public void deshabilitarComponentes() {
         txt_primer_nombre.setEditable(false);
         txt_segundo_nombre.setEditable(false);
         txt_apell_paterno.setEditable(false);
         txt_apell_materno.setEditable(false);
         txt_curp.setEditable(false);
         txt_no_tutor.setEditable(false);
-        
+
         fecha_nacimiento.setEnabled(false);
         btn_buscar_tutor.setEnabled(false);
     }
-    
+
     private void btn_buscar_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_tutorActionPerformed
         String dato = txt_no_tutor.getText();
         if (dato.equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese El No. De Tutor", "Campo Vacio", 
+            JOptionPane.showMessageDialog(null, "Ingrese El No. De Tutor", "Campo Vacio",
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if (!modificarAlumno.buscarTutor(dato)) {
             txt_no_tutor.setText("");
-            JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No encontrado!", 
+            JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
         }
-        
     }//GEN-LAST:event_btn_buscar_tutorActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        System.exit(0);
+        try {
+            if (ctrlPrimerNombre.getColor(txt_primer_nombre)
+                    && ctrlSegundoNombre.getColor(txt_segundo_nombre)
+                    && ctrlApellPaterno.getColor(txt_apell_paterno)
+                    && ctrlApellMaterno.getColor(txt_apell_materno)
+                    && ctrlFechaNac.getColor(editorFecha)
+                    && ctrlCurp.getColor(txt_curp)
+                    && ctrlNoTutor.getColor(txt_no_tutor)) {
+                JOptionPane.showMessageDialog(null, "Corecto");
+            } else {
+                JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
+        //System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     public static void main(String args[]) {
