@@ -12,13 +12,12 @@ public class ManejadorFusionDeGrupos {
 
     Conexion baseDatos = new Conexion().conectar();
 
-    String no_horario;
     int numero_alumnos, numAlumnosHorario1, numAlumnosHorario2, totalAlumnos = 0;
 
     public ManejadorFusionDeGrupos() {
     }
 
-    public DefaultTableModel getDatos(DefaultTableModel modelo) {
+    public DefaultTableModel getDatos(DefaultTableModel modelo, String no_horario) {
         String consulta = "SELECT No_Horario, Hora_Entrada, Hora_Salida, No_Profesor, Numero_Alumnos "
                 + "FROM horario where No_Horario = '" + no_horario + "';";
         ResultSet res = baseDatos.consultar(consulta);
@@ -43,9 +42,9 @@ public class ManejadorFusionDeGrupos {
         return modelo;
     }
 
-    public DefaultTableModel getDisponibles(DefaultTableModel modelo) {
+    public DefaultTableModel getDisponibles(DefaultTableModel modelo, String no_horario) {
         String consulta = "SELECT No_Horario, Hora_Entrada, Hora_Salida, No_Profesor, Numero_Alumnos "
-                + "FROM horario WHERE No_Horario != " + getNo_horario() + ";";
+                + "FROM horario WHERE No_Horario != " + no_horario + ";";
         ResultSet res = baseDatos.consultar(consulta);
         try {
             while (res.next()) {
@@ -101,13 +100,4 @@ public class ManejadorFusionDeGrupos {
         baseDatos.ejecutar(consultaElim);
         baseDatos.ejecutar(consulta);
     }
-
-    public String getNo_horario() {
-        return no_horario;
-    }
-
-    public void setNo_horario(String no_horario) {
-        this.no_horario = no_horario;
-    }
-
 }

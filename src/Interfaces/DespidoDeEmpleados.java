@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Controladores.ControladorGrafico;
 import Controladores.ManejadorDespidoDeEmpleados;
 import Controladores.ManejadorFocus;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
 public class DespidoDeEmpleados extends javax.swing.JFrame {
 
     ManejadorDespidoDeEmpleados despido;
+    ControladorGrafico ctrlNoEmpelado;
 
     ImageIcon img;
     ImageIcon icon;
@@ -38,14 +40,15 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
+
         despido = new ManejadorDespidoDeEmpleados();
-        
+
         //JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         //editor.setEditable(false);
         fecha_nacimiento.setEnabled(false);
-        
-        new ManejadorFocus(txt_no_empleado, "\\d+");
+
+        ctrlNoEmpelado = new ControladorGrafico();
+        ctrlNoEmpelado.getDocument(txt_no_empleado, "\\d+");
     }
 
     @SuppressWarnings("unchecked")
@@ -282,21 +285,26 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        
+
         String campoDato = txt_no_empleado.getText();
-        if (campoDato.equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese El No. Del Empleado", "Campo Vacio", 
-                    JOptionPane.INFORMATION_MESSAGE);
+
+        try {
+            if (!ctrlNoEmpelado.getColor(txt_no_empleado)) {
+                JOptionPane.showMessageDialog(null, "Verifique El No Del Empleado", "Campo Incorrecto",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Verifique El No Del Empleado", "Campo Incorrecto",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        despido.setNo_empleado(campoDato);
-        
-        String[] datos = despido.getDatos();
+        String[] datos = despido.getDatos(campoDato);
 
-        if ( datos[0] == null) {
+        if (datos[0] == null) {
             limpiarCampos();
-            JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado", 
+            JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             txt_primer_nombre.setText(datos[0]);
@@ -316,7 +324,7 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_buscarActionPerformed
 
-    public void limpiarCampos(){
+    public void limpiarCampos() {
         txt_no_empleado.setText("");
         txt_primer_nombre.setText("");
         txt_segundo_nombre.setText("");
@@ -324,27 +332,41 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
         txt_apell_materno.setText("");
         fecha_nacimiento.setDate(null);
     }
-    
+
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-         String campoDato = txt_no_empleado.getText();
-         if (campoDato.equals("")) {
-             JOptionPane.showMessageDialog(null, "Ingrese El No. Del Empleado", "Campo Vacio", 
-                    JOptionPane.INFORMATION_MESSAGE);
+        String campoDato = txt_no_empleado.getText();
+        try {
+            if (ctrlNoEmpelado.getColor(txt_no_empleado)) {
+                if (despido.getDatos(campoDato)[0] == null) {
+                    limpiarCampos();
+                    JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Verifique El No Del Empleado", "Campo Incorrecto",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Verifique El No Del Empleado", "Campo Incorrecto",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
-        int resp = JOptionPane.showConfirmDialog(null, "¿Esta Seguro De Eliminar Al Empleado?", "Alerta!", 
+
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta Seguro De Eliminar Al Empleado?", "Alerta!",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (resp == 0) {
             if (despido.despedir(campoDato)) {
                 limpiarCampos();
-                JOptionPane.showMessageDialog(null, "Empleado Eliminado", "Eliminado...", 
-                    JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Empleado Eliminado", "Eliminado...",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-       System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     public static void main(String args[]) {

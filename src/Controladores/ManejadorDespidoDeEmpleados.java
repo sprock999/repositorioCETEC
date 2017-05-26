@@ -11,13 +11,13 @@ public class ManejadorDespidoDeEmpleados {
 
     Conexion baseDatos = new Conexion().conectar();
 
-    String no_empleado, primer_nom, segundo_nom, apellido_pat, apellido_mat;
+    String primer_nom, segundo_nom, apellido_pat, apellido_mat;
     int dia_nac, mes_nac, año_nac;
 
     public ManejadorDespidoDeEmpleados() {
     }
 
-    public String[] getDatos() {
+    public String[] getDatos(String no_empleado) {
         String[] salida = new String[7];
         String consulta = "SELECT Primer_Nom, Segun_Nom, Apellido_P, Apellido_M, Dia_Nac, "
                 + "Mes_Nac, Año_Nac FROM profesor INNER JOIN persona ON "
@@ -55,13 +55,4 @@ public class ManejadorDespidoDeEmpleados {
         baseDatos.ejecutar(sentenciaEmp);
         return true;
     }
-
-    public String getNo_empleado() {
-        return no_empleado;
-    }
-
-    public void setNo_empleado(String no_empleado) {
-        this.no_empleado = no_empleado;
-    }
-
 }

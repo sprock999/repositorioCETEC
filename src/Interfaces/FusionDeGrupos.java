@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Controladores.ControladorGrafico;
 import Controladores.ManejadorFocus;
 import Controladores.ManejadorFusionDeGrupos;
 import java.awt.Image;
@@ -16,6 +17,7 @@ import javax.swing.table.TableModel;
 public class FusionDeGrupos extends javax.swing.JFrame {
 
     ManejadorFusionDeGrupos fusion;
+    ControladorGrafico ctrlNoHorario;
 
     DefaultTableModel modelo, modeloD;
 
@@ -45,8 +47,9 @@ public class FusionDeGrupos extends javax.swing.JFrame {
 
         modelo = (DefaultTableModel) tabla_horarios.getModel();
         modeloD = (DefaultTableModel) tabla_disponibles.getModel();
-        
-        new ManejadorFocus(txt_no_horario, "\\d+");
+
+        ctrlNoHorario = new ControladorGrafico();
+        ctrlNoHorario.getDocument(txt_no_horario, "\\d+");
     }
 
     @SuppressWarnings("unchecked")
@@ -244,14 +247,23 @@ public class FusionDeGrupos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-
         modelo.setRowCount(0);
         modeloD.setRowCount(0);
 
-        fusion.setNo_horario(txt_no_horario.getText());
+        String no_horario = txt_no_horario.getText();
+        try {
+            if (!ctrlNoHorario.getColor(txt_no_horario)) {
+                JOptionPane.showMessageDialog(null, "Verifique El No Del horario", "Campo Incorrecto",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Verifique El No Del horario", "Campo Incorrecto",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        DefaultTableModel model = fusion.getDatos(modelo);
-
+        DefaultTableModel model = fusion.getDatos(modelo, no_horario);
         if (model == null) {
             JOptionPane.showMessageDialog(this, "Horario No Encontrado", "No encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -262,33 +274,41 @@ public class FusionDeGrupos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_fusionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fusionarActionPerformed
+        String no_horario = txt_no_horario.getText();
+        try {
+            if (!ctrlNoHorario.getColor(txt_no_horario)) {
+                JOptionPane.showMessageDialog(null, "Verifique El No Del horario", "Campo Incorrecto",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Verifique El No Del horario", "Campo Incorrecto",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        if (txt_no_horario.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Busque Un horario...",
+        if (seleccionadoUno.equals("") || seleccionadoDos.equals("")) {
+            JOptionPane.showMessageDialog(this, "Seleccione Los Horarios A Fusionar...",
                     "Advertencia", JOptionPane.WARNING_MESSAGE);
         } else {
-            if (seleccionadoUno.equals("") || seleccionadoDos.equals("")) {
-                JOptionPane.showMessageDialog(this, "Seleccione Los Horarios A Fusionar...",
-                    "Advertencia", JOptionPane.WARNING_MESSAGE);
+            if (fusion.horariosAceptados(seleccionadoUno, seleccionadoDos)) {
+                fusion.fusionarHorario(seleccionadoUno, seleccionadoDos);
+                JOptionPane.showMessageDialog(this, "Horarios Funcionados...", "Fusionados",
+                        JOptionPane.INFORMATION_MESSAGE);
+                modelo.setRowCount(0);
+                modeloD.setRowCount(0);
+                seleccionadoUno = "";
+                seleccionadoDos = "";
             } else {
-                if (fusion.horariosAceptados(seleccionadoUno, seleccionadoDos)) {
-                    fusion.fusionarHorario(seleccionadoUno, seleccionadoDos);
-                    JOptionPane.showMessageDialog(this, "Horarios Funcionados...", "Fusionados",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    modelo.setRowCount(0);
-                    modeloD.setRowCount(0);
-                    seleccionadoUno = "";
-                    seleccionadoDos = "";
-                } else {
-                    modelo.setRowCount(0);
-                    modeloD.setRowCount(0);
-                    seleccionadoUno = "";
-                    seleccionadoDos = "";
-                    JOptionPane.showMessageDialog(this, "La Cantidad De Alumnos Excede\n La Capacidad De Grupo",
-                            "Advertencia", JOptionPane.WARNING_MESSAGE);
-                }
+                modelo.setRowCount(0);
+                modeloD.setRowCount(0);
+                seleccionadoUno = "";
+                seleccionadoDos = "";
+                JOptionPane.showMessageDialog(this, "La Cantidad De Alumnos Excede\n La Capacidad De Grupo",
+                        "Advertencia", JOptionPane.WARNING_MESSAGE);
             }
         }
+
     }//GEN-LAST:event_btn_fusionarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
@@ -304,7 +324,7 @@ public class FusionDeGrupos extends javax.swing.JFrame {
         TableModel model = tabla_horarios.getModel();
         //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
         seleccionadoUno = txt_no_horario.getText();
-        tabla_disponibles.setModel(fusion.getDisponibles(modeloD));
+        tabla_disponibles.setModel(fusion.getDisponibles(modeloD, seleccionadoUno) );
     }//GEN-LAST:event_tabla_horariosMouseClicked
 
     private void tabla_disponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_disponiblesMouseClicked
