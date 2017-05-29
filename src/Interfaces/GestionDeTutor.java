@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Controladores.ControladorGrafico;
 import Controladores.ManejadorFocus;
 import Controladores.ManejadorGestionDeTutor;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -20,55 +21,75 @@ public class GestionDeTutor extends javax.swing.JFrame {
 
     ManejadorGestionDeTutor gestionTutor;
     DefaultTableModel modelo;
-    
+
+    ControladorGrafico ctrlNoTutor, ctrlPrimerNombre, ctrlSegundoNombre, ctrlApellPaterno,
+            ctrlApellMaterno, ctrlFechaNac, ctrlCurp, ctrlTelefono, ctrlEmail, ctrlParentezco, ctrlOcupacion;
+
+    JTextFieldDateEditor editorFecha;
+
     String no_tutor, primer_nom, segundo_nom, apellido_pat,
             apellido_mat, curp, telefono, e_mail, parectezco, ocupacion;
     int dia_nac, mes_nac, año_nac;
-    
+
     int correcto = 0;
-    
+
     ImageIcon img;
     ImageIcon icon;
-    
+
     public GestionDeTutor() {
         initComponents();
         this.setTitle("Gestion De Tutor");
         this.setLocationRelativeTo(null);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/modificar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_modificar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/eliminar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_eliminar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
+
         modelo = (DefaultTableModel) tabla_tutor.getModel();
         gestionTutor = new ManejadorGestionDeTutor();
-        
-        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
-        editor.setEditable(false);
-        String regexCurp ="[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}" + 
-                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" + 
-                "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
-        new ManejadorFocus(txt_no_tutor, "\\d+");
-        new ManejadorFocus(txt_primer_nombre, "\\w+");
-        new ManejadorFocus(txt_segundo_nombre, "\\w+");
-        new ManejadorFocus(txt_apell_paterno, "\\w+");
-        new ManejadorFocus(txt_apell_materno, "\\w+");
-        new ManejadorFocus(txt_curp, regexCurp);
-        new ManejadorFocus(txt_telefono, "\\d+");
-        new ManejadorFocus(txt_Email, "^[\\w-]+(\\.[\\w-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        new ManejadorFocus(txt_parentezco, "\\w+");
-        new ManejadorFocus(txt_ocupacion, "\\w+");
+
+        editorFecha = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editorFecha.setEditable(false);
+
+        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}"
+                + "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)"
+                + "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
+
+        ctrlNoTutor = new ControladorGrafico();
+        ctrlPrimerNombre = new ControladorGrafico();
+        ctrlSegundoNombre = new ControladorGrafico();
+        ctrlApellPaterno = new ControladorGrafico();
+        ctrlApellMaterno = new ControladorGrafico();
+        ctrlFechaNac = new ControladorGrafico();
+        ctrlCurp = new ControladorGrafico();
+        ctrlTelefono = new ControladorGrafico();
+        ctrlEmail = new ControladorGrafico();
+        ctrlParentezco = new ControladorGrafico();
+        ctrlOcupacion = new ControladorGrafico();
+
+        ctrlNoTutor.getDocument(txt_no_tutor, "\\d+");
+        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zA-Z]+");
+        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zA-Z]+");
+        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zA-Z]+");
+        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zA-Z]+");
+        ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
+        ctrlCurp.getDocument(txt_curp, regexCurp);
+        ctrlTelefono.getDocument(txt_telefono, "\\d{10}");
+        ctrlEmail.getDocument(txt_Email, "^[\\w-]+(\\.[\\w-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+        ctrlParentezco.getDocument(txt_parentezco, "[a-zA-Z]+");
+        ctrlOcupacion.getDocument(txt_ocupacion, "[a-zA-Z]+");
     }
 
     @SuppressWarnings("unchecked")
@@ -417,20 +438,19 @@ public class GestionDeTutor extends javax.swing.JFrame {
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         modelo.setRowCount(0);
         String dato = txt_no_tutor.getText();
-        
+
         if (dato.equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese El No. De Tutor", "Campo Vacio", 
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingrese El No. De Tutor", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
-        gestionTutor.setNo_tutor(dato);
-        
-        DefaultTableModel model = gestionTutor.getTutor(modelo);
-        if (model.getRowCount() < 1 ) {
+
+        DefaultTableModel model = gestionTutor.getTutor(modelo, dato);
+        if (model.getRowCount() < 1) {
             deshabilitarComonentes();
             limpiarCampos();
             correcto = 0;
-            JOptionPane.showMessageDialog(null, "No Se Encontró El Tutor", "No Encontrado!", 
+            JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             tabla_tutor.setModel(model);
@@ -439,23 +459,23 @@ public class GestionDeTutor extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void tabla_tutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_tutorMouseClicked
-        modelo.setRowCount(0);
+
         Point point = evt.getPoint();
         int row = tabla_tutor.rowAtPoint(point);
         int column = tabla_tutor.columnAtPoint(point);
         TableModel model = tabla_tutor.getModel();
         //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
-        
-        //modificarAlumno.getDatos();
-        String[] datos = gestionTutor.getDatos();
 
-        if ( datos[0] == null) {
-            JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No Encontrado!", 
+        //modificarAlumno.getDatos();
+        String[] datos = gestionTutor.getDatos(model.getValueAt(row, 0).toString());
+
+        if (datos[0] == null) {
+            JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
             correcto = 2;
         } else {
             habilitarComonentes();
-            
+
             txt_curp.setText(datos[0]);
             txt_telefono.setText(datos[1]);
             txt_Email.setText(datos[2]);
@@ -472,7 +492,7 @@ public class GestionDeTutor extends javax.swing.JFrame {
                 Date fechaDate = formato.parse(dato);
                 //Date time = new Date(fecha);
                 fecha_nacimiento.setDate(fechaDate);
-                
+
                 correcto = 1;
             } catch (Exception e) {
             }
@@ -481,18 +501,18 @@ public class GestionDeTutor extends javax.swing.JFrame {
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
         if (correcto == 0) {
-            JOptionPane.showMessageDialog(null, "Busque Un Tutor", "Advertencia!", 
+            JOptionPane.showMessageDialog(null, "Busque Un Tutor", "Advertencia!",
                     JOptionPane.WARNING_MESSAGE);
             return;
-        }else{
+        } else {
             if (correcto == 2) {
-                JOptionPane.showMessageDialog(null, "Seleccione Un Tutor", "Advertencia!", 
-                    JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Seleccione Un Tutor", "Advertencia!",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
-            }  
+            }
         }
-        
-        no_tutor = txt_no_tutor.getText();        
+
+        no_tutor = txt_no_tutor.getText();
         primer_nom = txt_primer_nombre.getText();
         segundo_nom = txt_segundo_nombre.getText();
         apellido_pat = txt_apell_paterno.getText();
@@ -502,7 +522,7 @@ public class GestionDeTutor extends javax.swing.JFrame {
         e_mail = txt_Email.getText();
         parectezco = txt_parentezco.getText();
         ocupacion = txt_ocupacion.getText();
-        
+
         Date time = null;
         String fecha_nac = "";
         if (fecha_nacimiento.getCalendar() != null) {
@@ -510,46 +530,81 @@ public class GestionDeTutor extends javax.swing.JFrame {
             SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
             fecha_nac = formato.format(time);
         }
-        
+
         String[] fechaArray = fecha_nac.split("-");
         dia_nac = Integer.parseInt(fechaArray[0]);
         mes_nac = Integer.parseInt(fechaArray[1]);
         año_nac = Integer.parseInt(fechaArray[2]);
-        
-        if (no_tutor.equals("") || primer_nom.equals("")
-                || apellido_pat.equals("") || apellido_mat.equals("") || curp.equals("") 
-                || telefono.equals("") || e_mail.equals("") || parectezco.equals("") || ocupacion.equals("")
-                || fecha_nacimiento.getCalendar() == null ) {
-            JOptionPane.showMessageDialog(null, "Ingresa Los Datos solicitados", "Advertencia", 
+
+        try {
+            if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
+                    && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
+                    && ctrlCurp.getColor(txt_curp) && ctrlTelefono.getColor(txt_telefono) 
+                    && ctrlEmail.getColor(txt_Email) && ctrlParentezco.getColor(txt_parentezco) 
+                    && ctrlOcupacion.getColor(txt_ocupacion)) {
+
+                if (txt_segundo_nombre.getText().equals("")) {
+                    System.out.println("Segundo Nombre Vacio");
+                } else {
+                    if (!ctrlSegundoNombre.estaVacio(txt_segundo_nombre)) {
+                        if (!ctrlSegundoNombre.getColor(txt_segundo_nombre)) {
+                            JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                                    JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                    }
+                }
+
+                gestionTutor.asignarDatos(no_tutor, primer_nom, segundo_nom, apellido_pat, apellido_mat, curp,
+                        telefono, e_mail, parectezco, ocupacion, dia_nac, mes_nac, año_nac);
+                gestionTutor.actualizar();
+                JOptionPane.showMessageDialog(null, "Datos Del Tutor Actualizados", "Actualizado...",
+                        JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+                deshabilitarComonentes();
+                correcto = 0;
+                modelo.setRowCount(0);
+            } else {
+                JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
+    }//GEN-LAST:event_btn_modificarActionPerformed
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        modelo.setRowCount(0);
+        String campoDato = txt_no_tutor.getText();
+        if (campoDato.equals("")) {
+            JOptionPane.showMessageDialog(null, "Busque Un Tutor", "Advertencia!",
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        gestionTutor.asignarDatos(primer_nom, segundo_nom, apellido_pat, apellido_mat, curp, 
-                telefono, e_mail, parectezco, ocupacion, dia_nac, mes_nac, año_nac);
-        gestionTutor.actualizar();
-         JOptionPane.showMessageDialog(null, "Datos Del Tutor Actualizados", "Actualizado...", 
+        DefaultTableModel model = gestionTutor.getTutor(modelo, campoDato);
+        if (model.getRowCount() < 1) {
+            deshabilitarComonentes();
+            limpiarCampos();
+            correcto = 0;
+            JOptionPane.showMessageDialog(null, "Tuto No Encontrado", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
-        limpiarCampos();
-        deshabilitarComonentes();
-        correcto = 0;
-    }//GEN-LAST:event_btn_modificarActionPerformed
-
-    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        String campoDato = txt_no_tutor.getText();
-         if (campoDato.equals("")) {
-             JOptionPane.showMessageDialog(null, "Ingrese El No. Del Tutor", "Campo Vacio", 
-                    JOptionPane.INFORMATION_MESSAGE);
-            return;
+        } else {
+            tabla_tutor.setModel(model);
+            correcto = 2;
         }
-        int resp = JOptionPane.showConfirmDialog(null, "¿Esta Seguro De Eliminar Al Empleado?", "Alerta!", 
+        
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta Seguro De Eliminar Al Empleado?", "Alerta!",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (resp == 0) {
             if (gestionTutor.eliminarTutor(campoDato)) {
                 limpiarCampos();
                 modelo.setRowCount(0);
-                JOptionPane.showMessageDialog(null, "Empleado Eliminado", "eliminado...", 
-                    JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Empleado Eliminado", "eliminado...",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
@@ -558,7 +613,7 @@ public class GestionDeTutor extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
-    public void limpiarCampos(){
+    public void limpiarCampos() {
         txt_no_tutor.setText("");
         txt_primer_nombre.setText("");
         txt_segundo_nombre.setText("");
@@ -571,8 +626,8 @@ public class GestionDeTutor extends javax.swing.JFrame {
         txt_ocupacion.setText("");
         fecha_nacimiento.setDate(null);
     }
-    
-    public void habilitarComonentes(){
+
+    public void habilitarComonentes() {
         txt_primer_nombre.setEditable(true);
         txt_segundo_nombre.setEditable(true);
         txt_apell_paterno.setEditable(true);
@@ -582,11 +637,11 @@ public class GestionDeTutor extends javax.swing.JFrame {
         txt_Email.setEditable(true);
         txt_parentezco.setEditable(true);
         txt_ocupacion.setEditable(true);
-        
+
         fecha_nacimiento.setEnabled(true);
     }
-    
-    public void deshabilitarComonentes(){
+
+    public void deshabilitarComonentes() {
         txt_primer_nombre.setEditable(false);
         txt_segundo_nombre.setEditable(false);
         txt_apell_paterno.setEditable(false);
@@ -596,10 +651,10 @@ public class GestionDeTutor extends javax.swing.JFrame {
         txt_Email.setEditable(false);
         txt_parentezco.setEditable(false);
         txt_ocupacion.setEditable(false);
-        
+
         fecha_nacimiento.setEnabled(false);
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

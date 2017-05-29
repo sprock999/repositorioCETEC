@@ -90,8 +90,6 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
         ctrlCurp.getDocument(txt_curp, regexCurp);
         ctrlNoTutor.getDocument(txt_no_tutor, "\\d+");
-
-        bordes();
     }
 
     @SuppressWarnings("unchecked")
@@ -457,12 +455,17 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
             if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
                     && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
                     && ctrlCurp.getColor(txt_curp) && ctrlNoTutor.getColor(txt_no_tutor)) {
-                if (!ctrlSegundoNombre.estaVacio(txt_segundo_nombre)) {
+                
+                if (txt_segundo_nombre.getText().equals("")) {
+                    System.out.println("Segundo Nombre Vacio");
+                }else{
+                    if (!ctrlSegundoNombre.estaVacio(txt_segundo_nombre)) {
                     if (!ctrlSegundoNombre.getColor(txt_segundo_nombre)) {
                         JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
                                 JOptionPane.WARNING_MESSAGE);
                         return;
                     }
+                }
                 }
 
                 if (!modificarAlumno.buscarTutor(txt_no_tutor.getText())) {
@@ -478,7 +481,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
                 limpiarCampos();
                 deshabilitarComponentes();
                 correcto = 0;
-
+                modelo.setRowCount(0);
             } else {
                 JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
                         JOptionPane.WARNING_MESSAGE);
@@ -499,9 +502,8 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        modificarAlumno.setNo_control(dato);
-
-        DefaultTableModel model = modificarAlumno.getAlumno(modelo);
+        
+        DefaultTableModel model = modificarAlumno.getAlumno(modelo, dato);
         if (model.getRowCount() < 1) {
             deshabilitarComponentes();
             limpiarCampos();
@@ -516,7 +518,6 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void tabla_alumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_alumnosMouseClicked
-        modelo.setRowCount(0);
         Point point = evt.getPoint();
         int row = tabla_alumnos.rowAtPoint(point);
         int column = tabla_alumnos.columnAtPoint(point);
@@ -524,7 +525,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
 
         //modificarAlumno.getDatos();
-        String[] datos = modificarAlumno.getDatos();
+        String[] datos = modificarAlumno.getDatos(model.getValueAt(row, 0).toString());
 
         if (datos[0] == null) {
             JOptionPane.showMessageDialog(null, "Aumno No Encontrado", "No Encontrado!",
@@ -552,17 +553,6 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tabla_alumnosMouseClicked
-
-    public void bordes() {
-        txt_no_control.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-        txt_primer_nombre.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-        txt_segundo_nombre.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-        txt_apell_paterno.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-        txt_apell_materno.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-        editorFecha.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-        txt_curp.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-        txt_no_tutor.setBorder(BorderFactory.createLineBorder(Color.BLUE, 2));
-    }
 
     public void limpiarCampos() {
         txt_no_control.setText("");

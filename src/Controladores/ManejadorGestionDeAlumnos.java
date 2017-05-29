@@ -33,10 +33,10 @@ public class ManejadorGestionDeAlumnos {
         this.año_nac = año_nac;
     }
     
-    public DefaultTableModel getAlumno(DefaultTableModel modelo) {
+    public DefaultTableModel getAlumno(DefaultTableModel modelo, String no_control) {
         String consulta = "SELECT No_Control, Primer_Nom, Apellido_P, Apellido_M, No_Tutor "
                 + " FROM alumno INNER JOIN persona on alumno.CURP = persona.CURP " 
-                + " WHERE alumno.No_Control = '" + getNo_control() + "';";
+                + " WHERE alumno.No_Control = '" + no_control + "' && Estado = 1;";
         ResultSet res = baseDatos.consultar(consulta);
         try {
             while (res.next()) {
@@ -55,11 +55,11 @@ public class ManejadorGestionDeAlumnos {
         return modelo;
     }
     
-    public String[] getDatos(){
+    public String[] getDatos(String no_control){
         String[] salida = new String[9];
         String consulta = "SELECT * " 
                 + " FROM alumno INNER JOIN persona ON alumno.CURP = persona.CURP " 
-                + " WHERE alumno.No_Control = '" + getNo_control() + "';";
+                + " WHERE alumno.No_Control = '" + no_control + "' && Estado = 1;";
         
         ResultSet res = baseDatos.consultar(consulta);
         try {
@@ -88,7 +88,7 @@ public class ManejadorGestionDeAlumnos {
     public boolean buscarTutor(String noTutor) {
         String salida = "";
         String consulta = "SELECT * FROM tutor "
-                + "WHERE No_tutor = '" + noTutor + "';";
+                + "WHERE No_tutor = '" + noTutor + "' && Estado = 1;";
         ResultSet res = baseDatos.consultar(consulta);
         try {
             while (res.next()) {
@@ -136,13 +136,5 @@ public class ManejadorGestionDeAlumnos {
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-    }
-
-    public String getNo_control() {
-        return no_control;
-    }
-
-    public void setNo_control(String no_control) {
-        this.no_control = no_control;
     }
 }

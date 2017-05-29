@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Controladores.ControladorGrafico;
 import Controladores.ManejadorFocus;
 import Controladores.ManejadorGestionDeEmpleados;
 import com.toedter.calendar.JTextFieldDateEditor;
@@ -19,52 +20,67 @@ import javax.swing.table.TableModel;
 public class GestionDeEmpleados extends javax.swing.JFrame {
 
     ManejadorGestionDeEmpleados gestionEmpleados;
-    
+
+    ControladorGrafico ctrlNoEmpleado, ctrlPrimerNombre, ctrlSegundoNombre, ctrlApellPaterno,
+            ctrlApellMaterno, ctrlFechaNac, ctrlCurp, ctrlSalrio;
+
+    JTextFieldDateEditor editorFecha;
+
     DefaultTableModel modelo;
-    
-    String no_empleado, primer_nom, segundo_nom, apellido_pat, 
+
+    String no_empleado, primer_nom, segundo_nom, apellido_pat,
             apellido_mat, curp, grado_estudios;
-    int salario, dia_nac, mes_nac, año_nac; 
-    
+    int salario, dia_nac, mes_nac, año_nac;
+
     int correcto = 0;
-    
+
     ImageIcon img;
     ImageIcon icon;
-    
+
     public GestionDeEmpleados() {
         initComponents();
         this.setTitle("Gestion De Empleados");
         this.setLocationRelativeTo(null);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/modificar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_modificar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
+
         modelo = (DefaultTableModel) tabla_empleados.getModel();
         gestionEmpleados = new ManejadorGestionDeEmpleados();
-        
-        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
-        editor.setEditable(false);
-        
-        String regexCurp ="[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}" + 
-                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" + 
-                "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
-        
-        new ManejadorFocus(txt_no_empleado, "\\d+");
-        new ManejadorFocus(txt_primer_nombre, "\\w+");
-        new ManejadorFocus(txt_segundo_nombre, "\\w+");
-        new ManejadorFocus(txt_apell_paterno, "\\w+");
-        new ManejadorFocus(txt_apell_materno, "\\w+");
-        new ManejadorFocus(txt_curp, regexCurp);
-        new ManejadorFocus(txt_salario, "\\d+");
+
+        editorFecha = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editorFecha.setEditable(false);
+
+        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}"
+                + "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)"
+                + "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
+
+        ctrlNoEmpleado = new ControladorGrafico();
+        ctrlPrimerNombre = new ControladorGrafico();
+        ctrlSegundoNombre = new ControladorGrafico();
+        ctrlApellPaterno = new ControladorGrafico();
+        ctrlApellMaterno = new ControladorGrafico();
+        ctrlFechaNac = new ControladorGrafico();
+        ctrlCurp = new ControladorGrafico();
+        ctrlSalrio = new ControladorGrafico();
+
+        ctrlNoEmpleado.getDocument(txt_no_empleado, "\\d+");
+        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zA-Z]+");
+        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zA-Z]+");
+        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zA-Z]+");
+        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zA-Z]+");
+        ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
+        ctrlCurp.getDocument(txt_curp, regexCurp);
+        ctrlSalrio.getDocument(txt_salario, "\\d+");
     }
 
     @SuppressWarnings("unchecked")
@@ -395,20 +411,19 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         modelo.setRowCount(0);
         String dato = txt_no_empleado.getText();
-        
+
         if (dato.equals("")) {
-            JOptionPane.showMessageDialog(null, "Ingrese El No. De Empleado", "Campo Vacio", 
+            JOptionPane.showMessageDialog(null, "Ingrese El No. De Empleado", "Campo Vacio",
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        gestionEmpleados.setNo_empleado(dato);
-        
-        DefaultTableModel model = gestionEmpleados.getEmpleado(modelo);
-        if (model.getRowCount() < 1 ) {
-            deshabilitarComonentes();
+
+        DefaultTableModel model = gestionEmpleados.getEmpleado(modelo, dato);
+        if (model.getRowCount() < 1) {
+            deshabilitarComponentes();
             limpiarCampos();
             correcto = 0;
-            JOptionPane.showMessageDialog(null, "No Se Encontró El Empleado", "No Encontrado!", 
+            JOptionPane.showMessageDialog(null, "No Se Encontró El Empleado", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
             tabla_empleados.setModel(model);
@@ -417,23 +432,22 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void tabla_empleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_empleadosMouseClicked
-        modelo.setRowCount(0);
+
         Point point = evt.getPoint();
         int row = tabla_empleados.rowAtPoint(point);
         int column = tabla_empleados.columnAtPoint(point);
         TableModel model = tabla_empleados.getModel();
-        //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
-        
-        //modificarAlumno.getDatos();
-        String[] datos = gestionEmpleados.getDatos();
 
-        if ( datos[0] == null) {
-            JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado!", 
+        //modificarAlumno.getDatos();
+        String[] datos = gestionEmpleados.getDatos(model.getValueAt(row, 0).toString());
+
+        if (datos[0] == null) {
+            JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
             correcto = 2;
         } else {
-            habilitarComonentes();
-            
+            habilitarComponentes();
+
             txt_curp.setText(datos[0]);
             combo_estudios.setSelectedItem(datos[1]);
             txt_salario.setText(datos[2]);
@@ -448,7 +462,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
                 Date fechaDate = formato.parse(dato);
                 //Date time = new Date(fecha);
                 fecha_nacimiento.setDate(fechaDate);
-                
+
                 correcto = 1;
             } catch (Exception e) {
             }
@@ -459,21 +473,20 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         //String seleccionado = combo_estudios.getSelectedItem().toString();
         //System.out.println(seleccionado);
         //combo_estudios.setSelectedItem("Doctorado");
-        
+
         if (correcto == 0) {
-            JOptionPane.showMessageDialog(null, "Busque Un Empleado", "Advertencia!", 
+            JOptionPane.showMessageDialog(null, "Busque Un Empleado", "Advertencia!",
                     JOptionPane.WARNING_MESSAGE);
             return;
-        }else{
+        } else {
             if (correcto == 2) {
-                JOptionPane.showMessageDialog(null, "Seleccione Un Empleado", "Advertencia!", 
-                    JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Seleccione Un Empleado", "Advertencia!",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
-            }  
+            }
         }
-        
+
         no_empleado = txt_no_empleado.getText();
-        salario = Integer.parseInt(txt_salario.getText());
         grado_estudios = combo_estudios.getSelectedItem().toString();
         primer_nom = txt_primer_nombre.getText();
         segundo_nom = txt_segundo_nombre.getText();
@@ -487,28 +500,48 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
             SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
             fecha_nac = formato.format(time);
         }
-        
+
         String[] fechaArray = fecha_nac.split("-");
         dia_nac = Integer.parseInt(fechaArray[0]);
         mes_nac = Integer.parseInt(fechaArray[1]);
         año_nac = Integer.parseInt(fechaArray[2]);
-        
-        if (no_empleado.equals("") || salario < 0 || primer_nom.equals("")
-                || apellido_pat.equals("") || apellido_mat.equals("") || curp.equals("") 
-                || fecha_nacimiento.getCalendar() == null ) {
-            JOptionPane.showMessageDialog(null, "Ingresa Los Datos solicitados", "Advertencia", 
+
+        try {
+            if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
+                    && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
+                    && ctrlCurp.getColor(txt_curp) && ctrlSalrio.getColor(txt_salario)) {
+
+                if (txt_segundo_nombre.getText().equals("")) {
+                    System.out.println("Segundo Nombre Vacio");
+                } else {
+                    if (!ctrlSegundoNombre.estaVacio(txt_segundo_nombre)) {
+                        if (!ctrlSegundoNombre.getColor(txt_segundo_nombre)) {
+                            JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                                    JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                    }
+                }
+
+                salario = Integer.parseInt(txt_salario.getText());
+                gestionEmpleados.asignarDatos(no_empleado, primer_nom, segundo_nom, apellido_pat,
+                        apellido_mat, curp, grado_estudios, salario, dia_nac, mes_nac, año_nac);
+                gestionEmpleados.actualizar();
+                JOptionPane.showMessageDialog(null, "Datos Del Alumno Actualizado", "Actualizado...",
+                        JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+                deshabilitarComponentes();
+                correcto = 0;
+                modelo.setRowCount(0);
+            } else {
+                JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
                     JOptionPane.WARNING_MESSAGE);
-            return;
         }
-        
-        gestionEmpleados.asignarDatos(primer_nom, segundo_nom, apellido_pat, apellido_mat, 
-                curp, grado_estudios, salario, dia_nac, mes_nac, año_nac);
-        gestionEmpleados.actualizar();
-         JOptionPane.showMessageDialog(null, "Datos Del Empleado Actualizado", "Actualizado...", 
-                    JOptionPane.INFORMATION_MESSAGE);
-        limpiarCampos();
-        deshabilitarComonentes();
-        correcto = 0;
     }//GEN-LAST:event_btn_modificarActionPerformed
 
     private void combo_estudiosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_estudiosItemStateChanged
@@ -522,7 +555,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
-    public void limpiarCampos(){
+    public void limpiarCampos() {
         txt_no_empleado.setText("");
         txt_primer_nombre.setText("");
         txt_segundo_nombre.setText("");
@@ -532,31 +565,31 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         txt_salario.setText("");
         fecha_nacimiento.setDate(null);
     }
-    
-    public void habilitarComonentes(){
+
+    public void habilitarComponentes() {
         txt_primer_nombre.setEditable(true);
         txt_segundo_nombre.setEditable(true);
         txt_apell_paterno.setEditable(true);
         txt_apell_materno.setEditable(true);
         txt_curp.setEditable(true);
         txt_salario.setEditable(true);
-        
+
         fecha_nacimiento.setEnabled(true);
         combo_estudios.setEnabled(true);
     }
-    
-    public void deshabilitarComonentes(){
+
+    public void deshabilitarComponentes() {
         txt_primer_nombre.setEditable(false);
         txt_segundo_nombre.setEditable(false);
         txt_apell_paterno.setEditable(false);
         txt_apell_materno.setEditable(false);
         txt_curp.setEditable(false);
         txt_salario.setEditable(false);
-        
+
         fecha_nacimiento.setEnabled(false);
         combo_estudios.setEnabled(false);
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -18,9 +18,10 @@ public class ManejadorGestionDeTutor {
             apellido_mat, curp, telefono, e_mail, parectezco, ocupacion;
     int dia_nac, mes_nac, año_nac, estado;
 
-    public void asignarDatos(String primer_nom, String segundo_nom,
+    public void asignarDatos(String no_tutor, String primer_nom, String segundo_nom,
             String apellido_pat, String apellido_mat, String curp, String telefono,
             String e_mail, String parectezco, String ocupacion, int dia_nac, int mes_nac, int año_nac) {
+        this.no_tutor = no_tutor;
         this.primer_nom = primer_nom;
         this.segundo_nom = segundo_nom;
         this.apellido_pat = apellido_pat;
@@ -36,10 +37,10 @@ public class ManejadorGestionDeTutor {
         
     }
 
-    public DefaultTableModel getTutor(DefaultTableModel modelo) {
+    public DefaultTableModel getTutor(DefaultTableModel modelo, String no_tutor) {
         String consulta = "SELECT No_Tutor, Primer_Nom, Apellido_P, Apellido_M, Telefono, Email, Ocupacion "
                 + " FROM tutor INNER JOIN persona on tutor.CURP = persona.CURP "
-                + " WHERE tutor.No_Tutor = '" + getNo_tutor() + "' && Estado = 1;";
+                + " WHERE tutor.No_Tutor = '" + no_tutor + "' && Estado = 1;";
         ResultSet res = baseDatos.consultar(consulta);
         try {
             while (res.next()) {
@@ -60,11 +61,11 @@ public class ManejadorGestionDeTutor {
         return modelo;
     }
 
-    public String[] getDatos(){
+    public String[] getDatos(String no_tutor){
         String[] salida = new String[12];
         String consulta = "SELECT * "
                 + " FROM tutor INNER JOIN persona on tutor.CURP = persona.CURP "
-                + " WHERE tutor.No_Tutor = '" + getNo_tutor() + "';";
+                + " WHERE tutor.No_Tutor = '" + no_tutor + "';";
         
         ResultSet res = baseDatos.consultar(consulta);
         try {
@@ -138,13 +139,4 @@ public class ManejadorGestionDeTutor {
         baseDatos.ejecutar(sentenciaEmp);
         return true;
     }
-    
-    public String getNo_tutor() {
-        return no_tutor;
-    }
-
-    public void setNo_tutor(String no_tutor) {
-        this.no_tutor = no_tutor;
-    }
-
 }

@@ -8,7 +8,9 @@ import java.awt.Image;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,54 +19,75 @@ import javax.swing.border.Border;
 public class InscribirAlumnos extends javax.swing.JFrame {
 
     ManejadorInscribirAlumno inscribirAlumno;
-    
-    String no_control, no_tutor, primer_nom, segundo_nom, apellido_pat, 
+
+    ControladorGrafico ctrlNoControl, ctrlPrimerNombre, ctrlSegundoNombre, ctrlApellPaterno,
+            ctrlApellMaterno, ctrlFechaNac, ctrlCurp, ctrlNoTutor;
+
+    JTextFieldDateEditor editorFecha;
+
+    String no_control, no_tutor, primer_nom, segundo_nom, apellido_pat,
             apellido_mat, curp;
-    int dia_nac, mes_nac, año_nac; 
-    
+    int dia_nac, mes_nac, año_nac;
+
     ImageIcon img;
     ImageIcon icon;
-    
+
     public InscribirAlumnos() {
         initComponents();
         this.setTitle("Inscribir Alumno");
         this.setLocationRelativeTo(null);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar tutor.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_registrar_tutor.getWidth(), btn_registrar_tutor.getHeight(), Image.SCALE_DEFAULT));
         btn_registrar_tutor.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
-        
+
 //        img = new ImageIcon(getClass().getResource("/Imagenes/documentacion.png"));
 //        icon = new ImageIcon(img.getImage().getScaledInstance(btn_docOficial.getWidth(), btn_docOficial.getHeight(), Image.SCALE_DEFAULT));
 //        btn_docOficial.setIcon(icon);
-        
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
-        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
-        editor.setEditable(false);
-        
-        String regexCurp ="[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}" + 
-                "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)" + 
-                "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
-        
-        new ControladorGrafico().getDocument(txt_no_control, "\\d+");
-        new ControladorGrafico().getDocument(txt_no_tutor, "\\d+");
-        new ControladorGrafico().getDocument(txt_primer_nombre,"[a-zA-Z]+");
-        new ControladorGrafico().getDocument(txt_segundo_nombre,"[a-zA-Z]+");
-        new ControladorGrafico().getDocument(txt_apell_paterno, "[a-zA-Z]+");
-        new ControladorGrafico().getDocument(txt_apell_materno, "[a-zA-Z]+");
-        new ControladorGrafico().getDocument(editor, "\\d{1,2}/\\d{1,2}/\\d{4}");
-        new ControladorGrafico().getDocument(txt_curp, regexCurp);
+
+        inscribirAlumno = new ManejadorInscribirAlumno();
+
+        editorFecha = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
+        editorFecha.setEditable(false);
+
+        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}"
+                + "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)"
+                + "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
+
+        ctrlNoControl = new ControladorGrafico();
+        ctrlPrimerNombre = new ControladorGrafico();
+        ctrlSegundoNombre = new ControladorGrafico();
+        ctrlApellPaterno = new ControladorGrafico();
+        ctrlApellMaterno = new ControladorGrafico();
+        ctrlFechaNac = new ControladorGrafico();
+        ctrlCurp = new ControladorGrafico();
+        ctrlNoTutor = new ControladorGrafico();
+
+        ctrlNoControl.getDocument(txt_no_control, "\\d+");
+        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zA-Z]+");
+        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zA-Z]+");
+        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zA-Z]+");
+        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zA-Z]+");
+        ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
+        ctrlCurp.getDocument(txt_curp, regexCurp);
+        ctrlNoTutor.getDocument(txt_no_tutor, "\\d+");
+
+        int numControl = inscribirAlumno.getNoControl();
+
+        if (numControl != -1) {
+            txt_no_control.setText(Integer.toString(numControl));
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -201,9 +224,15 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         jLabel3.setText("Registrar Tutor: ");
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
         btn_registrar_tutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrar tutor.png"))); // NOI18N
 
+        txt_no_control.setEditable(false);
         txt_no_control.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         txt_no_tutor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -333,7 +362,7 @@ public class InscribirAlumnos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-               
+
         no_control = txt_no_control.getText();
         no_tutor = txt_no_tutor.getText();
         primer_nom = txt_primer_nombre.getText();
@@ -348,28 +377,86 @@ public class InscribirAlumnos extends javax.swing.JFrame {
             SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
             fecha_nac = formato.format(time);
         }
-        
+
         String[] fechaArray = fecha_nac.split("-");
         dia_nac = Integer.parseInt(fechaArray[0]);
         mes_nac = Integer.parseInt(fechaArray[1]);
         año_nac = Integer.parseInt(fechaArray[2]);
-        
-        inscribirAlumno = new ManejadorInscribirAlumno(no_control, no_tutor, primer_nom, 
-                segundo_nom, apellido_pat, apellido_mat, curp, dia_nac, mes_nac, año_nac);
-        inscribirAlumno.registrar();
-        
+
+        try {
+            if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
+                    && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
+                    && ctrlCurp.getColor(txt_curp) && ctrlNoTutor.getColor(txt_no_tutor)) {
+
+                if (txt_segundo_nombre.getText().equals("")) {
+                    System.out.println("Segundo Nombre Vacio");
+                } else {
+                    if (!ctrlSegundoNombre.estaVacio(txt_segundo_nombre)) {
+                        if (!ctrlSegundoNombre.getColor(txt_segundo_nombre)) {
+                            JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                                    JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                    }
+                }
+
+                if (!inscribirAlumno.buscarTutor(txt_no_tutor.getText())) {
+                    JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No encontrado!",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                inscribirAlumno.AsignarDatos(no_control, no_tutor, primer_nom, segundo_nom, apellido_pat,
+                        apellido_mat, curp, dia_nac, mes_nac, año_nac);
+                inscribirAlumno.registrar();
+
+                JOptionPane.showMessageDialog(null, "Alumno Registrado", "Registrado...",
+                        JOptionPane.INFORMATION_MESSAGE);
+                limpiarCampos();
+                
+                int numControl = inscribirAlumno.getNoControl();
+                if (numControl != -1) {
+                    txt_no_control.setText(Integer.toString(numControl));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        
-        Border borde = txt_primer_nombre.getBorder();
-        
-        
-        
-        //System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
-    
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        String dato = txt_no_tutor.getText();
+        if (dato.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese El No. De Tutor", "Campo Vacio",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (!inscribirAlumno.buscarTutor(dato)) {
+            txt_no_tutor.setText("");
+            JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No encontrado!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    public void limpiarCampos() {
+        //txt_no_control.setText("");
+        txt_no_tutor.setText("");
+        txt_primer_nombre.setText("");
+        txt_segundo_nombre.setText("");
+        txt_apell_paterno.setText("");
+        txt_apell_materno.setText("");
+        txt_curp.setText("");
+        fecha_nacimiento.setDate(null);
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

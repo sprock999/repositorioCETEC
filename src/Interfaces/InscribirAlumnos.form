@@ -349,6 +349,9 @@
                   <Image iconType="3" name="/Imagenes/buscar.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_buscarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn_registrar_tutor">
               <Properties>
@@ -359,6 +362,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txt_no_control">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century Gothic" size="12" style="0"/>
                 </Property>

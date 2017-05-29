@@ -18,9 +18,10 @@ public class ManejadorGestionDeEmpleados {
             apellido_mat, curp, grado_estudios;
     int salario, dia_nac, mes_nac, año_nac; 
 
-    public void asignarDatos(String primer_nom, String segundo_nom, 
+    public void asignarDatos(String no_empleado, String primer_nom, String segundo_nom, 
             String apellido_pat, String apellido_mat, String curp, String grado_estudios, 
             int salario, int dia_nac, int mes_nac, int año_nac) {
+        this.no_empleado = no_empleado;
         this.primer_nom = primer_nom;
         this.segundo_nom = segundo_nom;
         this.apellido_pat = apellido_pat;
@@ -33,10 +34,10 @@ public class ManejadorGestionDeEmpleados {
         this.año_nac = año_nac;
     }
     
-    public DefaultTableModel getEmpleado(DefaultTableModel modelo) {
+    public DefaultTableModel getEmpleado(DefaultTableModel modelo, String no_empleado) {
         String consulta = "SELECT No_Profesor, Primer_Nom, Apellido_P, Apellido_M, Grado_Estudios, Salario "
                 + " FROM profesor INNER JOIN persona on profesor.CURP = persona.CURP " 
-                + " WHERE profesor.No_Profesor = '" + getNo_empleado() + "';";
+                + " WHERE profesor.No_Profesor = '" + no_empleado + "' && Estado = 1;";
         ResultSet res = baseDatos.consultar(consulta);
         try {
             while (res.next()) {
@@ -56,11 +57,11 @@ public class ManejadorGestionDeEmpleados {
         return modelo;
     }
 
-    public String[] getDatos(){
+    public String[] getDatos(String no_empleado){
         String[] salida = new String[10];
-        String consulta = "SELECT * " 
+        String consulta = "SELECT *" 
                 + " FROM profesor INNER JOIN persona ON profesor.CURP = persona.CURP " 
-                + " WHERE profesor.No_Profesor = '" + getNo_empleado() + "';";
+                + " WHERE profesor.No_Profesor = '" + no_empleado + "' && Estado = 1;";
         
         ResultSet res = baseDatos.consultar(consulta);
         try {
@@ -115,13 +116,5 @@ public class ManejadorGestionDeEmpleados {
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-    }
-    
-    public String getNo_empleado() {
-        return no_empleado;
-    }
-
-    public void setNo_empleado(String no_empleado) {
-        this.no_empleado = no_empleado;
     }
 }
