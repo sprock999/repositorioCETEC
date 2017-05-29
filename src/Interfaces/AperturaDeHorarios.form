@@ -205,11 +205,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btn_buscar">
-              <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/buscar.png"/>
-                </Property>
-              </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_buscarActionPerformed"/>
               </Events>
@@ -228,9 +223,6 @@
                   <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_no_profesorFocusLost"/>
-              </Events>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="fecha_inicio">
             </Component>
@@ -320,9 +312,6 @@
                   <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_no_alumnosFocusLost"/>
-              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -368,9 +357,6 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="btn_registrar">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/registrar.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Registrar"/>
               </Properties>
               <Events>
@@ -379,9 +365,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_salir">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/Imagenes/salir.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Salir"/>
               </Properties>
               <Events>

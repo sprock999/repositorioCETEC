@@ -1,4 +1,3 @@
-
 package Interfaces;
 
 import java.awt.Image;
@@ -12,21 +11,22 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import Controladores.ControladorGrafico;
+
 /**
  *
  * @author jose_
  */
 public class AperturaDeHorarios extends javax.swing.JFrame {
-    
+
     ImageIcon img;
     ImageIcon icon;
     Conexion conexion;
-    
+
     public AperturaDeHorarios() {
         initComponents();
         this.setTitle("Apertura De Horarios");
         this.setLocationRelativeTo(null);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
@@ -38,27 +38,25 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
         conexion = new Conexion();
         conexion.conectar();
-        
+
         crearNoHorario();
-        
+
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_inicio.getDateEditor();
         editor.setEditable(false);
-        
-        new ControladorGrafico().getDocument(txt_no_alumnos,"\\d+");
-        new ControladorGrafico().getDocument(txt_no_profesor,"\\d+");
+
+        new ControladorGrafico().getDocument(txt_no_alumnos, "[1-9]|([1-4]\\d)|50");
+        new ControladorGrafico().getDocument(txt_no_profesor, "\\d|[1-2]\\d");
     }
 
-    
-    public void validar(JTextField jt){
-        if(!jt.getText().matches("\\d+")){
-            JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
+    public void validar(JTextField jt) {
+        if (!jt.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Caracteres invalidos", "ERROR", JOptionPane.ERROR_MESSAGE);
             jt.requestFocus();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -98,7 +96,6 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel3.setText("Hora De Entrada:");
 
-        btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
         btn_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_buscarActionPerformed(evt);
@@ -109,11 +106,6 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         txt_no_horario.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         txt_no_profesor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txt_no_profesor.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_no_profesorFocusLost(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel5.setText("No. de Profesor:");
@@ -131,11 +123,6 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         combo_hora_salida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7:00", "8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00" }));
 
         txt_no_alumnos.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        txt_no_alumnos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_no_alumnosFocusLost(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -209,7 +196,6 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(204, 204, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Opciones", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 20), new java.awt.Color(177, 91, 6))); // NOI18N
 
-        btn_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrar.png"))); // NOI18N
         btn_registrar.setText("Registrar");
         btn_registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,7 +203,6 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
             }
         });
 
-        btn_salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir.png"))); // NOI18N
         btn_salir.setText("Salir");
         btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,60 +268,60 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_no_profesorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_no_profesorFocusLost
-        validar(txt_no_profesor);
-    }//GEN-LAST:event_txt_no_profesorFocusLost
-
-    private void txt_no_alumnosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_no_alumnosFocusLost
-        validar(txt_no_alumnos);
-    }//GEN-LAST:event_txt_no_alumnosFocusLost
-
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         new GestionDeEmpleados().setVisible(true);
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         conexion.cerrarConexion();
-        System.exit(0);        
+        System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         try{
-            String no_horario = txt_no_horario.getText();
-            String hora_entrada = combo_hora_entrada.getSelectedItem().toString();
-            String hora_salida = combo_hora_salida.getSelectedItem().toString();
-            String no_empleado = txt_no_profesor.getText();
-            int total_alumnos = Integer.parseInt(txt_no_alumnos.getText());
-            int cupo_alumnos = 0;
-            //int estado = 1;
-            conexion.ejecutar("INSERT INTO horario values ('"+no_horario+"','"+hora_entrada+"','"+hora_salida+"','"+no_empleado+"',"+cupo_alumnos+","+total_alumnos+")");
-            JOptionPane.showMessageDialog(null,"Horario Agregado exitosamente","OK",JOptionPane.INFORMATION_MESSAGE);
-            limpiar();
-            crearNoHorario();
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null,e.getMessage());
+            if (new ControladorGrafico().getColor(txt_no_alumnos) && new ControladorGrafico().getColor(txt_no_profesor)) {
+                try {
+                    String no_horario = txt_no_horario.getText();
+                    String hora_entrada = combo_hora_entrada.getSelectedItem().toString();
+                    String hora_salida = combo_hora_salida.getSelectedItem().toString();
+                    String no_empleado = txt_no_profesor.getText();
+                    int total_alumnos = Integer.parseInt(txt_no_alumnos.getText());
+                    int cupo_alumnos = 0;
+                    //int estado = 1;
+                    conexion.ejecutar("INSERT INTO horario values ('" + no_horario + "','" + hora_entrada + "','" + hora_salida + "','" + no_empleado + "'," + cupo_alumnos + "," + total_alumnos + ")");
+                    JOptionPane.showMessageDialog(null, "Horario Agregado exitosamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                    limpiar();
+                    crearNoHorario();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+            } else {
+                System.out.println("algo salio mal");
+            }
+        }catch(Exception es){
+            System.out.println(es.getMessage());
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
 
-    public void limpiar(){
+    public void limpiar() {
         txt_no_alumnos.setText("");
         txt_no_horario.setText("");
         txt_no_profesor.setText("");
     }
-    
-    public void crearNoHorario(){
-        try{
+
+    public void crearNoHorario() {
+        try {
             ResultSet datos = conexion.consultar("select no_horario from horario");
             datos.next();
             int numero = Integer.parseInt(datos.getString(1)) + 1;
             txt_no_horario.setText(Integer.toString(numero));
-        }catch(Exception e){
+        } catch (Exception e) {
             int numero = 1;
             txt_no_horario.setText(Integer.toString(numero));
             System.out.println(e.getMessage());
         }
     }
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -288,22 +288,24 @@ public class BajaDeAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        if(!txt_no_control.equals("")){
-            int no_control = Integer.parseInt(txt_no_control.getText());
-            try{
-                conexion.ejecutar("update alumno set estado = "+INACTIVO+" where no_control = '" + no_control + "'");
-                txt_primer_nombre.setText("");
-                txt_segundo_nombre.setText("");
-                txt_apell_paterno.setText("");
-                txt_apell_materno.setText("");
-                txt_fecha_nac.setText(""); 
-                txt_no_control.setText("");
-                JOptionPane.showMessageDialog(null,"Alumno dado de baja exitosamente","OK",JOptionPane.INFORMATION_MESSAGE);
-            }catch(Exception e){
-                System.out.println(e.getMessage());
+        if (!txt_no_control.equals("")) {
+            if (new Controladores.ControladorGrafico().getColor(txt_no_control)) {
+                int no_control = Integer.parseInt(txt_no_control.getText());
+                try {
+                    conexion.ejecutar("update alumno set estado = " + INACTIVO + " where no_control = '" + no_control + "'");
+                    txt_primer_nombre.setText("");
+                    txt_segundo_nombre.setText("");
+                    txt_apell_paterno.setText("");
+                    txt_apell_materno.setText("");
+                    txt_fecha_nac.setText("");
+                    txt_no_control.setText("");
+                    JOptionPane.showMessageDialog(null, "Alumno dado de baja exitosamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error No. Control vacio", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
-            JOptionPane.showMessageDialog(null,"Error No. Control vacio","ERROR",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 

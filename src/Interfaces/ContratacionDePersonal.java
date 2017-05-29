@@ -333,32 +333,37 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        try{
-            String curp = txt_curp.getText();
-            String primer_nombre = txt_primer_nombre.getText();
-            String segundo_nombre = txt_segundo_nombre.getText();
-            String apellidoP = txt_apell_paterno.getText();
-            String apellidoM = txt_apell_materno.getText();
-            String fecha = "";
-            int no_profesor = Integer.parseInt(txt_no_empleado.getText());
-            String grado_estudios = combo_estudios.getSelectedItem().toString();
-            float salario = Float.parseFloat(txt_salario.getText());
-            Date time;
-            if(fecha_nacimiento.getCalendar() != null){
-                time = fecha_nacimiento.getCalendar().getTime();
-                SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-                fecha = formato.format(time);
+        if(new Controladores.ControladorGrafico().getColor(txt_no_empleado) && new Controladores.ControladorGrafico().getColor(txt_salario)
+                && new Controladores.ControladorGrafico().getColor(txt_primer_nombre) && new Controladores.ControladorGrafico().getColor(txt_segundo_nombre)
+                && new Controladores.ControladorGrafico().getColor(txt_apell_paterno) && new Controladores.ControladorGrafico().getColor(txt_apell_materno)
+                && new Controladores.ControladorGrafico().getColor(txt_curp)){
+            try {
+                String curp = txt_curp.getText();
+                String primer_nombre = txt_primer_nombre.getText();
+                String segundo_nombre = txt_segundo_nombre.getText();
+                String apellidoP = txt_apell_paterno.getText();
+                String apellidoM = txt_apell_materno.getText();
+                String fecha = "";
+                int no_profesor = Integer.parseInt(txt_no_empleado.getText());
+                String grado_estudios = combo_estudios.getSelectedItem().toString();
+                float salario = Float.parseFloat(txt_salario.getText());
+                Date time;
+                if (fecha_nacimiento.getCalendar() != null) {
+                    time = fecha_nacimiento.getCalendar().getTime();
+                    SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+                    fecha = formato.format(time);
+                }
+                String[] fechaArray = fecha.split("-");
+                int dia = Integer.parseInt(fechaArray[0]);
+                int mes = Integer.parseInt(fechaArray[1]);
+                int año = Integer.parseInt(fechaArray[2]);
+                conexion.ejecutar("insert into persona values('" + curp + "','" + primer_nombre + "','" + segundo_nombre + "','" + apellidoP + "','" + apellidoM + "'," + dia + "," + mes + "," + año + ")");
+                conexion.ejecutar("insert into profesor values('" + no_profesor + "','" + curp + "','" + grado_estudios + "'," + salario + ",1)");
+                limpiar();
+                crearNoContorl();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-            String[] fechaArray = fecha.split("-");
-            int dia = Integer.parseInt(fechaArray[0]);
-            int mes = Integer.parseInt(fechaArray[1]);
-            int año = Integer.parseInt(fechaArray[2]);
-            conexion.ejecutar("insert into persona values('"+curp+"','"+primer_nombre+"','"+segundo_nombre+"','"+apellidoP+"','"+apellidoM+"',"+dia+","+mes+","+año+")");
-            conexion.ejecutar("insert into profesor values('"+no_profesor+"','"+curp+"','"+grado_estudios+"',"+salario+",1)");
-            limpiar();
-            crearNoContorl();
-        }catch(Exception e){
-            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
 
