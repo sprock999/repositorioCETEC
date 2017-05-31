@@ -75,10 +75,7 @@
                               <Component id="btn_gestion_emp" pref="170" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btn_reportes" max="32767" attributes="0"/>
-                              <Component id="btn_gestion_rep" pref="170" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="btn_reportes" min="-2" pref="170" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -97,7 +94,6 @@
                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btn_gestion_emp" alignment="3" min="-2" pref="70" max="-2" attributes="0"/>
-                      <Component id="btn_gestion_rep" alignment="3" min="-2" pref="70" max="-2" attributes="0"/>
                       <Component id="btn_gestion_alum" alignment="3" min="-2" pref="70" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
@@ -128,31 +124,41 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Contratacion De Personal"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_cont_personalActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_despido_emp">
           <Properties>
             <Property name="text" type="java.lang.String" value="Despido De Epleados"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_despido_empActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_reportes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reportes"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btn_gestion_rep">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Getion De reportes"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_reportesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_gestion_emp">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gestion De Empleados"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_gestion_empActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_gestion_alum">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gestion De Alumnos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_gestion_alumActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -121,26 +121,41 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Inscribir Alumno"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_inscribir_alumActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_baja_alum">
           <Properties>
             <Property name="text" type="java.lang.String" value="Baja De Alumno"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_baja_alumActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_reportes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reportes"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_reportesActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_gestion_tutor">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gestion De Tutor"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_gestion_tutorActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_registrar_tutor">
           <Properties>
             <Property name="text" type="java.lang.String" value="Registrar Tutor"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_registrar_tutorActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

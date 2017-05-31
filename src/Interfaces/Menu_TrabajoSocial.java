@@ -46,14 +46,39 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
         label_pass.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
 
         btn_inscribir_alum.setText("Inscribir Alumno");
+        btn_inscribir_alum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_inscribir_alumActionPerformed(evt);
+            }
+        });
 
         btn_baja_alum.setText("Baja De Alumno");
+        btn_baja_alum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_baja_alumActionPerformed(evt);
+            }
+        });
 
         btn_reportes.setText("Reportes");
+        btn_reportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reportesActionPerformed(evt);
+            }
+        });
 
         btn_gestion_tutor.setText("Gestion De Tutor");
+        btn_gestion_tutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gestion_tutorActionPerformed(evt);
+            }
+        });
 
         btn_registrar_tutor.setText("Registrar Tutor");
+        btn_registrar_tutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrar_tutorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -111,6 +136,31 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_inscribir_alumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inscribir_alumActionPerformed
+        new InscribirAlumnos().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_inscribir_alumActionPerformed
+
+    private void btn_baja_alumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_baja_alumActionPerformed
+        new BajaDeAlumno().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_baja_alumActionPerformed
+
+    private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
+        new Reportes().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_reportesActionPerformed
+
+    private void btn_registrar_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar_tutorActionPerformed
+        new RegistrarTutor().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_registrar_tutorActionPerformed
+
+    private void btn_gestion_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gestion_tutorActionPerformed
+        new GestionDeTutor().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_gestion_tutorActionPerformed
 
     /**
      * @param args the command line arguments

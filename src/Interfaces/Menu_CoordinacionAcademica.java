@@ -43,8 +43,18 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
         label_pass.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
 
         btn_apertura_horario.setText("Apertura De Horarios");
+        btn_apertura_horario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_apertura_horarioActionPerformed(evt);
+            }
+        });
 
         btn_fusion_grupos.setText("Fusion De Grupos");
+        btn_fusion_grupos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_fusion_gruposActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -91,6 +101,16 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_apertura_horarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_apertura_horarioActionPerformed
+        new AperturaDeHorarios().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_apertura_horarioActionPerformed
+
+    private void btn_fusion_gruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fusion_gruposActionPerformed
+        new FusionDeGrupos().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_fusion_gruposActionPerformed
 
     /**
      * @param args the command line arguments

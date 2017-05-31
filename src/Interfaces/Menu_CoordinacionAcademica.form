@@ -107,11 +107,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Apertura De Horarios"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_apertura_horarioActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_fusion_grupos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Fusion De Grupos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_fusion_gruposActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

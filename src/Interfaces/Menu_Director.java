@@ -33,7 +33,6 @@ public class Menu_Director extends javax.swing.JFrame {
         btn_cont_personal = new javax.swing.JButton();
         btn_despido_emp = new javax.swing.JButton();
         btn_reportes = new javax.swing.JButton();
-        btn_gestion_rep = new javax.swing.JButton();
         btn_gestion_emp = new javax.swing.JButton();
         btn_gestion_alum = new javax.swing.JButton();
 
@@ -47,16 +46,39 @@ public class Menu_Director extends javax.swing.JFrame {
         label_pass.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
 
         btn_cont_personal.setText("Contratacion De Personal");
+        btn_cont_personal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cont_personalActionPerformed(evt);
+            }
+        });
 
         btn_despido_emp.setText("Despido De Epleados");
+        btn_despido_emp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_despido_empActionPerformed(evt);
+            }
+        });
 
         btn_reportes.setText("Reportes");
-
-        btn_gestion_rep.setText("Getion De reportes");
+        btn_reportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_reportesActionPerformed(evt);
+            }
+        });
 
         btn_gestion_emp.setText("Gestion De Empleados");
+        btn_gestion_emp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gestion_empActionPerformed(evt);
+            }
+        });
 
         btn_gestion_alum.setText("Gestion De Alumnos");
+        btn_gestion_alum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gestion_alumActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -79,9 +101,7 @@ public class Menu_Director extends javax.swing.JFrame {
                             .addComponent(btn_despido_emp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btn_gestion_emp, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
                         .addGap(34, 34, 34)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_reportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_gestion_rep, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE))
+                        .addComponent(btn_reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -95,7 +115,6 @@ public class Menu_Director extends javax.swing.JFrame {
                 .addGap(88, 88, 88)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_gestion_emp, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_gestion_rep, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_gestion_alum, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addComponent(label_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -119,6 +138,31 @@ public class Menu_Director extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_cont_personalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cont_personalActionPerformed
+        new ContratacionDePersonal().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_cont_personalActionPerformed
+
+    private void btn_despido_empActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_despido_empActionPerformed
+        new DespidoDeEmpleados().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_despido_empActionPerformed
+
+    private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
+        new Reportes().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_reportesActionPerformed
+
+    private void btn_gestion_alumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gestion_alumActionPerformed
+        new GestionDeAlumnos().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_gestion_alumActionPerformed
+
+    private void btn_gestion_empActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gestion_empActionPerformed
+        new GestionDeEmpleados().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btn_gestion_empActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,7 +204,6 @@ public class Menu_Director extends javax.swing.JFrame {
     private javax.swing.JButton btn_despido_emp;
     private javax.swing.JButton btn_gestion_alum;
     private javax.swing.JButton btn_gestion_emp;
-    private javax.swing.JButton btn_gestion_rep;
     private javax.swing.JButton btn_reportes;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel label_pass;
