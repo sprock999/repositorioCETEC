@@ -15,6 +15,7 @@ public class AccesoAlSistema extends javax.swing.JFrame {
     ImageIcon icon;
     private final String DIRECCION = "123", TRABAJO_SOCIAL = "1234", ACADEMICO = "12345";
     
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public AccesoAlSistema() {
         initComponents();
         this.setTitle("Acceso Al Sistema");
@@ -185,19 +186,16 @@ public class AccesoAlSistema extends javax.swing.JFrame {
                     dispose();
                     Entrar("coordinador academico");
                     break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Error en la contraseña de acceso","Error",JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btn_ingresarActionPerformed
-
-    
     
     public void Entrar(String user){
-        if (txt_pass.getText().equals(txt_pass.getText().toLowerCase())) {
-            JOptionPane.showMessageDialog(null, "Bienvenido " + user,user,JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Contraseña incorrecta","ERROR",JOptionPane.ERROR_MESSAGE);
-        }
+        JOptionPane.showMessageDialog(null, "Bienvenido " + user,user,JOptionPane.INFORMATION_MESSAGE);
     }
+    
     /**
      * @param args the command line arguments
      */

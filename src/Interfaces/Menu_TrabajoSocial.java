@@ -38,6 +38,13 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
         btn_gestion_tutor = new javax.swing.JButton();
         btn_registrar_tutor = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
+
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 20), new java.awt.Color(0, 0, 255))); // NOI18N
 
@@ -161,6 +168,14 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
         new GestionDeTutor().setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_gestion_tutorActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AccesoAlSistema().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
