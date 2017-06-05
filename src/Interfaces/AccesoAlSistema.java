@@ -54,6 +54,7 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         txt_pass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Acceso al Sistema");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
