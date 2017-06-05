@@ -1,20 +1,17 @@
 package Interfaces;
 
 import Controladores.ControladorGrafico;
-import Controladores.ManejadorFocus;
 import Controladores.ManejadorGestionDeAlumnos;
 import com.toedter.calendar.JTextFieldDateEditor;
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -28,6 +25,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
 
     JTextFieldDateEditor editorFecha;
     DefaultTableModel modelo;
+    JFrame control;
 
     String no_control, no_tutor, primer_nom, segundo_nom, apellido_pat,
             apellido_mat, curp;
@@ -38,10 +36,12 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
 
-    public GestionDeAlumnos() {
+    @SuppressWarnings("OverridableMethodCallInConstructor")
+    public GestionDeAlumnos(JFrame ventana) {
         initComponents();
         this.setTitle("Gestion De Alumnos");
         this.setLocationRelativeTo(null);
+        control = ventana;
 
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
@@ -126,7 +126,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         btn_buscar_tutor = new javax.swing.JButton();
         btn_registrar_tutor = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -626,38 +626,6 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
 
         //System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionDeAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionDeAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionDeAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionDeAlumnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionDeAlumnos().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;

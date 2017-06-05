@@ -2,15 +2,12 @@ package Interfaces;
 
 import Controladores.ControladorGrafico;
 import Controladores.ManejadorDespidoDeEmpleados;
-import Controladores.ManejadorFocus;
-import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 /**
  *
@@ -20,14 +17,17 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
 
     ManejadorDespidoDeEmpleados despido;
     ControladorGrafico ctrlNoEmpelado;
+    JFrame control;
 
     ImageIcon img;
     ImageIcon icon;
 
-    public DespidoDeEmpleados() {
+    @SuppressWarnings("OverridableMethodCallInConstructor")
+    public DespidoDeEmpleados(JFrame ventana) {
         initComponents();
         this.setTitle("Despido De Empleados");
         this.setLocationRelativeTo(null);
+        control = ventana;
 
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
@@ -43,8 +43,6 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
 
         despido = new ManejadorDespidoDeEmpleados();
 
-        //JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
-        //editor.setEditable(false);
         fecha_nacimiento.setEnabled(false);
 
         ctrlNoEmpelado = new ControladorGrafico();
@@ -368,38 +366,6 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DespidoDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DespidoDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DespidoDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DespidoDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DespidoDeEmpleados().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;

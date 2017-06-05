@@ -1,7 +1,6 @@
 package Interfaces;
 
 import Controladores.ControladorGrafico;
-import Controladores.ManejadorFocus;
 import Controladores.ManejadorGestionDeEmpleados;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
@@ -12,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.JFrame;
 
 /**
  *
@@ -25,6 +25,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
             ctrlApellMaterno, ctrlFechaNac, ctrlCurp, ctrlSalrio;
 
     JTextFieldDateEditor editorFecha;
+    JFrame control;
 
     DefaultTableModel modelo;
 
@@ -37,11 +38,13 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
 
-    public GestionDeEmpleados() {
+    @SuppressWarnings("OverridableMethodCallInConstructor")
+    public GestionDeEmpleados(JFrame ventana) {
         initComponents();
         this.setTitle("Gestion De Empleados");
         this.setLocationRelativeTo(null);
-
+        control = ventana;
+        
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
@@ -116,7 +119,13 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         txt_salario = new javax.swing.JTextField();
         combo_estudios = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAlwaysOnTop(true);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -555,6 +564,10 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_salirActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        control.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
     public void limpiarCampos() {
         txt_no_empleado.setText("");
         txt_primer_nombre.setText("");
@@ -588,38 +601,6 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
         fecha_nacimiento.setEnabled(false);
         combo_estudios.setEnabled(false);
-    }
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionDeEmpleados().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

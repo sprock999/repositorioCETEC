@@ -59,7 +59,7 @@ public class Menu_Director extends javax.swing.JFrame {
             }
         });
 
-        btn_despido_emp.setText("Despido De Epleados");
+        btn_despido_emp.setText("Despido De Empleados");
         btn_despido_emp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_despido_empActionPerformed(evt);
@@ -147,28 +147,28 @@ public class Menu_Director extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cont_personalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cont_personalActionPerformed
-        new ContratacionDePersonal().setVisible(true);
-        dispose();
+        new ContratacionDePersonal(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_cont_personalActionPerformed
 
     private void btn_despido_empActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_despido_empActionPerformed
-        new DespidoDeEmpleados().setVisible(true);
-        dispose();
+        new DespidoDeEmpleados(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_despido_empActionPerformed
 
     private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
-        new Reportes().setVisible(true);
-        dispose();
+        new Reportes(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_reportesActionPerformed
 
     private void btn_gestion_alumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gestion_alumActionPerformed
-        new GestionDeAlumnos().setVisible(true);
-        dispose();
+        new GestionDeAlumnos(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_gestion_alumActionPerformed
 
     private void btn_gestion_empActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gestion_empActionPerformed
-        new GestionDeEmpleados().setVisible(true);
-        dispose();
+        new GestionDeEmpleados(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_gestion_empActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
