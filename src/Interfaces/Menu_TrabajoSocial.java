@@ -155,7 +155,7 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_baja_alumActionPerformed
 
     private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
-        new Reportes().setVisible(true);
+        new Reportes(this).setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_reportesActionPerformed
 
