@@ -14,8 +14,10 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
     /**
      * Creates new form Menu_CoordinacionAcademica
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public Menu_CoordinacionAcademica() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

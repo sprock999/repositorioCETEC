@@ -14,8 +14,10 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
     /**
      * Creates new form Menu_TrabajoSocial
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public Menu_TrabajoSocial() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

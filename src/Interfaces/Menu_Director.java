@@ -14,8 +14,10 @@ public class Menu_Director extends javax.swing.JFrame {
     /**
      * Creates new form Menu_Director
      */
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public Menu_Director() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

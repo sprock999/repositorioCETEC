@@ -1,14 +1,9 @@
 
 package Interfaces;
 
-import java.awt.Color;
 import java.awt.Image;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -177,14 +172,17 @@ public class AccesoAlSistema extends javax.swing.JFrame {
                 case DIRECCION:
                     new Menu_Director().setVisible(true);
                     dispose();
+                    Entrar("direccion");
                     break;
                 case TRABAJO_SOCIAL:
                     new Menu_TrabajoSocial().setVisible(true);
                     dispose();
+                    Entrar("trabajo social");
                     break;
                 case ACADEMICO:
                     new Menu_CoordinacionAcademica().setVisible(true);
                     dispose();
+                    Entrar("coordinador academico");
                     break;
             }
         }
@@ -192,11 +190,11 @@ public class AccesoAlSistema extends javax.swing.JFrame {
 
     
     
-    public void Entrar(String pass,String user){
-        if (txt_pass.getText().equals(pass.toLowerCase())) {
+    public void Entrar(String user){
+        if (txt_pass.getText().equals(txt_pass.getText().toLowerCase())) {
             JOptionPane.showMessageDialog(null, "Bienvenido " + user,user,JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta","ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Contraseña incorrecta","ERROR",JOptionPane.ERROR_MESSAGE);
         }
     }
     /**
