@@ -110,13 +110,13 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_apertura_horarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_apertura_horarioActionPerformed
-        new AperturaDeHorarios().setVisible(true);
-        dispose();
+        new AperturaDeHorarios(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_apertura_horarioActionPerformed
 
     private void btn_fusion_gruposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fusion_gruposActionPerformed
-        new FusionDeGrupos().setVisible(true);
-        dispose();
+        new FusionDeGrupos(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_fusion_gruposActionPerformed
 
     @SuppressWarnings("ResultOfObjectAllocationIgnored")

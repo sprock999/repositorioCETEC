@@ -181,6 +181,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="&#xbf;Olvidaste Tu Contrase&#xf1;a?"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="label_recuperacionMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>

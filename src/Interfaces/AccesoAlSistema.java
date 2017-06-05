@@ -77,6 +77,11 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         label_recuperacion.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         label_recuperacion.setForeground(new java.awt.Color(0, 0, 255));
         label_recuperacion.setText("¿Olvidaste Tu Contraseña?");
+        label_recuperacion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label_recuperacionMouseClicked(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel10.setText("Ingresar");
@@ -191,6 +196,11 @@ public class AccesoAlSistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btn_ingresarActionPerformed
+
+    private void label_recuperacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_recuperacionMouseClicked
+        new Recuperacion(this).setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_label_recuperacionMouseClicked
     
     public void Entrar(String user){
         JOptionPane.showMessageDialog(null, "Bienvenido " + user,user,JOptionPane.INFORMATION_MESSAGE);

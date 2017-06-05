@@ -5,6 +5,7 @@ import com.sun.glass.events.KeyEvent;
 import java.awt.Image;
 import java.sql.ResultSet;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -17,14 +18,17 @@ public class BajaDeAlumno extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
     Conexion conexion;
+    JFrame control;
     
     final int ACTIVO = 1;
     final int INACTIVO = 0;
     
-    public BajaDeAlumno() {
+    @SuppressWarnings("OverridableMethodCallInConstructor")
+    public BajaDeAlumno(JFrame ventana) {
         initComponents();
         this.setTitle("Baja De Alumno");
         this.setLocationRelativeTo(null);
+        control = ventana;
         
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
@@ -68,7 +72,12 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         btn_eliminar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -279,7 +288,7 @@ public class BajaDeAlumno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        new GestionDeAlumnos().setVisible(true);
+        new GestionDeAlumnos(this).setVisible(true);
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
@@ -332,6 +341,10 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt_no_controlKeyPressed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        control.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
     public boolean validarControl(JTextField campo){
         if(!campo.getText().matches("\\d+")){
             JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
@@ -342,38 +355,6 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         }
     }
     
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BajaDeAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BajaDeAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BajaDeAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BajaDeAlumno.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new BajaDeAlumno().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_eliminar;

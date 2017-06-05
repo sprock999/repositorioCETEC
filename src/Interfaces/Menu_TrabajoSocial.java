@@ -145,28 +145,28 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_inscribir_alumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inscribir_alumActionPerformed
-        new InscribirAlumnos().setVisible(true);
-        dispose();
+        new InscribirAlumnos(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_inscribir_alumActionPerformed
 
     private void btn_baja_alumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_baja_alumActionPerformed
-        new BajaDeAlumno().setVisible(true);
-        dispose();
+        new BajaDeAlumno(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_baja_alumActionPerformed
 
     private void btn_reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_reportesActionPerformed
         new Reportes(this).setVisible(true);
-        dispose();
+        setVisible(false);
     }//GEN-LAST:event_btn_reportesActionPerformed
 
     private void btn_registrar_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar_tutorActionPerformed
-        new RegistrarTutor().setVisible(true);
-        dispose();
+        new RegistrarTutor(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_registrar_tutorActionPerformed
 
     private void btn_gestion_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gestion_tutorActionPerformed
-        new GestionDeTutor().setVisible(true);
-        dispose();
+        new GestionDeTutor(this).setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btn_gestion_tutorActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

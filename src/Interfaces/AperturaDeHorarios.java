@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import Controladores.ControladorGrafico;
+import javax.swing.JFrame;
 
 /**
  *
@@ -18,11 +19,14 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
     Conexion conexion;
+    private final JFrame control;
 
-    public AperturaDeHorarios() {
+    @SuppressWarnings("OverridableMethodCallInConstructor")
+    public AperturaDeHorarios(JFrame ventana) {
         initComponents();
         this.setTitle("Apertura De Horarios");
         this.setLocationRelativeTo(null);
+        control = ventana;
 
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
@@ -77,7 +81,12 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         btn_registrar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -266,7 +275,7 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        new GestionDeEmpleados().setVisible(true);
+        new GestionDeEmpleados(this).setVisible(true);
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
@@ -300,6 +309,10 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        control.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
     public void limpiar() {
         txt_no_alumnos.setText("");
         txt_no_horario.setText("");
@@ -317,38 +330,6 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
             txt_no_horario.setText(Integer.toString(numero));
             System.out.println(e.getMessage());
         }
-    }
-
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AperturaDeHorarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AperturaDeHorarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AperturaDeHorarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AperturaDeHorarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AperturaDeHorarios().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
