@@ -33,11 +33,11 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         control = ventana;
         
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
-        icon = new ImageIcon(img.getImage().getScaledInstance(btn_registrar.getWidth(), btn_registrar.getHeight(), Image.SCALE_DEFAULT));
+        icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
         
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
-        icon = new ImageIcon(img.getImage().getScaledInstance(btn_salir.getWidth(), btn_salir.getHeight(), Image.SCALE_DEFAULT));
+        icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
 
         conexion = new Conexion();
