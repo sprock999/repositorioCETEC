@@ -2,6 +2,7 @@
 package Interfaces;
 
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -87,6 +88,12 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         jLabel10.setText("Ingresar");
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cetec.png"))); // NOI18N
+
+        txt_pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_passKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -204,6 +211,35 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         new Recuperacion(this).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_label_recuperacionMouseClicked
+
+    private void txt_passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!txt_pass.getText().equals("")) {
+                switch (txt_pass.getText()) {
+                    case DIRECCION:
+                        new Bienvenida(new Menu_Director(), "Dirección").setVisible(true);
+                        //new Menu_Director().setVisible(true);
+                        dispose();
+                        //Entrar("direccion");
+                        break;
+                    case TRABAJO_SOCIAL:
+                        new Bienvenida(new Menu_TrabajoSocial(), "Trabajo Social").setVisible(true);
+                        //new Menu_TrabajoSocial().setVisible(true);
+                        dispose();
+                        //Entrar("trabajo social");
+                        break;
+                    case ACADEMICO:
+                        new Bienvenida(new Menu_CoordinacionAcademica(), "Coordinador Academico").setVisible(true);
+                        //new Menu_CoordinacionAcademica().setVisible(true);
+                        dispose();
+                        //Entrar("coordinador academico");
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Error en la contraseña de acceso", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }//GEN-LAST:event_txt_passKeyPressed
     
     public void Entrar(String user){
         JOptionPane.showMessageDialog(null, "Bienvenido " + user,user,JOptionPane.INFORMATION_MESSAGE);
