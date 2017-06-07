@@ -35,6 +35,10 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/reportes.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_reportes.setIcon(icon);
+        
+        img = new ImageIcon(getClass().getResource("/Imagenes/cerrar_sesion.png"));
+        icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
+        btn_cerrar_sesion.setIcon(icon);
     }
 
     @SuppressWarnings("unchecked")
@@ -49,6 +53,7 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
         btn_reportes = new javax.swing.JButton();
         btn_gestion_tutor = new javax.swing.JButton();
         btn_registrar_tutor = new javax.swing.JButton();
+        btn_cerrar_sesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -64,7 +69,8 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
 
         label_pass.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
 
-        btn_inscribir_alum.setBackground(new java.awt.Color(0, 51, 255));
+        btn_inscribir_alum.setBackground(new java.awt.Color(204, 255, 204));
+        btn_inscribir_alum.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_inscribir_alum.setText("Inscribir Alumno");
         btn_inscribir_alum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -72,7 +78,8 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
             }
         });
 
-        btn_baja_alum.setBackground(new java.awt.Color(0, 51, 255));
+        btn_baja_alum.setBackground(new java.awt.Color(204, 255, 204));
+        btn_baja_alum.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_baja_alum.setText("Baja De Alumno");
         btn_baja_alum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,7 +87,8 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
             }
         });
 
-        btn_reportes.setBackground(new java.awt.Color(0, 51, 255));
+        btn_reportes.setBackground(new java.awt.Color(204, 255, 204));
+        btn_reportes.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_reportes.setText("Reportes");
         btn_reportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,7 +96,8 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
             }
         });
 
-        btn_gestion_tutor.setBackground(new java.awt.Color(0, 51, 255));
+        btn_gestion_tutor.setBackground(new java.awt.Color(204, 255, 204));
+        btn_gestion_tutor.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_gestion_tutor.setText("Gestion De Tutor");
         btn_gestion_tutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,11 +105,21 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
             }
         });
 
-        btn_registrar_tutor.setBackground(new java.awt.Color(0, 51, 255));
+        btn_registrar_tutor.setBackground(new java.awt.Color(204, 255, 204));
+        btn_registrar_tutor.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_registrar_tutor.setText("Registrar Tutor");
         btn_registrar_tutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_registrar_tutorActionPerformed(evt);
+            }
+        });
+
+        btn_cerrar_sesion.setBackground(new java.awt.Color(204, 255, 204));
+        btn_cerrar_sesion.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        btn_cerrar_sesion.setText("Cerrar Sesion");
+        btn_cerrar_sesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrar_sesionActionPerformed(evt);
             }
         });
 
@@ -122,12 +141,15 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
                             .addComponent(btn_inscribir_alum, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_gestion_tutor, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btn_gestion_tutor, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_cerrar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(btn_baja_alum, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(12, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +161,9 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
                     .addComponent(btn_reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_gestion_tutor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_gestion_tutor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_cerrar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btn_registrar_tutor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(135, 135, 135)
                 .addComponent(label_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,6 +219,10 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_formWindowClosed
 
+    private void btn_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrar_sesionActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_cerrar_sesionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -232,6 +260,7 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_baja_alum;
+    private javax.swing.JButton btn_cerrar_sesion;
     private javax.swing.JButton btn_gestion_tutor;
     private javax.swing.JButton btn_inscribir_alum;
     private javax.swing.JButton btn_registrar_tutor;

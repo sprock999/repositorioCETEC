@@ -38,7 +38,6 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
     public GestionDeEmpleados(JFrame ventana) {
         initComponents();
         this.setTitle("Gestion De Empleados");

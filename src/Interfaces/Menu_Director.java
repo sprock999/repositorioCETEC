@@ -47,6 +47,10 @@ public class Menu_Director extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/gestion_empleados.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_gestion_emp.setIcon(icon);
+        
+        img = new ImageIcon(getClass().getResource("/Imagenes/cerrar_sesion.png"));
+        icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
+        btn_cerrar_sesion.setIcon(icon);
     }
 
     @SuppressWarnings("unchecked")
@@ -64,6 +68,7 @@ public class Menu_Director extends javax.swing.JFrame {
         btn_backup = new javax.swing.JButton();
         btn_restaurar = new javax.swing.JButton();
         btn_reset = new javax.swing.JButton();
+        btn_cerrar_sesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -79,7 +84,8 @@ public class Menu_Director extends javax.swing.JFrame {
 
         label_pass.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
 
-        btn_cont_personal.setBackground(new java.awt.Color(0, 51, 255));
+        btn_cont_personal.setBackground(new java.awt.Color(204, 255, 204));
+        btn_cont_personal.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_cont_personal.setText("Contratacion De Personal");
         btn_cont_personal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btn_cont_personal.setIconTextGap(2);
@@ -89,7 +95,8 @@ public class Menu_Director extends javax.swing.JFrame {
             }
         });
 
-        btn_despido_emp.setBackground(new java.awt.Color(0, 51, 255));
+        btn_despido_emp.setBackground(new java.awt.Color(204, 255, 204));
+        btn_despido_emp.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_despido_emp.setText("Despido De Empleados");
         btn_despido_emp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +104,8 @@ public class Menu_Director extends javax.swing.JFrame {
             }
         });
 
-        btn_reportes.setBackground(new java.awt.Color(0, 51, 255));
+        btn_reportes.setBackground(new java.awt.Color(204, 255, 204));
+        btn_reportes.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_reportes.setText("Reportes");
         btn_reportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +113,8 @@ public class Menu_Director extends javax.swing.JFrame {
             }
         });
 
-        btn_gestion_emp.setBackground(new java.awt.Color(0, 51, 255));
+        btn_gestion_emp.setBackground(new java.awt.Color(204, 255, 204));
+        btn_gestion_emp.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_gestion_emp.setText("Gestion De Empleados");
         btn_gestion_emp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,7 +122,8 @@ public class Menu_Director extends javax.swing.JFrame {
             }
         });
 
-        btn_gestion_alum.setBackground(new java.awt.Color(0, 51, 255));
+        btn_gestion_alum.setBackground(new java.awt.Color(204, 255, 204));
+        btn_gestion_alum.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_gestion_alum.setText("Gestion De Alumnos");
         btn_gestion_alum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +131,8 @@ public class Menu_Director extends javax.swing.JFrame {
             }
         });
 
-        btn_backup.setBackground(new java.awt.Color(0, 51, 255));
+        btn_backup.setBackground(new java.awt.Color(204, 255, 204));
+        btn_backup.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_backup.setText("Copia de Seguridad");
         btn_backup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +140,8 @@ public class Menu_Director extends javax.swing.JFrame {
             }
         });
 
-        btn_restaurar.setBackground(new java.awt.Color(0, 51, 255));
+        btn_restaurar.setBackground(new java.awt.Color(204, 255, 204));
+        btn_restaurar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_restaurar.setText("Restaurar");
         btn_restaurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,11 +149,21 @@ public class Menu_Director extends javax.swing.JFrame {
             }
         });
 
-        btn_reset.setBackground(new java.awt.Color(0, 51, 255));
+        btn_reset.setBackground(new java.awt.Color(204, 255, 204));
+        btn_reset.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btn_reset.setText("Reiniciar Sistema");
         btn_reset.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_resetActionPerformed(evt);
+            }
+        });
+
+        btn_cerrar_sesion.setBackground(new java.awt.Color(204, 255, 204));
+        btn_cerrar_sesion.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        btn_cerrar_sesion.setText("Cerrar Sesion");
+        btn_cerrar_sesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cerrar_sesionActionPerformed(evt);
             }
         });
 
@@ -170,9 +192,11 @@ public class Menu_Director extends javax.swing.JFrame {
                                     .addComponent(btn_gestion_emp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btn_reset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_reportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btn_backup, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(btn_reportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_backup, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
+                            .addComponent(btn_cerrar_sesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -191,7 +215,8 @@ public class Menu_Director extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_reset, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_restaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_restaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_cerrar_sesion, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addComponent(label_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
@@ -260,6 +285,10 @@ public class Menu_Director extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_btn_resetActionPerformed
 
+    private void btn_cerrar_sesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cerrar_sesionActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_cerrar_sesionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -297,6 +326,7 @@ public class Menu_Director extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_backup;
+    private javax.swing.JButton btn_cerrar_sesion;
     private javax.swing.JButton btn_cont_personal;
     private javax.swing.JButton btn_despido_emp;
     private javax.swing.JButton btn_gestion_alum;

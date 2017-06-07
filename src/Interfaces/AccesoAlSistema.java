@@ -177,19 +177,22 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         if(!txt_pass.getText().equals("")){
             switch(txt_pass.getText()){
                 case DIRECCION:
-                    new Menu_Director().setVisible(true);
+                    new Bienvenida(new Menu_Director(), "Dirección").setVisible(true);
+                    //new Menu_Director().setVisible(true);
                     dispose();
-                    Entrar("direccion");
+                    //Entrar("direccion");
                     break;
                 case TRABAJO_SOCIAL:
-                    new Menu_TrabajoSocial().setVisible(true);
+                    new Bienvenida(new Menu_TrabajoSocial(), "Trabajo Social").setVisible(true);
+                    //new Menu_TrabajoSocial().setVisible(true);
                     dispose();
-                    Entrar("trabajo social");
+                    //Entrar("trabajo social");
                     break;
                 case ACADEMICO:
-                    new Menu_CoordinacionAcademica().setVisible(true);
+                    new Bienvenida(new Menu_CoordinacionAcademica(), "Coordinador Academico").setVisible(true);
+                    //new Menu_CoordinacionAcademica().setVisible(true);
                     dispose();
-                    Entrar("coordinador academico");
+                    //Entrar("coordinador academico");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Error en la contraseña de acceso","Error",JOptionPane.ERROR_MESSAGE);
