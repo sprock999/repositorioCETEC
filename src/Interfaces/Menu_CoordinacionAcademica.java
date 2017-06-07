@@ -24,6 +24,10 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/fusionar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_fusion_grupos.setIcon(icon);
+        
+        img = new ImageIcon(getClass().getResource("/Imagenes/inscribir.png"));
+        icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
+        btn_inscribir.setIcon(icon);
     }
 
     @SuppressWarnings("unchecked")
@@ -33,6 +37,7 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         btn_apertura_horario = new javax.swing.JButton();
         btn_fusion_grupos = new javax.swing.JButton();
+        btn_inscribir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -43,7 +48,6 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Impact", 0, 20), new java.awt.Color(0, 0, 255))); // NOI18N
-        jPanel3.setLayout(null);
 
         btn_apertura_horario.setBackground(new java.awt.Color(0, 51, 255));
         btn_apertura_horario.setText("Apertura De Horarios");
@@ -52,8 +56,6 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
                 btn_apertura_horarioActionPerformed(evt);
             }
         });
-        jPanel3.add(btn_apertura_horario);
-        btn_apertura_horario.setBounds(20, 20, 212, 70);
 
         btn_fusion_grupos.setBackground(new java.awt.Color(0, 51, 255));
         btn_fusion_grupos.setText("Fusion De Grupos");
@@ -62,18 +64,47 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
                 btn_fusion_gruposActionPerformed(evt);
             }
         });
-        jPanel3.add(btn_fusion_grupos);
-        btn_fusion_grupos.setBounds(228, 20, 212, 70);
+
+        btn_inscribir.setBackground(new java.awt.Color(0, 51, 255));
+        btn_inscribir.setText("Inscribir Alumno");
+        btn_inscribir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_inscribirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(btn_apertura_horario, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_fusion_grupos, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_inscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_apertura_horario, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_fusion_grupos, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_inscribir, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -97,6 +128,11 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_formWindowClosed
+
+    private void btn_inscribirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_inscribirActionPerformed
+        new InscribirAlumnos(this).setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btn_inscribirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -136,6 +172,7 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_apertura_horario;
     private javax.swing.JButton btn_fusion_grupos;
+    private javax.swing.JButton btn_inscribir;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

@@ -611,25 +611,8 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_buscar_tutorActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        try {
-            if (ctrlPrimerNombre.getColor(txt_primer_nombre)
-                    && ctrlSegundoNombre.getColor(txt_segundo_nombre)
-                    && ctrlApellPaterno.getColor(txt_apell_paterno)
-                    && ctrlApellMaterno.getColor(txt_apell_materno)
-                    && ctrlFechaNac.getColor(editorFecha)
-                    && ctrlCurp.getColor(txt_curp)
-                    && ctrlNoTutor.getColor(txt_no_tutor)) {
-                JOptionPane.showMessageDialog(null, "Corecto");
-            } else {
-                JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
-                        JOptionPane.WARNING_MESSAGE);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
-                    JOptionPane.WARNING_MESSAGE);
-        }
-
-        //System.exit(0);
+        this.dispose();
+        control.setVisible(true);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

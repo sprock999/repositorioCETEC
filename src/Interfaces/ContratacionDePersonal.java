@@ -340,7 +340,8 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         conexion.cerrarConexion();
-        System.exit(0);
+        this.dispose();
+        control.setVisible(true);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed

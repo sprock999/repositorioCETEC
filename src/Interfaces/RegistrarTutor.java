@@ -406,7 +406,8 @@ public class RegistrarTutor extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        System.exit(0);
+        this.dispose();
+        control.setVisible(true);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

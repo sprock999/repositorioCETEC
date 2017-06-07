@@ -175,7 +175,8 @@ public class CopiaDeSeguridad extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        System.exit(0);
+        this.dispose();
+        control.setVisible(true);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_explorarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_explorarActionPerformed

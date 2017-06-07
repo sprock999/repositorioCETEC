@@ -384,12 +384,11 @@ public class InscribirAlumnos extends javax.swing.JFrame {
             fecha_nac = formato.format(time);
         }
 
-        String[] fechaArray = fecha_nac.split("-");
-        dia_nac = Integer.parseInt(fechaArray[0]);
-        mes_nac = Integer.parseInt(fechaArray[1]);
-        año_nac = Integer.parseInt(fechaArray[2]);
-
         try {
+            String[] fechaArray = fecha_nac.split("-");
+            dia_nac = Integer.parseInt(fechaArray[0]);
+            mes_nac = Integer.parseInt(fechaArray[1]);
+            año_nac = Integer.parseInt(fechaArray[2]);
             if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
                     && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
                     && ctrlCurp.getColor(txt_curp) && ctrlNoTutor.getColor(txt_no_tutor)) {
@@ -418,7 +417,7 @@ public class InscribirAlumnos extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Alumno Registrado", "Registrado...",
                         JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
-                
+
                 int numControl = inscribirAlumno.getNoControl();
                 if (numControl != -1) {
                     txt_no_control.setText(Integer.toString(numControl));
@@ -435,7 +434,8 @@ public class InscribirAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        System.exit(0);
+        this.dispose();
+        control.setVisible(true);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed

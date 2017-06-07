@@ -482,8 +482,8 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         //String seleccionado = combo_estudios.getSelectedItem().toString();
         //System.out.println(seleccionado);
         //combo_estudios.setSelectedItem("Doctorado");
-
-        if (correcto == 0) {
+        try {
+            if (correcto == 0) {
             JOptionPane.showMessageDialog(null, "Busque Un Empleado", "Advertencia!",
                     JOptionPane.WARNING_MESSAGE);
             return;
@@ -493,6 +493,9 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
                         JOptionPane.WARNING_MESSAGE);
                 return;
             }
+        }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
         }
 
         no_empleado = txt_no_empleado.getText();
@@ -561,7 +564,8 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_combo_estudiosItemStateChanged
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        System.exit(0);
+        this.dispose();
+        control.setVisible(true);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

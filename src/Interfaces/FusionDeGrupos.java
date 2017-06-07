@@ -320,7 +320,8 @@ public class FusionDeGrupos extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_fusionarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
-        System.exit(0);
+        this.dispose();
+        control.setVisible(true);
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void tabla_horariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_horariosMouseClicked
