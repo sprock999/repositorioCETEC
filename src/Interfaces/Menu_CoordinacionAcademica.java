@@ -16,6 +16,7 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
     public Menu_CoordinacionAcademica() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("coordinación Academica");
         
         img = new ImageIcon(getClass().getResource("/Imagenes/apertura_horarios.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));

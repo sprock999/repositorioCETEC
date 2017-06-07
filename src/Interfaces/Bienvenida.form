@@ -24,14 +24,19 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="labelUsuario1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="labelFondo" alignment="0" pref="230" max="32767" attributes="0"/>
-                  <Component id="labelUsuario" alignment="0" max="32767" attributes="0"/>
-                  <Component id="barraPro" alignment="0" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="barraPro" max="32767" attributes="0"/>
+                  <Component id="labelFondo" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labelUsuario1" min="-2" pref="227" max="-2" attributes="0"/>
+                          <Component id="labelUsuario" alignment="0" min="-2" pref="227" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -45,7 +50,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="labelUsuario" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="barraPro" min="-2" pref="36" max="-2" attributes="0"/>
+              <Component id="barraPro" min="-2" pref="28" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -70,10 +75,10 @@
     <Component class="javax.swing.JLabel" name="labelUsuario">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Impact" size="20" style="1"/>
+          <Font name="Impact" size="22" style="1"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="66" red="0" type="rgb"/>
+          <Color blue="cc" green="33" red="0" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Tipo De Usuario"/>
@@ -85,7 +90,7 @@
           <Font name="Century Gothic" size="18" style="1"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="66" red="0" type="rgb"/>
+          <Color blue="cc" green="33" red="0" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Bienvenido"/>

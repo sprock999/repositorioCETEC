@@ -2,10 +2,12 @@ package Interfaces;
 
 import Entidades.tiempo;
 import com.sun.awt.AWTUtilities;
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 /**
  *
@@ -14,13 +16,13 @@ import javax.swing.JFrame;
 public class Bienvenida extends javax.swing.JFrame {
 
     JFrame control;
-    
+
     tiempo hilo;
     double i = 50, j = 1;
 
     private ImageIcon imagen;
     private Icon icono;
-    
+
     public Bienvenida(JFrame ventana, String texto) {
         TransparenciaFrame(this);
         initComponents();
@@ -29,13 +31,16 @@ public class Bienvenida extends javax.swing.JFrame {
         fondo();
         labelUsuario.setText(texto);
         iniciar();
+
+        UIManager.put("ProgressBar.selectionBackground",Color.BLUE);
+UIManager.put("ProgressBar.selectionForeground",Color.WHITE);
     }
 
-    public void TransparenciaFrame(JFrame frame){
+    public void TransparenciaFrame(JFrame frame) {
         frame.setUndecorated(true);
         AWTUtilities.setWindowOpaque(frame, false);
     }
-    
+
     public void fondo() {
         imagen = new ImageIcon(getClass().getResource("/Imagenes/logo.jpg"));
         icono = new ImageIcon(imagen.getImage().getScaledInstance(labelFondo.getWidth(),
@@ -49,7 +54,7 @@ public class Bienvenida extends javax.swing.JFrame {
         hilo.start();
         hilo = null;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -69,13 +74,13 @@ public class Bienvenida extends javax.swing.JFrame {
             }
         });
 
-        labelUsuario.setFont(new java.awt.Font("Impact", 1, 20)); // NOI18N
-        labelUsuario.setForeground(new java.awt.Color(0, 102, 255));
+        labelUsuario.setFont(new java.awt.Font("Impact", 1, 22)); // NOI18N
+        labelUsuario.setForeground(new java.awt.Color(0, 51, 204));
         labelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelUsuario.setText("Tipo De Usuario");
 
         labelUsuario1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
-        labelUsuario1.setForeground(new java.awt.Color(0, 102, 255));
+        labelUsuario1.setForeground(new java.awt.Color(0, 51, 204));
         labelUsuario1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelUsuario1.setText("Bienvenido");
 
@@ -84,12 +89,15 @@ public class Bienvenida extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelUsuario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                    .addComponent(labelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(barraPro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(barraPro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelFondo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -102,7 +110,7 @@ public class Bienvenida extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(barraPro, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(barraPro, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

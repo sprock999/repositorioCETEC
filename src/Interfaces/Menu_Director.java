@@ -15,6 +15,7 @@ public class Menu_Director extends javax.swing.JFrame {
     public Menu_Director() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Dirección");
         
         img = new ImageIcon(getClass().getResource("/Imagenes/despido.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));

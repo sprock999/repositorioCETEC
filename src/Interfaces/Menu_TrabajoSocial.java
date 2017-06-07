@@ -15,6 +15,7 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
     public Menu_TrabajoSocial() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Trabajo social");
         
         img = new ImageIcon(getClass().getResource("/Imagenes/baja_alumno.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
