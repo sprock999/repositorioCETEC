@@ -25,6 +25,12 @@ public class CopiaDeSeguridad extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         control = ventana;
         
+        control.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                setVisible(false);
+            }
+        });
+        
         img = new ImageIcon(getClass().getResource("/Imagenes/explorar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_explorar.getWidth(), btn_explorar.getHeight(), Image.SCALE_DEFAULT));
         btn_explorar.setIcon(icon);

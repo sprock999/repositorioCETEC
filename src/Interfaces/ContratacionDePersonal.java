@@ -32,6 +32,12 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         
         control = ventana;
         
+        control.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                setVisible(false);
+            }
+        });
+        
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);

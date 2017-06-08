@@ -42,6 +42,12 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         this.setTitle("Gestion De Alumnos");
         this.setLocationRelativeTo(null);
         control = ventana;
+        
+        control.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                setVisible(false);
+            }
+        });
 
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));

@@ -28,6 +28,12 @@ public class Recuperacion extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         control = ventana;
         
+        control.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                setVisible(false);
+            }
+        });
+        
         img = new ImageIcon(getClass().getResource("/Imagenes/aceptar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_aceptar.setIcon(icon);

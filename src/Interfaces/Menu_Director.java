@@ -58,7 +58,7 @@ public class Menu_Director extends javax.swing.JFrame {
             @Override
             public void run() {
                 long start = System.currentTimeMillis();
-                long end = start + (30 * 60 * 1000);
+                long end = start + (60 * 1000);
                 System.out.println(start + " " + end);
                 while(System.currentTimeMillis() < end){
                 }
