@@ -32,8 +32,7 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         
         img = new ImageIcon(getClass().getResource("/Imagenes/login.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_ingresar.getWidth(), btn_ingresar.getHeight(), Image.SCALE_DEFAULT));
-        btn_ingresar.setIcon(icon);
-        
+        btn_ingresar.setIcon(icon);    
     }
 
     /**
