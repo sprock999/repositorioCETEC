@@ -3,7 +3,6 @@ package Interfaces;
 
 import javax.swing.ImageIcon;
 import java.awt.Image;
-import javax.swing.Timer;
 
 /**
  *
@@ -34,7 +33,21 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
         
         img = new ImageIcon(getClass().getResource("/Imagenes/cerrar_sesion.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
-        btn_cerrar_sesion.setIcon(icon);        
+        btn_cerrar_sesion.setIcon(icon);   
+        
+        tiempo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                long start = System.currentTimeMillis();
+                long end = start + (30 * 60 * 1000);
+                System.out.println(start + " " + end);
+                while(System.currentTimeMillis() < end){
+                }
+                dispose();
+                tiempo.stop();
+            }
+        });
+        tiempo.start();
     }
 
     @SuppressWarnings("unchecked")
