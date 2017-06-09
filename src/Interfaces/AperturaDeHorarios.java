@@ -55,8 +55,8 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_inicio.getDateEditor();
         editor.setEditable(false);
 
-        new ControladorGrafico().getDocument(txt_no_alumnos, "[1-9]|([1-4]\\d)|50");
-        new ControladorGrafico().getDocument(txt_no_profesor, "\\d|[1-2]\\d");
+        new ControladorGrafico().getDocument(txt_no_alumnos, "[1-9]|([1-2]\\d)|30");
+        new ControladorGrafico().getDocument(txt_no_profesor, "\\d+");
     }
 
     public void validar(JTextField jt) {
