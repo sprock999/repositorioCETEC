@@ -17,28 +17,28 @@ public class RecuperacionDeDatos extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
     private final JFrame control;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public RecuperacionDeDatos(JFrame ventana) {
         initComponents();
         this.setTitle("Recuperacion De Datos");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/explorar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_explorar.getWidth(), btn_explorar.getHeight(), Image.SCALE_DEFAULT));
         btn_explorar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/abrir archivo.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_abrir.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
@@ -181,19 +181,26 @@ public class RecuperacionDeDatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_explorarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_explorarActionPerformed
-        JFileChooser archivero = new JFileChooser();
-        archivero.showOpenDialog(this);
-        File archivo = archivero.getSelectedFile();
-        txt_ruta.setText(archivo.getPath());
+        try {
+            JFileChooser archivero = new JFileChooser();
+            archivero.showOpenDialog(this);
+            File archivo = archivero.getSelectedFile();
+            txt_ruta.setText(archivo.getPath());
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_btn_explorarActionPerformed
 
     private void btn_abrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_abrirActionPerformed
-        try {
-            ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe","/c","\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql\" --user=cetec --password=cetec cetec < " + txt_ruta.getText());
-            Process backup = mysqldump.start();
-            System.exit(0);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+        if (txt_ruta.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Busca una ruta.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe", "/c", "\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql\" --user=cetec --password=cetec cetec < " + txt_ruta.getText());
+                Process backup = mysqldump.start();
+                System.exit(0);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage());
+            }
         }
     }//GEN-LAST:event_btn_abrirActionPerformed
 

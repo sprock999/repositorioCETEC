@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import Controladores.ControladorGrafico;
 import java.util.Calendar;
+import java.util.Vector;
 import javax.swing.JFrame;
 
 /**
@@ -28,7 +29,7 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         this.setTitle("Apertura De Horarios");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
@@ -38,11 +39,11 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
@@ -316,8 +317,38 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        new GestionDeEmpleados(this).setVisible(true);
+        String dato = txt_no_profesor.getText();
+        if (dato.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese El No. De Profesor", "Campo Vacio",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (!buscarProfesor(dato)) {
+            txt_no_profesor.setText("");
+            JOptionPane.showMessageDialog(null, "Profesor No Encontrado", "No encontrado!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btn_buscarActionPerformed
+
+    public boolean buscarProfesor(String noProfesor) {
+        String salida = "";
+        String consulta = "SELECT * FROM profesor "
+                + "WHERE No_Profesor = '" + noProfesor + "' && Estado = 1;";
+        ResultSet res = conexion.consultar(consulta);
+        try {
+            while (res.next()) {
+                salida = res.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
+        }
+        if (salida.equals("")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         conexion.cerrarConexion();
@@ -326,25 +357,32 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        try{
-            if(combo_hora_entrada.getSelectedItem().toString().equals(combo_hora_salida.getSelectedItem().toString())){
-                JOptionPane.showMessageDialog(null,"Error al seleccionar hora de apertura o de salida","ERROR",JOptionPane.ERROR_MESSAGE);
-            }else if(Integer.parseInt(combo_hora_entrada.getSelectedItem().toString().replace(":00", ""))> Integer.parseInt(combo_hora_salida.getSelectedItem().toString().replace(":00", ""))){
-                JOptionPane.showMessageDialog(null,"Error al seleccionar hora de apertura o de salida","ERROR",JOptionPane.ERROR_MESSAGE);
-            }else {
+        try {
+            if (combo_hora_entrada.getSelectedItem().toString().equals(combo_hora_salida.getSelectedItem().toString())) {
+                JOptionPane.showMessageDialog(null, "Error al seleccionar hora de apertura o de salida", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else if (Integer.parseInt(combo_hora_entrada.getSelectedItem().toString().replace(":00", "")) > Integer.parseInt(combo_hora_salida.getSelectedItem().toString().replace(":00", ""))) {
+                JOptionPane.showMessageDialog(null, "Error al seleccionar hora de apertura o de salida", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
                 if (new ControladorGrafico().getColor(txt_no_alumnos) && new ControladorGrafico().getColor(txt_no_profesor)) {
                     try {
-                        String no_horario = txt_no_horario.getText();
-                        String hora_entrada = combo_hora_entrada.getSelectedItem().toString();
-                        String hora_salida = combo_hora_salida.getSelectedItem().toString();
-                        String no_empleado = txt_no_profesor.getText();
-                        int total_alumnos = Integer.parseInt(txt_no_alumnos.getText());
-                        int cupo_alumnos = 0;
-                        //int estado = 1;
-                        conexion.ejecutar("INSERT INTO horario values ('" + no_horario + "','" + hora_entrada + "','" + hora_salida + "','" + no_empleado + "'," + cupo_alumnos + "," + total_alumnos + ")");
-                        JOptionPane.showMessageDialog(null, "Horario Agregado exitosamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                        limpiar();
-                        crearNoHorario();
+                        if (buscarProfesor(txt_no_profesor.getText())) {
+                            String no_horario = txt_no_horario.getText();
+                            String hora_entrada = combo_hora_entrada.getSelectedItem().toString();
+                            String hora_salida = combo_hora_salida.getSelectedItem().toString();
+                            String no_empleado = txt_no_profesor.getText();
+                            int total_alumnos = Integer.parseInt(txt_no_alumnos.getText());
+                            int cupo_alumnos = 30;
+                            //int estado = 1;
+                            conexion.ejecutar("INSERT INTO horario values ('" + no_horario + "','" + hora_entrada + "','" + hora_salida + "','" + no_empleado + "'," + total_alumnos + "," + cupo_alumnos + ")");
+                            JOptionPane.showMessageDialog(null, "Horario Agregado exitosamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                            limpiar();
+                            crearNoHorario();
+                        } else {
+                            txt_no_profesor.setText("");
+                            JOptionPane.showMessageDialog(null, "Profesor No Encontrado", "No encontrado!",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                        }
+
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());
                     }
@@ -352,8 +390,8 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
                     System.out.println("algo salio mal");
                 }
             }
-        }catch(Exception es){
-            System.out.println(es.getMessage());
+        } catch (Exception es) {
+            JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Advertencia...", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
 
@@ -363,20 +401,27 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         System.out.println("matutino");
-        llenarMatutino(fecha_inicio.getCalendar().get(Calendar.DAY_OF_WEEK));
+        try {
+            llenarMatutino(fecha_inicio.getCalendar().get(Calendar.DAY_OF_WEEK));
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         System.out.println("vespertino");
-        llenarVespertino(fecha_inicio.getCalendar().get(Calendar.DAY_OF_WEEK));
+        try {
+            llenarVespertino(fecha_inicio.getCalendar().get(Calendar.DAY_OF_WEEK));
+
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void fecha_inicioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_fecha_inicioPropertyChange
-        try{
+        try {
             System.out.println(fecha_inicio.getCalendar().get(Calendar.DAY_OF_WEEK));
             llenarMatutino(fecha_inicio.getCalendar().get(Calendar.DAY_OF_WEEK));
             jRadioButton1.setSelected(true);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_fecha_inicioPropertyChange
@@ -388,20 +433,24 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
     }
 
     public void crearNoHorario() {
+        int numero;
+        String salida = "";
+        ResultSet res = conexion.consultar("select No_Horario from horario");
+
         try {
-            ResultSet datos = conexion.consultar("select no_horario from horario");
-            datos.next();
-            int numero = Integer.parseInt(datos.getString(1)) + 1;
+            while (res.next()) {
+                salida = res.getString(1);
+            }
+            numero = Integer.parseInt(salida) + 1;
             txt_no_horario.setText(Integer.toString(numero));
         } catch (Exception e) {
-            int numero = 1;
-            txt_no_horario.setText(Integer.toString(numero));
-            System.out.println(e.getMessage());
+            txt_no_horario.setText("1");
+            System.out.println("Error: " + e);
         }
     }
-    
-    public void llenarMatutino(int dia){
-        if(dia == 7){
+
+    public void llenarMatutino(int dia) {
+        if (dia == 7) {
             System.out.println("Sabado");
             combo_hora_entrada.removeAllItems();
             combo_hora_salida.removeAllItems();
@@ -411,7 +460,7 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
             combo_hora_salida.addItem("12:00");
             combo_hora_salida.addItem("16:00");
             combo_hora_salida.addItem("20:00");
-        }else if(dia == 1){
+        } else if (dia == 1) {
             System.out.println("domingo");
             combo_hora_entrada.removeAllItems();
             combo_hora_salida.removeAllItems();
@@ -419,20 +468,20 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
             combo_hora_entrada.addItem("12:00");
             combo_hora_salida.addItem("12:00");
             combo_hora_salida.addItem("16:00");
-        }else{
+        } else {
             combo_hora_entrada.removeAllItems();
             combo_hora_salida.removeAllItems();
-            for(int i = 8; i <= 11; i++){
-                combo_hora_entrada.addItem(i+":00");
+            for (int i = 8; i <= 11; i++) {
+                combo_hora_entrada.addItem(i + ":00");
             }
-            for(int i = 9; i <= 12; i++){
-                combo_hora_salida.addItem(i+":00");
+            for (int i = 9; i <= 12; i++) {
+                combo_hora_salida.addItem(i + ":00");
             }
         }
     }
-    
-    public void llenarVespertino(int dia){
-        if(dia == 7){
+
+    public void llenarVespertino(int dia) {
+        if (dia == 7) {
             System.out.println("Sabado");
             combo_hora_entrada.removeAllItems();
             combo_hora_salida.removeAllItems();
@@ -442,7 +491,7 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
             combo_hora_salida.addItem("12:00");
             combo_hora_salida.addItem("16:00");
             combo_hora_salida.addItem("20:00");
-        }else if(dia == 1){
+        } else if (dia == 1) {
             System.out.println("domingo");
             combo_hora_entrada.removeAllItems();
             combo_hora_salida.removeAllItems();
@@ -450,14 +499,14 @@ public class AperturaDeHorarios extends javax.swing.JFrame {
             combo_hora_entrada.addItem("12:00");
             combo_hora_salida.addItem("12:00");
             combo_hora_salida.addItem("16:00");
-        }else{
+        } else {
             combo_hora_entrada.removeAllItems();
             combo_hora_salida.removeAllItems();
-            for(int i = 16; i <= 19; i++){
-                combo_hora_entrada.addItem(i+":00");
+            for (int i = 16; i <= 19; i++) {
+                combo_hora_entrada.addItem(i + ":00");
             }
-            for(int i = 17; i <= 20; i++){
-                combo_hora_salida.addItem(i+":00");
+            for (int i = 17; i <= 20; i++) {
+                combo_hora_salida.addItem(i + ":00");
             }
         }
     }

@@ -4,6 +4,7 @@ import Controladores.Conexion;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Image;
 import java.sql.ResultSet;
+import java.util.Vector;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -19,41 +20,41 @@ public class BajaDeAlumno extends javax.swing.JFrame {
     ImageIcon icon;
     Conexion conexion;
     JFrame control;
-    
+
     final int ACTIVO = 1;
     final int INACTIVO = 0;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public BajaDeAlumno(JFrame ventana) {
         initComponents();
         this.setTitle("Baja De Alumno");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/eliminar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_eliminar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
         conexion = new Conexion();
         conexion.conectar();
-        
+
         //new Controladores.ControladorGrafico().getDocument(txt_segundo_nombre, "[a-Zñ\\sA-ZÑ\\s]+");
         new Controladores.ControladorGrafico().getDocument(txt_no_control, "\\d+");
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -294,7 +295,29 @@ public class BajaDeAlumno extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        new GestionDeAlumnos(this).setVisible(true);
+        String dato = txt_no_control.getText();
+
+        if (dato.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese El No. De Control", "Campo Vacio",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        String[] datos = getDatos(dato);
+
+        if (datos[0] == null) {
+            limpiarCampos();
+            JOptionPane.showMessageDialog(null, "Alumno No Encontrado", "No Encontrado!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            txt_primer_nombre.setText(datos[0]);
+            txt_segundo_nombre.setText(datos[1]);
+            txt_apell_paterno.setText(datos[2]);
+            txt_apell_materno.setText(datos[3]);
+            String date = datos[4] + "-" + datos[5] + "-" + datos[6];
+            txt_fecha_nac.setText(date);
+
+        }
     }//GEN-LAST:event_btn_buscarActionPerformed
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
@@ -304,29 +327,42 @@ public class BajaDeAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        if (!txt_no_control.equals("")) {
-            if (new Controladores.ControladorGrafico().getColor(txt_no_control)) {
-                int no_control = Integer.parseInt(txt_no_control.getText());
-                try {
-                    conexion.ejecutar("update alumno set estado = " + INACTIVO + " where no_control = '" + no_control + "'");
-                    txt_primer_nombre.setText("");
-                    txt_segundo_nombre.setText("");
-                    txt_apell_paterno.setText("");
-                    txt_apell_materno.setText("");
-                    txt_fecha_nac.setText("");
-                    txt_no_control.setText("");
-                    JOptionPane.showMessageDialog(null, "Alumno dado de baja exitosamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
+        try {
+            if (!txt_no_control.equals("")) {
+                if (new Controladores.ControladorGrafico().getColor(txt_no_control)) {
+                    String[] datos = getDatos(txt_no_control.getText());
+
+                    if (datos[0] == null) {
+                        limpiarCampos();
+                        JOptionPane.showMessageDialog(null, "Alumno No Encontrado", "No Encontrado!",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                    }
+
+                    int no_control = Integer.parseInt(txt_no_control.getText());
+                    try {
+                        conexion.ejecutar("update alumno set estado = " + INACTIVO + " where no_control = '" + no_control + "'");
+                        txt_primer_nombre.setText("");
+                        txt_segundo_nombre.setText("");
+                        txt_apell_paterno.setText("");
+                        txt_apell_materno.setText("");
+                        txt_fecha_nac.setText("");
+                        txt_no_control.setText("");
+                        JOptionPane.showMessageDialog(null, "Alumno dado de baja exitosamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Busque Un Alumno", "Informacion.", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Error No. Control vacio", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Busque Un Alumno", "Informacion.", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void txt_no_controlKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_no_controlKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (validarControl(txt_no_control)) {
                 System.out.println("paso validacion");
                 int no_control = Integer.parseInt(txt_no_control.getText());
@@ -340,7 +376,7 @@ public class BajaDeAlumno extends javax.swing.JFrame {
                     txt_fecha_nac.setText(consulta.getString(5) + "-" + consulta.getString(6) + "-" + consulta.getString(7));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                    JOptionPane.showMessageDialog(null, "Alumno no encontrado","ERROR",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Alumno no encontrado", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 System.out.println("no paso");
@@ -352,16 +388,52 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         control.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
-    public boolean validarControl(JTextField campo){
-        if(!campo.getText().matches("\\d+")){
-            JOptionPane.showMessageDialog(null,"Caracteres invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
+    public String[] getDatos(String no_control) {
+        String[] salida = new String[7];
+        String consulta = "SELECT Primer_Nom, Segun_nom, Apellido_P, Apellido_M, Dia_Nac, Mes_Nac, Año_Nac"
+                + " FROM alumno INNER JOIN persona on alumno.CURP = persona.CURP "
+                + " WHERE alumno.No_Control = '" + no_control + "' && Estado = 1;";
+
+        ResultSet res = conexion.consultar(consulta);
+        try {
+            while (res.next()) {
+                Vector v = new Vector();
+                salida[0] = res.getString(1);
+                salida[1] = res.getString(2);
+                salida[2] = res.getString(3);
+                salida[3] = res.getString(4);
+                salida[4] = Integer.toString(res.getInt(5));
+                salida[5] = Integer.toString(res.getInt(6));
+                salida[6] = Integer.toString(res.getInt(7));
+            }
+            for (int i = 0; i < salida.length; i++) {
+                System.out.println(salida[i]);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+        return salida;
+    }
+
+    public boolean validarControl(JTextField campo) {
+        if (!campo.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Caracteres invalidos", "ERROR", JOptionPane.ERROR_MESSAGE);
             campo.requestFocus();
             return false;
-        }else{
+        } else {
             return true;
         }
     }
-    
+
+    public void limpiarCampos() {
+        txt_primer_nombre.setText("");
+        txt_segundo_nombre.setText("");
+        txt_apell_paterno.setText("");
+        txt_apell_materno.setText("");
+        txt_fecha_nac.setText("");
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_eliminar;

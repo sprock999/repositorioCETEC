@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,10 +17,12 @@ public class Reportes extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
     JFrame control;
-    
+
     String no_reporte, no_profesor, actividad;
     int dia_reporte, mes_reporte, año_reporte;
     
+    JTextFieldDateEditor editorFecha;
+
     ManejadorReportes reporte;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
@@ -28,27 +31,31 @@ public class Reportes extends javax.swing.JFrame {
         this.setTitle("Reportes");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
+
+        editorFecha = (JTextFieldDateEditor) fecha_registro.getDateEditor();
+        editorFecha.setEditable(false);
+
+        reporte = new ManejadorReportes();
         
-        JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_registro.getDateEditor();
-        editor.setEnabled(false);
+        asignarNoReporte();
     }
 
     @SuppressWarnings("unchecked")
@@ -93,7 +100,13 @@ public class Reportes extends javax.swing.JFrame {
         jLabel3.setText("No. De Empleado:");
 
         btn_buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_buscarActionPerformed(evt);
+            }
+        });
 
+        txt_no_reporte.setEditable(false);
         txt_no_reporte.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         txt_no_empleado.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -233,17 +246,47 @@ public class Reportes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        no_reporte = txt_no_reporte.getText();
-        String fecha[] = new SimpleDateFormat("dd/M/yyyy").format(fecha_registro.getCalendar().getTime()).split("/");
-        dia_reporte = Integer.parseInt(fecha[0]);
-        mes_reporte = Integer.parseInt(fecha[1]);
-        año_reporte = Integer.parseInt(fecha[2]);
-        no_profesor = txt_no_reporte.getText();
-        actividad = txt_actividad.getText();
-        
-        reporte = new ManejadorReportes(no_reporte, no_profesor, actividad, dia_reporte, mes_reporte, año_reporte);
-        reporte.Registrar();
+        try {
+            no_reporte = txt_no_reporte.getText();
+            String fecha[] = new SimpleDateFormat("dd/M/yyyy").format(fecha_registro.getCalendar().getTime()).split("/");
+            dia_reporte = Integer.parseInt(fecha[0]);
+            mes_reporte = Integer.parseInt(fecha[1]);
+            año_reporte = Integer.parseInt(fecha[2]);
+            no_profesor = txt_no_empleado.getText();
+            actividad = txt_actividad.getText();
+            if (no_profesor.equals("") || actividad.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (!reporte.buscarTutor(no_profesor)) {
+                txt_no_empleado.setText("");
+                JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No encontrado!",
+                        JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            reporte.asignarDatos(no_reporte, no_profesor, actividad, dia_reporte, mes_reporte, año_reporte);
+            reporte.Registrar();
+            JOptionPane.showMessageDialog(null, "Reporte Registrado", "Informacion.",
+                    JOptionPane.INFORMATION_MESSAGE);
+            asignarNoReporte();
+            limpiarCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    public void asignarNoReporte() {
+        int numRep = reporte.getID();
+
+        if (numRep != -1) {
+            txt_no_reporte.setText(Integer.toString(numRep));
+        } else {
+            txt_no_reporte.setText("1");
+        }
+    }
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         this.dispose();
@@ -254,6 +297,27 @@ public class Reportes extends javax.swing.JFrame {
         control.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
+        String dato = txt_no_empleado.getText();
+        if (dato.equals("")) {
+            JOptionPane.showMessageDialog(null, "Ingrese El No. Del Empleado", "Campo Vacio",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (!reporte.buscarTutor(dato)) {
+            txt_no_empleado.setText("");
+            JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No encontrado!",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_buscarActionPerformed
+
+    public void limpiarCampos(){
+        
+        txt_no_empleado.setText("");
+        txt_actividad.setText("");
+        fecha_registro.setDate(null);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_registrar;

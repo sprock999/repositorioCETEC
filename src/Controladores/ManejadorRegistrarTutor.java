@@ -3,6 +3,7 @@ package Controladores;
 
 import Entidades.Persona;
 import Entidades.Tutor;
+import java.sql.ResultSet;
 
 public class ManejadorRegistrarTutor{
     
@@ -12,7 +13,10 @@ public class ManejadorRegistrarTutor{
             apellido_mat, curp, telefono, email, parentesco, ocupacion;
     int dia_nac, mes_nac, año_nac;
 
-    public ManejadorRegistrarTutor(String no_tutor, String primer_nom, String segundo_nom, String apellido_pat, String apellido_mat, String curp, String telefono, String email, String parentesco, String ocupacion, int dia_nac, int mes_nac, int año_nac) {
+    public ManejadorRegistrarTutor() {
+    }
+
+    public void asignarDatos(String no_tutor, String primer_nom, String segundo_nom, String apellido_pat, String apellido_mat, String curp, String telefono, String email, String parentesco, String ocupacion, int dia_nac, int mes_nac, int año_nac) {
         this.no_tutor = no_tutor;
         this.primer_nom = primer_nom;
         this.segundo_nom = segundo_nom;
@@ -56,6 +60,43 @@ public class ManejadorRegistrarTutor{
             baseDatos.ejecutar(sentenciaTutor);
         }catch(Exception e){
             System.out.println(e.getMessage());
+        }
+    }
+    
+    public int getId() {
+        int numero;
+        String salida = "";
+        ResultSet res = baseDatos.consultar("select No_Tutor from tutor ORDER BY No_Tutor ASC");
+        
+        try {
+            while (res.next()) {
+                salida = res.getString(1);
+            }
+            numero = Integer.parseInt(salida) + 1;
+            return numero;
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return -1;
+        }
+    }
+    
+    public boolean buscarTutor(String noTutor) {
+        String salida = "";
+        String consulta = "SELECT * FROM tutor "
+                + "WHERE No_tutor = '" + noTutor + "' && Estado = 1;";
+        ResultSet res = baseDatos.consultar(consulta);
+        try {
+            while (res.next()) {
+                salida = res.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return false;
+        }
+        if (salida.equals("")) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

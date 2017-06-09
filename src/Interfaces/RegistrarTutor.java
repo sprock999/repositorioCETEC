@@ -17,33 +17,33 @@ public class RegistrarTutor extends javax.swing.JFrame {
 
     ImageIcon img;
     ImageIcon icon;
-    String no_tutor, primer_nom, segundo_nom, apellido_pat, 
+    String no_tutor, primer_nom, segundo_nom, apellido_pat,
             apellido_mat, curp, telefono, email, parentesco, ocupacion;
     int dia_nac, mes_nac, año_nac;
     ManejadorRegistrarTutor registrartutor;
     JFrame control;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public RegistrarTutor(JFrame ventana){
+    public RegistrarTutor(JFrame ventana) {
         initComponents();
         this.setTitle("Registrar Tutor");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
+
         new ControladorGrafico().getDocument(txt_primer_nombre, "[a-zñA-ZÑ]{3,30}");
         new ControladorGrafico().getDocument(txt_segundo_nombre, "[a-zñA-ZÑ]{3,30}");
         new ControladorGrafico().getDocument(txt_apell_paterno, "[a-zñA-ZÑ ]{4,50}");
@@ -53,9 +53,13 @@ public class RegistrarTutor extends javax.swing.JFrame {
         new ControladorGrafico().getDocument(txt_Email, "[a-zA-Z._]+@[a-zA-Z]+.([Cc][Oo][Mm]|[Oo][Rr][Gg]|[Nn][Ee][Tt]|([Cc][Oo][Mm].[a-zA-Z]))");
         new ControladorGrafico().getDocument(txt_parentezco, "[a-zñA-ZÑ ]+");
         new ControladorGrafico().getDocument(txt_ocupacion, "[a-zñA-ZÑ ]+");
-        
+
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editor.setEditable(false);
+
+        registrartutor = new ManejadorRegistrarTutor();
+
+        asignarId();
     }
 
     @SuppressWarnings("unchecked")
@@ -250,6 +254,7 @@ public class RegistrarTutor extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel1.setText("No. De Tutor:");
 
+        txt_no_tutor.setEditable(false);
         txt_no_tutor.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -350,66 +355,78 @@ public class RegistrarTutor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-//        txt_no_tutor.getBackground().equals(Color.green) && 
-        if(new ControladorGrafico().getColor(txt_primer_nombre) && new ControladorGrafico().getColor(txt_segundo_nombre)
-                && new ControladorGrafico().getColor(txt_apell_paterno) && new ControladorGrafico().getColor(txt_apell_materno) && new ControladorGrafico().getColor(txt_curp)
-                && new ControladorGrafico().getColor(txt_telefono) && new ControladorGrafico().getColor(txt_Email) && new ControladorGrafico().getColor(txt_parentezco)
-                && new ControladorGrafico().getColor(txt_ocupacion) && fecha_nacimiento.getDate() != null){
-            no_tutor = txt_no_tutor.getText();
-            primer_nom = txt_primer_nombre.getText();
-            segundo_nom = txt_segundo_nombre.getText();
-            apellido_pat = txt_apell_paterno.getText();
-            apellido_mat = txt_apell_materno.getText();
-            curp = txt_curp.getText();
-            telefono = txt_telefono.getText();
-            email = txt_Email.getText();
-            parentesco = txt_parentezco.getText();
-            ocupacion = txt_ocupacion.getText();
-            String fecha[] = new SimpleDateFormat("dd/M/yyyy").format(fecha_nacimiento.getCalendar().getTime()).split("/");
-            dia_nac = Integer.parseInt(fecha[0]);
-            mes_nac = Integer.parseInt(fecha[1]);
-            año_nac = Integer.parseInt(fecha[2]);
 
-            registrartutor = new ManejadorRegistrarTutor(no_tutor, primer_nom, segundo_nom, apellido_pat, apellido_mat, curp, telefono, email, parentesco, ocupacion, dia_nac, mes_nac, año_nac);
-            registrartutor.Registrar();
-        }else{
-            String error = "El o los siguientes campos con incorrecto o estan vacios";
-            if(!new ControladorGrafico().getColor(txt_no_tutor)){
-                error += "\nNumero de tutor";
-            } 
-            if(!new ControladorGrafico().getColor(txt_primer_nombre)){
-                error += "\nPrimer Nombre";
+        try {
+            if (new ControladorGrafico().getColor(txt_primer_nombre)
+                    && new ControladorGrafico().getColor(txt_apell_paterno) && new ControladorGrafico().getColor(txt_apell_materno) && new ControladorGrafico().getColor(txt_curp)
+                    && new ControladorGrafico().getColor(txt_telefono) && new ControladorGrafico().getColor(txt_Email) && new ControladorGrafico().getColor(txt_parentezco)
+                    && new ControladorGrafico().getColor(txt_ocupacion) && fecha_nacimiento.getDate() != null) {
+
+                if (txt_segundo_nombre.getText().equals("")) {
+                    System.out.println("Segundo Nombre Vacio");
+                } else {
+                    if (!new ControladorGrafico().estaVacio(txt_segundo_nombre)) {
+                        if (!new ControladorGrafico().getColor(txt_segundo_nombre)) {
+                            JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                                    JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                    }
+                }
+                no_tutor = txt_no_tutor.getText();
+                primer_nom = txt_primer_nombre.getText();
+                segundo_nom = txt_segundo_nombre.getText();
+                apellido_pat = txt_apell_paterno.getText();
+                apellido_mat = txt_apell_materno.getText();
+                curp = txt_curp.getText();
+                telefono = txt_telefono.getText();
+                email = txt_Email.getText();
+                parentesco = txt_parentezco.getText();
+                ocupacion = txt_ocupacion.getText();
+                String fecha[] = new SimpleDateFormat("dd/M/yyyy").format(fecha_nacimiento.getCalendar().getTime()).split("/");
+                dia_nac = Integer.parseInt(fecha[0]);
+                mes_nac = Integer.parseInt(fecha[1]);
+                año_nac = Integer.parseInt(fecha[2]);
+
+                registrartutor.asignarDatos(no_tutor, primer_nom, segundo_nom, apellido_pat, apellido_mat, curp, telefono, email, parentesco, ocupacion, dia_nac, mes_nac, año_nac);
+                registrartutor.Registrar();
+                JOptionPane.showMessageDialog(null, "Tutor Registrado", "Registrado...",
+                        JOptionPane.INFORMATION_MESSAGE);
+                asignarId();
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                        JOptionPane.WARNING_MESSAGE);
             }
-            if(!new ControladorGrafico().getColor(txt_segundo_nombre)){
-                error += "\nSegundo Nombre";
-            }
-            if(!new ControladorGrafico().getColor(txt_apell_paterno)){
-                error += "\nApellido Paterno";
-            }
-            if(!new ControladorGrafico().getColor(txt_apell_materno)){
-                error += "\nApellido Materno";
-            }
-            if(!new ControladorGrafico().getColor(txt_curp)){
-                error += "\nCURP";
-            }
-            if(!new ControladorGrafico().getColor(txt_telefono)){
-                error += "\nNumero Telefonico";
-            }
-            if(!new ControladorGrafico().getColor(txt_Email)){
-                error += "\nCorreo Electronico";
-            }
-            if(!new ControladorGrafico().getColor(txt_parentezco)){
-                error += "\nParentesco";
-            }
-            if(!new ControladorGrafico().getColor(txt_ocupacion)){
-                error += "\nOcupacion";
-            }
-            if(fecha_nacimiento.getDate() == null){                
-                error += "\nFecha de Nacimineto";
-            }
-            JOptionPane.showMessageDialog(null, error);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
+
+    public void asignarId() {
+        int numTut = registrartutor.getId();
+
+        if (numTut != -1) {
+            txt_no_tutor.setText(Integer.toString(numTut));
+
+        } else {
+            txt_no_tutor.setText("1");
+        }
+    }
+
+    public void limpiarCampos() {
+        txt_primer_nombre.setText("");
+        txt_segundo_nombre.setText("");
+        txt_apell_paterno.setText("");
+        txt_apell_materno.setText("");
+        txt_curp.setText("");
+        fecha_nacimiento.setDate(null);
+        txt_telefono.setText("");
+        txt_Email.setText("");
+        txt_parentezco.setText("");
+        txt_ocupacion.setText("");
+    }
 
     private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         this.dispose();
@@ -450,4 +467,5 @@ public class RegistrarTutor extends javax.swing.JFrame {
     private javax.swing.JTextField txt_segundo_nombre;
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
+
 }

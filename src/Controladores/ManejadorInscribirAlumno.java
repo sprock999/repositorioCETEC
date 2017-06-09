@@ -67,11 +67,10 @@ public class ManejadorInscribirAlumno {
     public int getNoControl() {
         int numero;
         String salida = "";
-        ResultSet res = baseDatos.consultar("select no_control from alumno where Estado = 1");
+        ResultSet res = baseDatos.consultar("select No_Control from alumno ORDER BY No_Control ASC");
         
         try {
             while (res.next()) {
-                Vector v = new Vector();
                 salida = res.getString(1);
             }
             numero = Integer.parseInt(salida) + 1;
@@ -89,7 +88,6 @@ public class ManejadorInscribirAlumno {
         ResultSet res = baseDatos.consultar(consulta);
         try {
             while (res.next()) {
-                Vector v = new Vector();
                 salida = res.getString(1);
             }
         } catch (Exception e) {

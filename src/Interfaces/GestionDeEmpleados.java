@@ -32,19 +32,19 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     int correcto = 0;
 
     ImageIcon img, icon;
-    
+
     public GestionDeEmpleados(JFrame ventana) {
         initComponents();
         this.setTitle("Gestion De Empleados");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
@@ -85,7 +85,6 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         ctrlCurp.getDocument(txt_curp, regexCurp);
         ctrlSalrio.getDocument(txt_salario, "\\d+");
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -429,7 +428,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
         if (datos[0] == null) {
             JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado!",
-                JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE);
             correcto = 2;
         } else {
             habilitarComponentes();
@@ -461,7 +460,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
         if (dato.equals("")) {
             JOptionPane.showMessageDialog(null, "Ingrese El No. De Empleado", "Campo Vacio",
-                JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -471,7 +470,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
             limpiarCampos();
             correcto = 0;
             JOptionPane.showMessageDialog(null, "No Se Encontró El Empleado", "No Encontrado!",
-                JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE);
         } else {
             tabla_empleados.setModel(model);
             correcto = 2;
@@ -485,12 +484,12 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         try {
             if (correcto == 0) {
                 JOptionPane.showMessageDialog(null, "Busque Un Empleado", "Advertencia!",
-                    JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             } else {
                 if (correcto == 2) {
                     JOptionPane.showMessageDialog(null, "Seleccione Un Empleado", "Advertencia!",
-                        JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
             }
@@ -513,15 +512,15 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
             fecha_nac = formato.format(time);
         }
 
-        String[] fechaArray = fecha_nac.split("-");
-        dia_nac = Integer.parseInt(fechaArray[0]);
-        mes_nac = Integer.parseInt(fechaArray[1]);
-        año_nac = Integer.parseInt(fechaArray[2]);
-
         try {
+            String[] fechaArray = fecha_nac.split("-");
+            dia_nac = Integer.parseInt(fechaArray[0]);
+            mes_nac = Integer.parseInt(fechaArray[1]);
+            año_nac = Integer.parseInt(fechaArray[2]);
+
             if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
-                && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
-                && ctrlCurp.getColor(txt_curp) && ctrlSalrio.getColor(txt_salario)) {
+                    && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
+                    && ctrlCurp.getColor(txt_curp) && ctrlSalrio.getColor(txt_salario)) {
 
                 if (txt_segundo_nombre.getText().equals("")) {
                     System.out.println("Segundo Nombre Vacio");
@@ -529,7 +528,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
                     if (!ctrlSegundoNombre.estaVacio(txt_segundo_nombre)) {
                         if (!ctrlSegundoNombre.getColor(txt_segundo_nombre)) {
                             JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
-                                JOptionPane.WARNING_MESSAGE);
+                                    JOptionPane.WARNING_MESSAGE);
                             return;
                         }
                     }
@@ -537,22 +536,22 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
                 salario = Integer.parseInt(txt_salario.getText());
                 gestionEmpleados.asignarDatos(no_empleado, primer_nom, segundo_nom, apellido_pat,
-                    apellido_mat, curp, grado_estudios, salario, dia_nac, mes_nac, año_nac);
+                        apellido_mat, curp, grado_estudios, salario, dia_nac, mes_nac, año_nac);
                 gestionEmpleados.actualizar();
                 JOptionPane.showMessageDialog(null, "Datos Del Alumno Actualizado", "Actualizado...",
-                    JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
                 deshabilitarComponentes();
                 correcto = 0;
                 modelo.setRowCount(0);
             } else {
                 JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
-                    JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e) {
             System.out.println(e);
             JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
-                JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btn_modificarActionPerformed
 
@@ -562,7 +561,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void combo_estudiosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_estudiosItemStateChanged
-      
+
     }//GEN-LAST:event_combo_estudiosItemStateChanged
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -603,7 +602,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         fecha_nacimiento.setEnabled(false);
         combo_estudios.setEnabled(false);
     }
-    
+
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

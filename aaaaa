@@ -1,0 +1,233 @@
+-- MySQL dump 10.13  Distrib 5.7.16, for Win64 (x86_64)
+--
+-- Host: localhost    Database: cetec
+-- ------------------------------------------------------
+-- Server version	5.7.16-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `alumno`
+--
+
+DROP TABLE IF EXISTS `alumno`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `alumno` (
+  `No_Control` varchar(10) NOT NULL,
+  `CURP` varchar(18) NOT NULL,
+  `No_Tutor` varchar(10) NOT NULL,
+  `Estado` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`No_Control`),
+  KEY `CURP` (`CURP`),
+  KEY `No_Tutor` (`No_Tutor`),
+  CONSTRAINT `alumno_ibfk_1` FOREIGN KEY (`CURP`) REFERENCES `persona` (`CURP`),
+  CONSTRAINT `alumno_ibfk_2` FOREIGN KEY (`No_Tutor`) REFERENCES `tutor` (`No_Tutor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alumno`
+--
+
+LOCK TABLES `alumno` WRITE;
+/*!40000 ALTER TABLE `alumno` DISABLE KEYS */;
+INSERT INTO `alumno` VALUES ('13','ROIP910720MDGSBL02','10',0),('1310','BADD110313HCMLNS09','10',1),('133','HEAM457GHSDF677','10',0);
+/*!40000 ALTER TABLE `alumno` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `avance`
+--
+
+DROP TABLE IF EXISTS `avance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `avance` (
+  `No_Avance` varchar(10) NOT NULL,
+  `Dia_Avance` tinyint(2) unsigned zerofill NOT NULL,
+  `Mes_Avance` tinyint(2) unsigned zerofill NOT NULL,
+  `Año_Avance` smallint(4) unsigned zerofill NOT NULL,
+  `Modulo_Avance` varchar(25) DEFAULT NULL,
+  `No_profesor` varchar(10) NOT NULL,
+  `No_Horario` varchar(10) NOT NULL,
+  `Cantidad_Alumnos` tinyint(3) unsigned zerofill NOT NULL,
+  PRIMARY KEY (`No_Avance`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `avance`
+--
+
+LOCK TABLES `avance` WRITE;
+/*!40000 ALTER TABLE `avance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `avance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `horario`
+--
+
+DROP TABLE IF EXISTS `horario`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `horario` (
+  `No_Horario` varchar(10) NOT NULL,
+  `Hora_Entrada` varchar(5) NOT NULL,
+  `Hora_Salida` varchar(5) NOT NULL,
+  `No_Profesor` varchar(10) NOT NULL,
+  `Numero_Alumnos` tinyint(3) unsigned zerofill NOT NULL,
+  `Numero_Maximo_Alumno` tinyint(3) unsigned zerofill NOT NULL,
+  PRIMARY KEY (`No_Horario`),
+  KEY `No_Profesor` (`No_Profesor`),
+  CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`No_Profesor`) REFERENCES `profesor` (`No_Profesor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `horario`
+--
+
+LOCK TABLES `horario` WRITE;
+/*!40000 ALTER TABLE `horario` DISABLE KEYS */;
+INSERT INTO `horario` VALUES ('31','10:00','14:00','21',020,030),('32','10:00','14:00','20',020,030),('33','11:00','12:00','21',015,030),('34','8:00','10:00','20',010,030);
+/*!40000 ALTER TABLE `horario` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `persona`
+--
+
+DROP TABLE IF EXISTS `persona`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `persona` (
+  `CURP` varchar(18) NOT NULL,
+  `Primer_Nom` varchar(30) NOT NULL,
+  `Segun_Nom` varchar(30) DEFAULT NULL,
+  `Apellido_P` varchar(50) NOT NULL,
+  `Apellido_M` varchar(50) DEFAULT NULL,
+  `Dia_Nac` tinyint(2) unsigned zerofill NOT NULL,
+  `Mes_Nac` tinyint(2) unsigned zerofill NOT NULL,
+  `Año_Nac` smallint(4) unsigned zerofill NOT NULL,
+  PRIMARY KEY (`CURP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `persona`
+--
+
+LOCK TABLES `persona` WRITE;
+/*!40000 ALTER TABLE `persona` DISABLE KEYS */;
+INSERT INTO `persona` VALUES ('BADD110313HCMLNS09','Edgar','','Alvares','Rios',12,03,1995),('CAJA920117MDGBRM08','Diego','Armando','Castro','Gonzales',22,09,1985),('COTD870531HDGNRG09','Rocio','','Ferman','Delgado',02,10,1985),('DAER455678FG4567','David','Fernando','Carbajal','Miranda',21,08,1992),('HEAM457GHSDF677','jose','manuel','hernandez','antaño',19,03,1995),('RERR910705HDGYDG01','Rogelio','','Reyes','Rodriguez',25,03,1983),('RILA930304MDGSPN09','Ana','Laura','Rios','Lopez',29,11,1983),('ROIP910720MDGSBL02','Hector','','Lobato','Silva',29,05,2010);
+/*!40000 ALTER TABLE `persona` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `profesor`
+--
+
+DROP TABLE IF EXISTS `profesor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `profesor` (
+  `No_Profesor` varchar(10) NOT NULL,
+  `CURP` varchar(18) NOT NULL,
+  `Grado_Estudios` varchar(25) NOT NULL,
+  `Salario` smallint(5) unsigned zerofill NOT NULL,
+  `Estado` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`No_Profesor`),
+  KEY `CURP` (`CURP`),
+  CONSTRAINT `profesor_ibfk_1` FOREIGN KEY (`CURP`) REFERENCES `persona` (`CURP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `profesor`
+--
+
+LOCK TABLES `profesor` WRITE;
+/*!40000 ALTER TABLE `profesor` DISABLE KEYS */;
+INSERT INTO `profesor` VALUES ('20','RERR910705HDGYDG01','Maestría ',02600,0),('21','RILA930304MDGSPN09','Licenciatura ',02300,1),('22','DAER455678FG4567','Licenciatura',08000,0);
+/*!40000 ALTER TABLE `profesor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reporte`
+--
+
+DROP TABLE IF EXISTS `reporte`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reporte` (
+  `Numero_Reporte` varchar(10) NOT NULL,
+  `Dia_Reporte` tinyint(2) unsigned zerofill NOT NULL,
+  `Mes_Reporte` tinyint(2) unsigned zerofill NOT NULL,
+  `Año_Reporte` smallint(4) unsigned zerofill NOT NULL,
+  `No_Profesor` varchar(10) NOT NULL,
+  `Actividad` varchar(25) NOT NULL,
+  PRIMARY KEY (`Numero_Reporte`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reporte`
+--
+
+LOCK TABLES `reporte` WRITE;
+/*!40000 ALTER TABLE `reporte` DISABLE KEYS */;
+/*!40000 ALTER TABLE `reporte` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tutor`
+--
+
+DROP TABLE IF EXISTS `tutor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tutor` (
+  `No_Tutor` varchar(10) NOT NULL,
+  `CURP` varchar(18) NOT NULL,
+  `Telefono` varchar(10) NOT NULL,
+  `Email` varchar(50) DEFAULT NULL,
+  `Parentesco` varchar(25) NOT NULL,
+  `Ocupacion` varchar(25) NOT NULL,
+  `Estado` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`No_Tutor`),
+  KEY `CURP` (`CURP`),
+  CONSTRAINT `tutor_ibfk_1` FOREIGN KEY (`CURP`) REFERENCES `persona` (`CURP`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tutor`
+--
+
+LOCK TABLES `tutor` WRITE;
+/*!40000 ALTER TABLE `tutor` DISABLE KEYS */;
+INSERT INTO `tutor` VALUES ('10','CAJA920117MDGBRM08','747123489','D@','Padre','Constructor',1),('11','COTD870531HDGNRG09','717489892','','Madre','Ama De Casa',0);
+/*!40000 ALTER TABLE `tutor` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2017-06-08 11:28:11

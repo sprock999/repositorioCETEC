@@ -1,9 +1,9 @@
-
 package Interfaces;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import Controladores.Conexion;
+import Controladores.ControladorGrafico;
 import com.sun.glass.events.KeyEvent;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.sql.ResultSet;
@@ -23,52 +23,53 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
     ImageIcon icon;
     Conexion conexion;
     JFrame control;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public ContratacionDePersonal(JFrame ventana) {
         initComponents();
         this.setTitle("Contratación De Personal");
         this.setLocationRelativeTo(null);
-        
+
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
 
         conexion = new Conexion();
         conexion.conectar();
-        crearNoContorl();
-        
+
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editor.setEditable(false);
-        
-        try{
+
+        try {
             new Controladores.ControladorGrafico().getDocument(txt_primer_nombre, "[a-zA-Z]+");
             new Controladores.ControladorGrafico().getDocument(txt_salario, "[\\d.]+");
             new Controladores.ControladorGrafico().getDocument(txt_segundo_nombre, "[a-zñ\\sA-ZÑ\\s]+");
             new Controladores.ControladorGrafico().getDocument(txt_apell_paterno, "[a-zñ\\sA-ZÑ\\s]+");
             new Controladores.ControladorGrafico().getDocument(txt_apell_materno, "[a-zñ\\sA-ZÑ\\s]+");
             new Controladores.ControladorGrafico().getDocument(txt_curp, "[a-zA-Z]{4}\\d{6}[a-zA-Z]{6}\\d{2}");
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         
+        asignarNoEpleado();
+
     }
-    
-    public void Validar(JTextField texto,String exprecion){
-        if(!texto.getText().matches(exprecion)){
-            JOptionPane.showMessageDialog(null,"Campos invalidos","ERROR",JOptionPane.ERROR_MESSAGE);
+
+    public void Validar(JTextField texto, String exprecion) {
+        if (!texto.getText().matches(exprecion)) {
+            JOptionPane.showMessageDialog(null, "Campos invalidos", "ERROR", JOptionPane.ERROR_MESSAGE);
             texto.requestFocus();
         }
     }
@@ -351,42 +352,63 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
-        if(new Controladores.ControladorGrafico().getColor(txt_no_empleado) && new Controladores.ControladorGrafico().getColor(txt_salario)
-                && new Controladores.ControladorGrafico().getColor(txt_primer_nombre) && new Controladores.ControladorGrafico().getColor(txt_segundo_nombre)
-                && new Controladores.ControladorGrafico().getColor(txt_apell_paterno) && new Controladores.ControladorGrafico().getColor(txt_apell_materno)
-                && new Controladores.ControladorGrafico().getColor(txt_curp)){
-            try {
-                String curp = txt_curp.getText();
-                String primer_nombre = txt_primer_nombre.getText();
-                String segundo_nombre = txt_segundo_nombre.getText();
-                String apellidoP = txt_apell_paterno.getText();
-                String apellidoM = txt_apell_materno.getText();
-                String fecha = "";
-                int no_profesor = Integer.parseInt(txt_no_empleado.getText());
-                String grado_estudios = combo_estudios.getSelectedItem().toString();
-                float salario = Float.parseFloat(txt_salario.getText());
-                Date time;
-                if (fecha_nacimiento.getCalendar() != null) {
-                    time = fecha_nacimiento.getCalendar().getTime();
-                    SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-                    fecha = formato.format(time);
+        try {
+            if (new Controladores.ControladorGrafico().getColor(txt_salario)
+                    && new Controladores.ControladorGrafico().getColor(txt_primer_nombre)
+                    && new Controladores.ControladorGrafico().getColor(txt_apell_paterno) 
+                    && new Controladores.ControladorGrafico().getColor(txt_apell_materno)
+                    && new Controladores.ControladorGrafico().getColor(txt_curp)) {
+                
+                if (txt_segundo_nombre.getText().equals("")) {
+                    System.out.println("Segundo Nombre Vacio");
+                } else {
+                    if (!new ControladorGrafico().estaVacio(txt_segundo_nombre)) {
+                        if (!new ControladorGrafico().getColor(txt_segundo_nombre)) {
+                            JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                                    JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
+                    }
                 }
-                String[] fechaArray = fecha.split("-");
-                int dia = Integer.parseInt(fechaArray[0]);
-                int mes = Integer.parseInt(fechaArray[1]);
-                int año = Integer.parseInt(fechaArray[2]);
-                conexion.ejecutar("insert into persona values('" + curp + "','" + primer_nombre + "','" + segundo_nombre + "','" + apellidoP + "','" + apellidoM + "'," + dia + "," + mes + "," + año + ")");
-                conexion.ejecutar("insert into profesor values('" + no_profesor + "','" + curp + "','" + grado_estudios + "'," + salario + ",1)");
-                limpiar();
-                crearNoContorl();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+                try {
+                    String curp = txt_curp.getText();
+                    String primer_nombre = txt_primer_nombre.getText();
+                    String segundo_nombre = txt_segundo_nombre.getText();
+                    String apellidoP = txt_apell_paterno.getText();
+                    String apellidoM = txt_apell_materno.getText();
+                    String fecha = "";
+                    int no_profesor = Integer.parseInt(txt_no_empleado.getText());
+                    String grado_estudios = combo_estudios.getSelectedItem().toString();
+                    float salario = Float.parseFloat(txt_salario.getText());
+                    Date time;
+                    if (fecha_nacimiento.getCalendar() != null) {
+                        time = fecha_nacimiento.getCalendar().getTime();
+                        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+                        fecha = formato.format(time);
+                    }
+                    String[] fechaArray = fecha.split("-");
+                    int dia = Integer.parseInt(fechaArray[0]);
+                    int mes = Integer.parseInt(fechaArray[1]);
+                    int año = Integer.parseInt(fechaArray[2]);
+                    conexion.ejecutar("insert into persona values('" + curp + "','" + primer_nombre + "','" + segundo_nombre + "','" + apellidoP + "','" + apellidoM + "'," + dia + "," + mes + "," + año + ")");
+                    conexion.ejecutar("insert into profesor values('" + no_profesor + "','" + curp + "','" + grado_estudios + "'," + salario + ",1)");
+                    limpiar();
+                    asignarNoEpleado();
+                    JOptionPane.showMessageDialog(null, "Empleado Registrado", "Registrado...",
+                        JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btn_registrarActionPerformed
 
     private void txt_curpKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_curpKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txt_curp.setText(txt_curp.getText().toUpperCase());
         }
     }//GEN-LAST:event_txt_curpKeyPressed
@@ -399,8 +421,7 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         control.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
-    
-    public void limpiar(){
+    public void limpiar() {
         txt_apell_materno.setText("");
         txt_apell_paterno.setText("");
         txt_curp.setText("");
@@ -408,21 +429,23 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         txt_primer_nombre.setText("");
         txt_salario.setText("");
         txt_segundo_nombre.setText("");
+        fecha_nacimiento.setDate(null);
     }
-    
-    public void crearNoContorl(){
-        try{
-            System.out.println("No error");
-            ResultSet consulta = conexion.consultar("select no_profesor from profesor");
-            int no_empleado = 1;
-            while(consulta.next()){
-                 no_empleado = consulta.getInt(1) + 1;
+
+    public void asignarNoEpleado() {
+        int numero;
+        String salida = "";
+        ResultSet res = conexion.consultar("select No_Profesor from profesor ORDER BY No_Profesor ASC");
+        
+        try {
+            while (res.next()) {
+                salida = res.getString(1);
             }
-            txt_no_empleado.setText(Integer.toString(no_empleado));
-        }catch(Exception e){
-            System.out.println("Error");
+            numero = Integer.parseInt(salida) + 1;
+            txt_no_empleado.setText(Integer.toString(numero));
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
             txt_no_empleado.setText("1");
-            System.out.println(e.getMessage());
         }
     }
 

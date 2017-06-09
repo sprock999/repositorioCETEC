@@ -43,7 +43,7 @@ public class GestionDeTutor extends javax.swing.JFrame {
         this.setTitle("Gestion De Tutor");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
@@ -545,16 +545,16 @@ public class GestionDeTutor extends javax.swing.JFrame {
             fecha_nac = formato.format(time);
         }
 
-        String[] fechaArray = fecha_nac.split("-");
-        dia_nac = Integer.parseInt(fechaArray[0]);
-        mes_nac = Integer.parseInt(fechaArray[1]);
-        año_nac = Integer.parseInt(fechaArray[2]);
-
         try {
+            String[] fechaArray = fecha_nac.split("-");
+            dia_nac = Integer.parseInt(fechaArray[0]);
+            mes_nac = Integer.parseInt(fechaArray[1]);
+            año_nac = Integer.parseInt(fechaArray[2]);
+
             if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
                     && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
-                    && ctrlCurp.getColor(txt_curp) && ctrlTelefono.getColor(txt_telefono) 
-                    && ctrlEmail.getColor(txt_Email) && ctrlParentezco.getColor(txt_parentezco) 
+                    && ctrlCurp.getColor(txt_curp) && ctrlTelefono.getColor(txt_telefono)
+                    && ctrlEmail.getColor(txt_Email) && ctrlParentezco.getColor(txt_parentezco)
                     && ctrlOcupacion.getColor(txt_ocupacion)) {
 
                 if (txt_segundo_nombre.getText().equals("")) {
@@ -598,7 +598,7 @@ public class GestionDeTutor extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         DefaultTableModel model = gestionTutor.getTutor(modelo, campoDato);
         if (model.getRowCount() < 1) {
             deshabilitarComonentes();
@@ -610,7 +610,7 @@ public class GestionDeTutor extends javax.swing.JFrame {
             tabla_tutor.setModel(model);
             correcto = 2;
         }
-        
+
         int resp = JOptionPane.showConfirmDialog(null, "¿Esta Seguro De Eliminar Al Empleado?", "Alerta!",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (resp == 0) {

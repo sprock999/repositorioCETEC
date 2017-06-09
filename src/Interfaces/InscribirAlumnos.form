@@ -362,6 +362,9 @@
                   <Image iconType="3" name="/Imagenes/registrar tutor.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_registrar_tutorActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txt_no_control">
               <Properties>

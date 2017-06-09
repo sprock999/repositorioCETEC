@@ -83,7 +83,7 @@ public class ManejadorFusionDeGrupos {
             System.out.println("Error: " + e);
             return false;
         }
-        if ( (numAlumnosHorario1 + numAlumnosHorario2) <= 20) {
+        if ( (numAlumnosHorario1 + numAlumnosHorario2) <= 30) {
             totalAlumnos = numAlumnosHorario1 + numAlumnosHorario2;
                 return true;
         }else

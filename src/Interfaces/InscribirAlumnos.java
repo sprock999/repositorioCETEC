@@ -55,10 +55,7 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
-
-//        img = new ImageIcon(getClass().getResource("/Imagenes/documentacion.png"));
-//        icon = new ImageIcon(img.getImage().getScaledInstance(btn_docOficial.getWidth(), btn_docOficial.getHeight(), Image.SCALE_DEFAULT));
-//        btn_docOficial.setIcon(icon);
+        
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
@@ -90,11 +87,7 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         ctrlCurp.getDocument(txt_curp, regexCurp);
         ctrlNoTutor.getDocument(txt_no_tutor, "\\d+");
 
-        int numControl = inscribirAlumno.getNoControl();
-
-        if (numControl != -1) {
-            txt_no_control.setText(Integer.toString(numControl));
-        }
+        asignarNoControl();
     }
 
     @SuppressWarnings("unchecked")
@@ -243,6 +236,11 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         });
 
         btn_registrar_tutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrar tutor.png"))); // NOI18N
+        btn_registrar_tutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrar_tutorActionPerformed(evt);
+            }
+        });
 
         txt_no_control.setEditable(false);
         txt_no_control.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
@@ -395,6 +393,7 @@ public class InscribirAlumnos extends javax.swing.JFrame {
             dia_nac = Integer.parseInt(fechaArray[0]);
             mes_nac = Integer.parseInt(fechaArray[1]);
             año_nac = Integer.parseInt(fechaArray[2]);
+            
             if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
                     && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
                     && ctrlCurp.getColor(txt_curp) && ctrlNoTutor.getColor(txt_no_tutor)) {
@@ -412,6 +411,7 @@ public class InscribirAlumnos extends javax.swing.JFrame {
                 }
 
                 if (!inscribirAlumno.buscarTutor(txt_no_tutor.getText())) {
+                    txt_no_tutor.setText("");
                     JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No encontrado!",
                             JOptionPane.INFORMATION_MESSAGE);
                     return;
@@ -419,15 +419,12 @@ public class InscribirAlumnos extends javax.swing.JFrame {
                 inscribirAlumno.AsignarDatos(no_control, no_tutor, primer_nom, segundo_nom, apellido_pat,
                         apellido_mat, curp, dia_nac, mes_nac, año_nac);
                 inscribirAlumno.registrar();
-
+                
+                asignarNoControl();
+                
                 JOptionPane.showMessageDialog(null, "Alumno Registrado", "Registrado...",
                         JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
-
-                int numControl = inscribirAlumno.getNoControl();
-                if (numControl != -1) {
-                    txt_no_control.setText(Integer.toString(numControl));
-                }
             } else {
                 JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
                         JOptionPane.WARNING_MESSAGE);
@@ -462,6 +459,21 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         control.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
+    private void btn_registrar_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar_tutorActionPerformed
+        new RegistrarTutor(this).setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btn_registrar_tutorActionPerformed
+
+    public void asignarNoControl(){
+        int numControl = inscribirAlumno.getNoControl();
+
+        if (numControl != -1) {
+            txt_no_control.setText(Integer.toString(numControl));
+        }else{
+            txt_no_control.setText("1");
+        }
+    }
+    
     public void limpiarCampos() {
         //txt_no_control.setText("");
         txt_no_tutor.setText("");

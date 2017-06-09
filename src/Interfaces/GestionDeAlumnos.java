@@ -42,7 +42,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         this.setTitle("Gestion De Alumnos");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
@@ -357,6 +357,11 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
 
         btn_registrar_tutor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/registrar tutor.png"))); // NOI18N
         btn_registrar_tutor.setEnabled(false);
+        btn_registrar_tutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_registrar_tutorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -457,26 +462,26 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
             fecha_nac = formato.format(time);
         }
 
-        String[] fechaArray = fecha_nac.split("-");
-        dia_nac = Integer.parseInt(fechaArray[0]);
-        mes_nac = Integer.parseInt(fechaArray[1]);
-        año_nac = Integer.parseInt(fechaArray[2]);
-
         try {
+            String[] fechaArray = fecha_nac.split("-");
+            dia_nac = Integer.parseInt(fechaArray[0]);
+            mes_nac = Integer.parseInt(fechaArray[1]);
+            año_nac = Integer.parseInt(fechaArray[2]);
+
             if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
                     && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
                     && ctrlCurp.getColor(txt_curp) && ctrlNoTutor.getColor(txt_no_tutor)) {
-                
+
                 if (txt_segundo_nombre.getText().equals("")) {
                     System.out.println("Segundo Nombre Vacio");
-                }else{
+                } else {
                     if (!ctrlSegundoNombre.estaVacio(txt_segundo_nombre)) {
-                    if (!ctrlSegundoNombre.getColor(txt_segundo_nombre)) {
-                        JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
-                                JOptionPane.WARNING_MESSAGE);
-                        return;
+                        if (!ctrlSegundoNombre.getColor(txt_segundo_nombre)) {
+                            JOptionPane.showMessageDialog(null, "Verifique Los Datos", "Datos Incorrectos",
+                                    JOptionPane.WARNING_MESSAGE);
+                            return;
+                        }
                     }
-                }
                 }
 
                 if (!modificarAlumno.buscarTutor(txt_no_tutor.getText())) {
@@ -513,7 +518,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        
+
         DefaultTableModel model = modificarAlumno.getAlumno(modelo, dato);
         if (model.getRowCount() < 1) {
             deshabilitarComponentes();
@@ -588,6 +593,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editor.setEditable(false);
         btn_buscar_tutor.setEnabled(true);
+        btn_registrar_tutor.setEnabled(true);
     }
 
     public void deshabilitarComponentes() {
@@ -600,6 +606,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
 
         fecha_nacimiento.setEnabled(false);
         btn_buscar_tutor.setEnabled(false);
+        btn_registrar_tutor.setEnabled(false);
     }
 
     private void btn_buscar_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscar_tutorActionPerformed
@@ -624,6 +631,11 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         control.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void btn_registrar_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar_tutorActionPerformed
+         new RegistrarTutor(this).setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_btn_registrar_tutorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;

@@ -23,7 +23,7 @@ public class Menu_Director extends javax.swing.JFrame {
         btn_despido_emp.setIcon(icon);
         
         img = new ImageIcon(getClass().getResource("/Imagenes/contratacion.png"));
-        icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+        icon = new ImageIcon(img.getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT));
         btn_cont_personal.setIcon(icon);
         
         img = new ImageIcon(getClass().getResource("/Imagenes/reportes.png"));
