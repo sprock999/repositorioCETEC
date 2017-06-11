@@ -33,12 +33,15 @@ public class FusionDeGrupos extends javax.swing.JFrame {
         this.setTitle("Fusión De Grupos");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
 
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
@@ -339,7 +342,7 @@ public class FusionDeGrupos extends javax.swing.JFrame {
         TableModel model = tabla_horarios.getModel();
         //JOptionPane.showMessageDialog(this, model.getValueAt(row, column));
         seleccionadoUno = txt_no_horario.getText();
-        tabla_disponibles.setModel(fusion.getDisponibles(modeloD, seleccionadoUno) );
+        tabla_disponibles.setModel(fusion.getDisponibles(modeloD, seleccionadoUno));
     }//GEN-LAST:event_tabla_horariosMouseClicked
 
     private void tabla_disponiblesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_disponiblesMouseClicked

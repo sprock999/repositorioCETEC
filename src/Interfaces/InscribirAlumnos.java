@@ -37,12 +37,15 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         this.setTitle("Inscribir Alumno");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
 
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
@@ -55,7 +58,7 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
@@ -64,10 +67,6 @@ public class InscribirAlumnos extends javax.swing.JFrame {
 
         editorFecha = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editorFecha.setEditable(false);
-
-        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}"
-                + "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)"
-                + "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
 
         ctrlNoControl = new ControladorGrafico();
         ctrlPrimerNombre = new ControladorGrafico();
@@ -78,11 +77,15 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         ctrlCurp = new ControladorGrafico();
         ctrlNoTutor = new ControladorGrafico();
 
-        ctrlNoControl.getDocument(txt_no_control, "\\d+");
-        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zA-Z]+");
-        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zA-Z]+");
-        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zA-Z]+");
-        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zA-Z]+");
+        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}"
+                + "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)"
+                + "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
+
+        ctrlNoControl.getDocument(txt_no_control, "A170100\\d|A17010\\d{2}|A1701\\d{3}");
+        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
         ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
         ctrlCurp.getDocument(txt_curp, regexCurp);
         ctrlNoTutor.getDocument(txt_no_tutor, "\\d+");
@@ -386,6 +389,10 @@ public class InscribirAlumnos extends javax.swing.JFrame {
             time = fecha_nacimiento.getCalendar().getTime();
             SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
             fecha_nac = formato.format(time);
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
         }
 
         try {
@@ -393,7 +400,7 @@ public class InscribirAlumnos extends javax.swing.JFrame {
             dia_nac = Integer.parseInt(fechaArray[0]);
             mes_nac = Integer.parseInt(fechaArray[1]);
             año_nac = Integer.parseInt(fechaArray[2]);
-            
+
             if (ctrlPrimerNombre.getColor(txt_primer_nombre) && ctrlApellPaterno.getColor(txt_apell_paterno)
                     && ctrlApellMaterno.getColor(txt_apell_materno) && ctrlFechaNac.getColor(editorFecha)
                     && ctrlCurp.getColor(txt_curp) && ctrlNoTutor.getColor(txt_no_tutor)) {
@@ -419,9 +426,9 @@ public class InscribirAlumnos extends javax.swing.JFrame {
                 inscribirAlumno.AsignarDatos(no_control, no_tutor, primer_nom, segundo_nom, apellido_pat,
                         apellido_mat, curp, dia_nac, mes_nac, año_nac);
                 inscribirAlumno.registrar();
-                
+
                 asignarNoControl();
-                
+
                 JOptionPane.showMessageDialog(null, "Alumno Registrado", "Registrado...",
                         JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
@@ -464,16 +471,22 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_btn_registrar_tutorActionPerformed
 
-    public void asignarNoControl(){
+    public void asignarNoControl() {
         int numControl = inscribirAlumno.getNoControl();
 
         if (numControl != -1) {
-            txt_no_control.setText(Integer.toString(numControl));
-        }else{
-            txt_no_control.setText("1");
+            if(numControl < 10){
+                txt_no_control.setText("A170100"+Integer.toString(numControl));
+            }else if(numControl >= 10 && numControl < 100){
+                txt_no_control.setText("A17010"+Integer.toString(numControl));
+            }else if(numControl >= 100 && numControl <= 999){
+                txt_no_control.setText("A1701"+Integer.toString(numControl));
+            }
+        } else {
+            txt_no_control.setText("A1701001");
         }
     }
-    
+
     public void limpiarCampos() {
         //txt_no_control.setText("");
         txt_no_tutor.setText("");

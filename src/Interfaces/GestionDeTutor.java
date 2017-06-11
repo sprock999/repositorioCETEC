@@ -50,6 +50,9 @@ public class GestionDeTutor extends javax.swing.JFrame {
             }
         });
 
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
@@ -88,17 +91,30 @@ public class GestionDeTutor extends javax.swing.JFrame {
         ctrlParentezco = new ControladorGrafico();
         ctrlOcupacion = new ControladorGrafico();
 
-        ctrlNoTutor.getDocument(txt_no_tutor, "\\d+");
-        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zA-Z]+");
-        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zA-Z]+");
-        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zA-Z]+");
-        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zA-Z]+");
+        ctrlNoTutor.getDocument(txt_no_tutor, "T170100\\d|T17010\\d{2}|T1701\\d{3}");
+        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
         ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
         ctrlCurp.getDocument(txt_curp, regexCurp);
         ctrlTelefono.getDocument(txt_telefono, "\\d{10}");
         ctrlEmail.getDocument(txt_Email, "^[\\w-]+(\\.[\\w-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-        ctrlParentezco.getDocument(txt_parentezco, "[a-zA-Z]+");
-        ctrlOcupacion.getDocument(txt_ocupacion, "[a-zA-Z]+");
+        ctrlParentezco.getDocument(txt_parentezco, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlOcupacion.getDocument(txt_ocupacion, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+
+        int indice = 0;
+        DefaultTableModel modelo = (DefaultTableModel) tabla_tutor.getModel();
+        do {
+            indice += 1;
+            try {
+                modelo = gestionTutor.getTutor(modelo, Integer.toString(indice));
+                modelo.getValueAt(indice - 1, 0);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                break;
+            }
+        } while (true);
+        tabla_tutor.setModel(modelo);
     }
 
     @SuppressWarnings("unchecked")
@@ -157,7 +173,7 @@ public class GestionDeTutor extends javax.swing.JFrame {
 
         tabla_tutor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "No. Tutor", "Nombre(s)", "Apellido Paterno", "Apellido Materno", "Telefono", "E-mail", "Ocupacion"

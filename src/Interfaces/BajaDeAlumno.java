@@ -37,6 +37,9 @@ public class BajaDeAlumno extends javax.swing.JFrame {
             }
         });
 
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
@@ -52,7 +55,7 @@ public class BajaDeAlumno extends javax.swing.JFrame {
         conexion.conectar();
 
         //new Controladores.ControladorGrafico().getDocument(txt_segundo_nombre, "[a-Zñ\\sA-ZÑ\\s]+");
-        new Controladores.ControladorGrafico().getDocument(txt_no_control, "\\d+");
+        new Controladores.ControladorGrafico().getDocument(txt_no_control, "A170100\\d|A17010\\d{2}|A1701\\d{3}");
     }
 
     @SuppressWarnings("unchecked")

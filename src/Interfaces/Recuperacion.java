@@ -16,33 +16,35 @@ public class Recuperacion extends javax.swing.JFrame {
 
     ImageIcon img;
     ImageIcon icon;
-    
+
     private final String usuario = "trabajo social";
     private String respuesta, contraseña;
     private final JFrame control;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public Recuperacion(JFrame ventana) {
         initComponents();
         this.setTitle("Recuperación");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
-        
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/aceptar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_aceptar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
-        
-        
+
         try {
             BufferedReader br = new BufferedReader(new FileReader(getClass().getResource("/Sesion/preguntas").getPath()));
             StringBuilder sb = new StringBuilder();
@@ -54,18 +56,18 @@ public class Recuperacion extends javax.swing.JFrame {
             }
             String preguntas = sb.toString();
             String[] bloques = preguntas.split("/");
-            for(int i = 1; i < bloques.length; i += 5){
-                if(usuario.equals(bloques[i])){
-                    label_pregunta.setText(bloques[i+1]);
-                    respuesta = bloques[i+2];
-                    contraseña = bloques[i+3];
+            for (int i = 1; i < bloques.length; i += 5) {
+                if (usuario.equals(bloques[i])) {
+                    label_pregunta.setText(bloques[i + 1]);
+                    respuesta = bloques[i + 2];
+                    contraseña = bloques[i + 3];
                 }
             }
             br.close();
-        }catch(IOException ex){
+        } catch (IOException ex) {
         } finally {
         }
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -201,10 +203,10 @@ public class Recuperacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_aceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_aceptarActionPerformed
-        if(txt_respuesta.getText().equals(respuesta)){
+        if (txt_respuesta.getText().equals(respuesta)) {
             JOptionPane.showMessageDialog(null, "La contraseña es: " + contraseña);
             System.exit(0);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Respuesta invalida");
         }
     }//GEN-LAST:event_btn_aceptarActionPerformed

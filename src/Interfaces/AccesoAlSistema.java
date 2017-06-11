@@ -1,4 +1,3 @@
-
 package Interfaces;
 
 import java.awt.Image;
@@ -15,24 +14,27 @@ public class AccesoAlSistema extends javax.swing.JFrame {
     ImageIcon img;
     ImageIcon icon;
     private final String DIRECCION = "123", TRABAJO_SOCIAL = "1234", ACADEMICO = "12345";
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AccesoAlSistema() {
         initComponents();
         this.setTitle("Acceso Al Sistema");
         this.setLocationRelativeTo(null);
-        
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/cetec.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(280, 170, Image.SCALE_DEFAULT));
         jLabel4.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/llave.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(label_pass.getWidth(), label_pass.getHeight(), Image.SCALE_DEFAULT));
         label_pass.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/login.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_ingresar.getWidth(), btn_ingresar.getHeight(), Image.SCALE_DEFAULT));
-        btn_ingresar.setIcon(icon);    
+        btn_ingresar.setIcon(icon);
     }
 
     /**
@@ -49,7 +51,6 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         label_pass = new javax.swing.JLabel();
         btn_ingresar = new javax.swing.JButton();
-        label_recuperacion = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txt_pass = new javax.swing.JPasswordField();
@@ -71,15 +72,6 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         btn_ingresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ingresarActionPerformed(evt);
-            }
-        });
-
-        label_recuperacion.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
-        label_recuperacion.setForeground(new java.awt.Color(0, 0, 255));
-        label_recuperacion.setText("¿Olvidaste Tu Contraseña?");
-        label_recuperacion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                label_recuperacionMouseClicked(evt);
             }
         });
 
@@ -112,20 +104,15 @@ public class AccesoAlSistema extends javax.swing.JFrame {
                         .addComponent(label_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_pass))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(124, 124, 124)
-                                .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(90, 90, 90)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(41, 41, 41)
-                                        .addComponent(jLabel10)
-                                        .addGap(63, 63, 63))
-                                    .addComponent(label_recuperacion, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addGap(0, 42, Short.MAX_VALUE)))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(131, 131, 131)
+                            .addComponent(jLabel10)
+                            .addGap(63, 105, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(124, 124, 124)
+                            .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 96, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -137,15 +124,13 @@ public class AccesoAlSistema extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(label_pass, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(txt_pass))
+                    .addComponent(label_pass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_pass, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_ingresar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addGap(18, 18, 18)
-                .addComponent(label_recuperacion)
-                .addGap(45, 45, 45))
+                .addGap(80, 80, 80))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -161,8 +146,8 @@ public class AccesoAlSistema extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,15 +158,15 @@ public class AccesoAlSistema extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
-        if(!txt_pass.getText().equals("")){
-            switch(txt_pass.getText()){
+        if (!txt_pass.getText().equals("")) {
+            switch (txt_pass.getText()) {
                 case DIRECCION:
                     new Bienvenida(new Menu_Director(), "Dirección").setVisible(true);
                     //new Menu_Director().setVisible(true);
@@ -201,18 +186,13 @@ public class AccesoAlSistema extends javax.swing.JFrame {
                     //Entrar("coordinador academico");
                     break;
                 default:
-                    JOptionPane.showMessageDialog(null, "Error en la contraseña de acceso","Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Error en la contraseña de acceso", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btn_ingresarActionPerformed
 
-    private void label_recuperacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_recuperacionMouseClicked
-        new Recuperacion(this).setVisible(true);
-        setVisible(false);
-    }//GEN-LAST:event_label_recuperacionMouseClicked
-
     private void txt_passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_passKeyPressed
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_pass.getText().equals("")) {
                 switch (txt_pass.getText()) {
                     case DIRECCION:
@@ -239,11 +219,11 @@ public class AccesoAlSistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_txt_passKeyPressed
-    
-    public void Entrar(String user){
-        JOptionPane.showMessageDialog(null, "Bienvenido " + user,user,JOptionPane.INFORMATION_MESSAGE);
+
+    public void Entrar(String user) {
+        JOptionPane.showMessageDialog(null, "Bienvenido " + user, user, JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -287,7 +267,6 @@ public class AccesoAlSistema extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel label_pass;
-    private javax.swing.JLabel label_recuperacion;
     private javax.swing.JPasswordField txt_pass;
     // End of variables declaration//GEN-END:variables
 }

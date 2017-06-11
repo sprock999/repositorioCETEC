@@ -4,6 +4,8 @@ import Controladores.ManejadorReportes;
 import com.toedter.calendar.JTextFieldDateEditor;
 import java.awt.Image;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,7 +22,7 @@ public class Reportes extends javax.swing.JFrame {
 
     String no_reporte, no_profesor, actividad;
     int dia_reporte, mes_reporte, año_reporte;
-    
+
     JTextFieldDateEditor editorFecha;
 
     ManejadorReportes reporte;
@@ -38,6 +40,9 @@ public class Reportes extends javax.swing.JFrame {
             }
         });
 
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
@@ -50,11 +55,15 @@ public class Reportes extends javax.swing.JFrame {
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
 
-        editorFecha = (JTextFieldDateEditor) fecha_registro.getDateEditor();
-        editorFecha.setEditable(false);
+        Calendar fecha = new GregorianCalendar();
+        año_reporte = fecha.get(Calendar.YEAR);
+        mes_reporte = fecha.get(Calendar.MONTH) + 1;
+        dia_reporte = fecha.get(Calendar.DAY_OF_MONTH);
+
+        fecha_registro.setText(dia_reporte + " / " + mes_reporte + " / " + año_reporte);
 
         reporte = new ManejadorReportes();
-        
+
         asignarNoReporte();
     }
 
@@ -70,10 +79,10 @@ public class Reportes extends javax.swing.JFrame {
         btn_buscar = new javax.swing.JButton();
         txt_no_reporte = new javax.swing.JTextField();
         txt_no_empleado = new javax.swing.JTextField();
-        fecha_registro = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txt_actividad = new javax.swing.JTextArea();
+        fecha_registro = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         btn_registrar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
@@ -111,8 +120,6 @@ public class Reportes extends javax.swing.JFrame {
 
         txt_no_empleado.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
-        fecha_registro.setDateFormatString("dd/M/yyyy");
-
         jLabel5.setFont(new java.awt.Font("Californian FB", 1, 14)); // NOI18N
         jLabel5.setText("Actividad:");
 
@@ -120,6 +127,9 @@ public class Reportes extends javax.swing.JFrame {
         txt_actividad.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         txt_actividad.setRows(5);
         jScrollPane1.setViewportView(txt_actividad);
+
+        fecha_registro.setEditable(false);
+        fecha_registro.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -142,8 +152,8 @@ public class Reportes extends javax.swing.JFrame {
                                 .addComponent(txt_no_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(fecha_registro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fecha_registro, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -153,14 +163,13 @@ public class Reportes extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_no_reporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(fecha_registro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(fecha_registro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -248,15 +257,12 @@ public class Reportes extends javax.swing.JFrame {
     private void btn_registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrarActionPerformed
         try {
             no_reporte = txt_no_reporte.getText();
-            String fecha[] = new SimpleDateFormat("dd/M/yyyy").format(fecha_registro.getCalendar().getTime()).split("/");
-            dia_reporte = Integer.parseInt(fecha[0]);
-            mes_reporte = Integer.parseInt(fecha[1]);
-            año_reporte = Integer.parseInt(fecha[2]);
+            
             no_profesor = txt_no_empleado.getText();
             actividad = txt_actividad.getText();
             if (no_profesor.equals("") || actividad.equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
-                    JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (!reporte.buscarTutor(no_profesor)) {
@@ -266,12 +272,17 @@ public class Reportes extends javax.swing.JFrame {
                 return;
             }
 
-            reporte.asignarDatos(no_reporte, no_profesor, actividad, dia_reporte, mes_reporte, año_reporte);
-            reporte.Registrar();
-            JOptionPane.showMessageDialog(null, "Reporte Registrado", "Informacion.",
-                    JOptionPane.INFORMATION_MESSAGE);
-            asignarNoReporte();
-            limpiarCampos();
+            int resp = JOptionPane.showConfirmDialog(null, "¿Seguro que quiere guardar los datos?\n"
+                    + "Los datos no podran ser manipulados posteriormente",  "Alerta!",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if (resp == 0) {
+                reporte.asignarDatos(no_reporte, no_profesor, actividad, dia_reporte, mes_reporte, año_reporte);
+                reporte.Registrar();
+                JOptionPane.showMessageDialog(null, "Reporte Registrado", "Informacion.",
+                        JOptionPane.INFORMATION_MESSAGE);
+                asignarNoReporte();
+                limpiarCampos();
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
                     JOptionPane.WARNING_MESSAGE);
@@ -311,18 +322,17 @@ public class Reportes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_buscarActionPerformed
 
-    public void limpiarCampos(){
-        
+    public void limpiarCampos() {
+
         txt_no_empleado.setText("");
         txt_actividad.setText("");
-        fecha_registro.setDate(null);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
     private javax.swing.JButton btn_registrar;
     private javax.swing.JButton btn_salir;
-    private com.toedter.calendar.JDateChooser fecha_registro;
+    private javax.swing.JTextField fecha_registro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -1,4 +1,3 @@
-
 package Interfaces;
 
 import javax.swing.ImageIcon;
@@ -12,36 +11,39 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
 
     ImageIcon img, icon;
     Thread tiempo;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public Menu_CoordinacionAcademica() {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("coordinación Academica");
-        
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/apertura_horarios.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_apertura_horario.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/fusionar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_fusion_grupos.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/inscribir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_inscribir.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/cerrar_sesion.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
-        btn_cerrar_sesion.setIcon(icon);   
-        
+        btn_cerrar_sesion.setIcon(icon);
+
         tiempo = new Thread(new Runnable() {
             @Override
             public void run() {
                 long start = System.currentTimeMillis();
                 long end = start + (30 * 60 * 1000);
                 System.out.println(start + " " + end);
-                while(System.currentTimeMillis() < end){
+                while (System.currentTimeMillis() < end) {
                 }
                 dispose();
                 tiempo.stop();
@@ -180,7 +182,6 @@ public class Menu_CoordinacionAcademica extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_cerrar_sesionActionPerformed
 
-    
 //    /**
 //     * @param args the command line arguments
 //     */

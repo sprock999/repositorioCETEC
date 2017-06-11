@@ -71,7 +71,7 @@ public class ManejadorInscribirAlumno {
         
         try {
             while (res.next()) {
-                salida = res.getString(1);
+                salida = res.getString(1).replace("A1701", "");
             }
             numero = Integer.parseInt(salida) + 1;
             return numero;

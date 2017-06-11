@@ -70,7 +70,7 @@ public class ManejadorRegistrarTutor{
         
         try {
             while (res.next()) {
-                salida = res.getString(1);
+                salida = res.getString(1).replace("T1701", "");
             }
             numero = Integer.parseInt(salida) + 1;
             return numero;

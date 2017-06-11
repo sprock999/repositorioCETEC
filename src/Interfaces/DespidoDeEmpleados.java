@@ -28,12 +28,15 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
         this.setTitle("Despido De Empleados");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
 
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
@@ -52,7 +55,7 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
         fecha_nacimiento.setEnabled(false);
 
         ctrlNoEmpelado = new ControladorGrafico();
-        ctrlNoEmpelado.getDocument(txt_no_empleado, "\\d+");
+        ctrlNoEmpelado.getDocument(txt_no_empleado, "E170100\\d|E17010\\d{2}|E1701\\d{3}");
     }
 
     @SuppressWarnings("unchecked")
@@ -308,7 +311,7 @@ public class DespidoDeEmpleados extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         String[] datos = despido.getDatos(campoDato);
 
         if (datos[0] == null) {

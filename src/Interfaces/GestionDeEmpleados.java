@@ -45,6 +45,9 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
             }
         });
 
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
@@ -56,6 +59,10 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/reportes.png"));
+        icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+        btn_imprimir.setIcon(icon);
 
         modelo = (DefaultTableModel) tabla_empleados.getModel();
         gestionEmpleados = new ManejadorGestionDeEmpleados();
@@ -76,14 +83,20 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         ctrlCurp = new ControladorGrafico();
         ctrlSalrio = new ControladorGrafico();
 
-        ctrlNoEmpleado.getDocument(txt_no_empleado, "\\d+");
-        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zA-Z]+");
-        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zA-Z]+");
-        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zA-Z]+");
-        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zA-Z]+");
+        ctrlNoEmpleado.getDocument(txt_no_empleado, "E170100\\d|E17010\\d{2}|E1701\\d{3}");
+        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
         ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
         ctrlCurp.getDocument(txt_curp, regexCurp);
         ctrlSalrio.getDocument(txt_salario, "\\d+");
+
+        DefaultTableModel modelo = (DefaultTableModel) tabla_empleados.getModel();
+
+        modelo = gestionEmpleados.getEmpleados(modelo);
+
+        tabla_empleados.setModel(modelo);
     }
 
     @SuppressWarnings("unchecked")
@@ -113,6 +126,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         btn_modificar = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
+        btn_imprimir = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -232,7 +246,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
         tabla_empleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "No. Empleado", "Nombre(s)", "Apellido Paterno", "Apellido Materno", "Grado De Estudios", "Salario"
@@ -302,12 +316,17 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
             }
         });
 
+        btn_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reportes.png"))); // NOI18N
+        btn_imprimir.setText("Ver Reportes");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(327, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -318,7 +337,8 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_imprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -637,6 +657,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_imprimir;
     private javax.swing.JButton btn_modificar;
     private javax.swing.JButton btn_salir;
     private javax.swing.JComboBox<String> combo_estudios;

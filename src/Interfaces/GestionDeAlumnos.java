@@ -49,6 +49,9 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
             }
         });
 
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/buscar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_buscar.getWidth(), btn_buscar.getHeight(), Image.SCALE_DEFAULT));
         btn_buscar.setIcon(icon);
@@ -88,14 +91,21 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
         ctrlCurp = new ControladorGrafico();
         ctrlNoTutor = new ControladorGrafico();
 
-        ctrlNoControl.getDocument(txt_no_control, "\\d+");
-        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zA-Z]+");
-        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zA-Z]+");
-        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zA-Z]+");
-        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zA-Z]+");
+        ctrlNoControl.getDocument(txt_no_control, "A170100\\d|A17010\\d{2}|A1701\\d{3}");
+        ctrlPrimerNombre.getDocument(txt_primer_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlSegundoNombre.getDocument(txt_segundo_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlApellPaterno.getDocument(txt_apell_paterno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        ctrlApellMaterno.getDocument(txt_apell_materno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
         ctrlFechaNac.getDocument(editorFecha, "\\d{1,2}/\\d{1,2}/\\d{4}");
         ctrlCurp.getDocument(txt_curp, regexCurp);
         ctrlNoTutor.getDocument(txt_no_tutor, "\\d+");
+
+        int indice = 0;
+        DefaultTableModel modelo = (DefaultTableModel) tabla_alumnos.getModel();
+
+        modelo = modificarAlumno.getAlumnos(modelo);
+
+        tabla_alumnos.setModel(modelo);
     }
 
     @SuppressWarnings("unchecked")
@@ -245,7 +255,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
 
         tabla_alumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "No. Control", "Nombre(s)", "Apellido Paterno", "Apellido Materno", "Tutor"
@@ -633,7 +643,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void btn_registrar_tutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_registrar_tutorActionPerformed
-         new RegistrarTutor(this).setVisible(true);
+        new RegistrarTutor(this).setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_btn_registrar_tutorActionPerformed
 

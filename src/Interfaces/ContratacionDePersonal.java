@@ -38,6 +38,9 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
             }
         });
 
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
@@ -52,17 +55,22 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editor.setEditable(false);
 
+        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}"
+                + "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)"
+                + "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
+
         try {
-            new Controladores.ControladorGrafico().getDocument(txt_primer_nombre, "[a-zA-Z]+");
+            new Controladores.ControladorGrafico().getDocument(txt_primer_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
             new Controladores.ControladorGrafico().getDocument(txt_salario, "[\\d.]+");
-            new Controladores.ControladorGrafico().getDocument(txt_segundo_nombre, "[a-zñ\\sA-ZÑ\\s]+");
-            new Controladores.ControladorGrafico().getDocument(txt_apell_paterno, "[a-zñ\\sA-ZÑ\\s]+");
-            new Controladores.ControladorGrafico().getDocument(txt_apell_materno, "[a-zñ\\sA-ZÑ\\s]+");
-            new Controladores.ControladorGrafico().getDocument(txt_curp, "[a-zA-Z]{4}\\d{6}[a-zA-Z]{6}\\d{2}");
+            new Controladores.ControladorGrafico().getDocument(txt_segundo_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+            new Controladores.ControladorGrafico().getDocument(txt_apell_paterno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+            new Controladores.ControladorGrafico().getDocument(txt_apell_materno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+            new Controladores.ControladorGrafico().getDocument(txt_curp, regexCurp);
+            new Controladores.ControladorGrafico().getDocument(txt_no_empleado, "E170100\\d|E17010\\d{2}|E1701\\d{3}");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
         asignarNoEpleado();
 
     }
@@ -227,7 +235,7 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         txt_salario.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
 
         combo_estudios.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        combo_estudios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Secundaria", "Bachillerato", "Licenciatura", "Posgrado" }));
+        combo_estudios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primaria ", "Secundaria ", "Bachillerato ", "Licenciatura ", "Maestría ", "Doctorado" }));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -355,10 +363,10 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         try {
             if (new Controladores.ControladorGrafico().getColor(txt_salario)
                     && new Controladores.ControladorGrafico().getColor(txt_primer_nombre)
-                    && new Controladores.ControladorGrafico().getColor(txt_apell_paterno) 
+                    && new Controladores.ControladorGrafico().getColor(txt_apell_paterno)
                     && new Controladores.ControladorGrafico().getColor(txt_apell_materno)
                     && new Controladores.ControladorGrafico().getColor(txt_curp)) {
-                
+
                 if (txt_segundo_nombre.getText().equals("")) {
                     System.out.println("Segundo Nombre Vacio");
                 } else {
@@ -373,31 +381,41 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
                 try {
                     String curp = txt_curp.getText();
                     String primer_nombre = txt_primer_nombre.getText();
-                    String segundo_nombre = txt_segundo_nombre.getText();
+                    String segundo_nombre = "";
+                    if (!txt_segundo_nombre.equals("")) {
+                        segundo_nombre = txt_segundo_nombre.getText();
+                    }
+
                     String apellidoP = txt_apell_paterno.getText();
                     String apellidoM = txt_apell_materno.getText();
-                    String fecha = "";
-                    int no_profesor = Integer.parseInt(txt_no_empleado.getText());
+                    String fecha_nac = "";
+                    String no_profesor = txt_no_empleado.getText();
                     String grado_estudios = combo_estudios.getSelectedItem().toString();
                     float salario = Float.parseFloat(txt_salario.getText());
-                    Date time;
+
+                    Date time = null;
                     if (fecha_nacimiento.getCalendar() != null) {
                         time = fecha_nacimiento.getCalendar().getTime();
                         SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
-                        fecha = formato.format(time);
+                        fecha_nac = formato.format(time);
+                        
+                        String[] fechaArray = fecha_nac.split("-");
+                        int dia = Integer.parseInt(fechaArray[0]);
+                        int mes = Integer.parseInt(fechaArray[1]);
+                        int año = Integer.parseInt(fechaArray[2]);
+                        
+                        conexion.ejecutar("insert into persona values('" + curp + "','" + primer_nombre + "','" + segundo_nombre + "','" + apellidoP + "','" + apellidoM + "'," + dia + "," + mes + "," + año + ")");
+                        conexion.ejecutar("insert into profesor values('" + no_profesor + "','" + curp + "','" + grado_estudios + "'," + salario + ",1)");
+                        limpiar();
+                        asignarNoEpleado();
+                        JOptionPane.showMessageDialog(null, "Empleado Registrado", "Registrado...",
+                                JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingrese Los Datos Solicitados", "Advertencia!",
+                                JOptionPane.WARNING_MESSAGE);
                     }
-                    String[] fechaArray = fecha.split("-");
-                    int dia = Integer.parseInt(fechaArray[0]);
-                    int mes = Integer.parseInt(fechaArray[1]);
-                    int año = Integer.parseInt(fechaArray[2]);
-                    conexion.ejecutar("insert into persona values('" + curp + "','" + primer_nombre + "','" + segundo_nombre + "','" + apellidoP + "','" + apellidoM + "'," + dia + "," + mes + "," + año + ")");
-                    conexion.ejecutar("insert into profesor values('" + no_profesor + "','" + curp + "','" + grado_estudios + "'," + salario + ",1)");
-                    limpiar();
-                    asignarNoEpleado();
-                    JOptionPane.showMessageDialog(null, "Empleado Registrado", "Registrado...",
-                        JOptionPane.INFORMATION_MESSAGE);
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("error: " + e);
                 }
             }
         } catch (Exception e) {
@@ -422,6 +440,7 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     public void limpiar() {
+        txt_no_empleado.setText("");
         txt_apell_materno.setText("");
         txt_apell_paterno.setText("");
         txt_curp.setText("");
@@ -436,16 +455,22 @@ public class ContratacionDePersonal extends javax.swing.JFrame {
         int numero;
         String salida = "";
         ResultSet res = conexion.consultar("select No_Profesor from profesor ORDER BY No_Profesor ASC");
-        
+
         try {
             while (res.next()) {
-                salida = res.getString(1);
+                salida = res.getString(1).replace("E1701", "");
             }
             numero = Integer.parseInt(salida) + 1;
-            txt_no_empleado.setText(Integer.toString(numero));
+            if (numero < 10) {
+                txt_no_empleado.setText("E170100" + Integer.toString(numero));
+            } else if (numero >= 10 && numero < 100) {
+                txt_no_empleado.setText("E17010" + Integer.toString(numero));
+            } else if (numero >= 100 && numero <= 999) {
+                txt_no_empleado.setText("E1701" + Integer.toString(numero));
+            }
         } catch (Exception e) {
             System.out.println("Error: " + e);
-            txt_no_empleado.setText("1");
+            txt_no_empleado.setText("E1701001");
         }
     }
 

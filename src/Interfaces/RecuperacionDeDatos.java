@@ -31,6 +31,9 @@ public class RecuperacionDeDatos extends javax.swing.JFrame {
             }
         });
 
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/explorar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(btn_explorar.getWidth(), btn_explorar.getHeight(), Image.SCALE_DEFAULT));
         btn_explorar.setIcon(icon);

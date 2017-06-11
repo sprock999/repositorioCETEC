@@ -55,6 +55,28 @@ public class ManejadorGestionDeAlumnos {
         return modelo;
     }
     
+    public DefaultTableModel getAlumnos(DefaultTableModel modelo) {
+        String consulta = "SELECT No_Control, Primer_Nom, Apellido_P, Apellido_M, No_Tutor "
+                + " FROM alumno INNER JOIN persona on alumno.CURP = persona.CURP " 
+                + " WHERE Estado = 1;";
+        ResultSet res = baseDatos.consultar(consulta);
+        try {
+            while (res.next()) {
+                Vector v = new Vector();
+                v.add(res.getString(1));
+                v.add(res.getString(2));
+                v.add(res.getString(3));
+                v.add(res.getString(4));
+                v.add(res.getInt(5));
+                modelo.addRow(v);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return null;
+        }
+        return modelo;
+    }
+    
     public String[] getDatos(String no_control){
         String[] salida = new String[9];
         String consulta = "SELECT * " 

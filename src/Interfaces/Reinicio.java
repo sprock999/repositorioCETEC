@@ -14,27 +14,30 @@ public class Reinicio extends javax.swing.JFrame {
 
     ImageIcon img;
     ImageIcon icon;
-    
+
     private final String password = "direccion";
     private final JFrame control;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public Reinicio(JFrame ventana) {
         initComponents();
         this.setTitle("Reinicio");
         this.setLocationRelativeTo(null);
         control = ventana;
-        
+
         control.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 setVisible(false);
             }
         });
-        
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/reset.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_reset.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
@@ -170,15 +173,15 @@ public class Reinicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_resetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resetActionPerformed
-        if(txt_pass.getText().equals(password)){
+        if (txt_pass.getText().equals(password)) {
             try {
-                ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe","/c","\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql\" --user=cetec --password=cetec cetec < " + this.getClass().getResource("/Backup/cetecSQL.sql").getPath().substring(1));
-                Process backup = mysqldump.start();         
+                ProcessBuilder mysqldump = new ProcessBuilder("cmd.exe", "/c", "\"C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\mysql\" --user=cetec --password=cetec cetec < " + this.getClass().getResource("/Backup/cetecSQL.sql").getPath().substring(1));
+                Process backup = mysqldump.start();
                 System.exit(0);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage());
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Error en el usuario o en la contraseña");
             txt_pass.setText("");
         }

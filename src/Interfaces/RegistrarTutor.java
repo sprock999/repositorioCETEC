@@ -36,6 +36,9 @@ public class RegistrarTutor extends javax.swing.JFrame {
             }
         });
 
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_registrar.setIcon(icon);
@@ -43,16 +46,21 @@ public class RegistrarTutor extends javax.swing.JFrame {
         img = new ImageIcon(getClass().getResource("/Imagenes/salir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         btn_salir.setIcon(icon);
+        
+        String regexCurp = "[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}" + "(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])" + "[HM]{1}"
+                + "(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)"
+                + "[B-DF-HJ-NP-TV-Z]{3}" + "[0-9A-Z]{1}[0-9]{1}$";
 
-        new ControladorGrafico().getDocument(txt_primer_nombre, "[a-zñA-ZÑ]{3,30}");
-        new ControladorGrafico().getDocument(txt_segundo_nombre, "[a-zñA-ZÑ]{3,30}");
-        new ControladorGrafico().getDocument(txt_apell_paterno, "[a-zñA-ZÑ ]{4,50}");
-        new ControladorGrafico().getDocument(txt_apell_materno, "[a-zñA-ZÑ ]{4,50}");
-        new ControladorGrafico().getDocument(txt_curp, "[A-Z]{4}[0-9]{6}[HM][A-Z]{2}[A-Z0-9]{5}");
+        new ControladorGrafico().getDocument(txt_primer_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        new ControladorGrafico().getDocument(txt_segundo_nombre, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        new ControladorGrafico().getDocument(txt_apell_paterno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        new ControladorGrafico().getDocument(txt_apell_materno, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        new ControladorGrafico().getDocument(txt_curp, regexCurp);
         new ControladorGrafico().getDocument(txt_telefono, "[0-9]{10}");
         new ControladorGrafico().getDocument(txt_Email, "[a-zA-Z._]+@[a-zA-Z]+.([Cc][Oo][Mm]|[Oo][Rr][Gg]|[Nn][Ee][Tt]|([Cc][Oo][Mm].[a-zA-Z]))");
-        new ControladorGrafico().getDocument(txt_parentezco, "[a-zñA-ZÑ ]+");
-        new ControladorGrafico().getDocument(txt_ocupacion, "[a-zñA-ZÑ ]+");
+        new ControladorGrafico().getDocument(txt_parentezco, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        new ControladorGrafico().getDocument(txt_ocupacion, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
+        new ControladorGrafico().getDocument(txt_no_tutor, "E170100\\d|E17010\\d{2}|E1701\\d{3}");
 
         JTextFieldDateEditor editor = (JTextFieldDateEditor) fecha_nacimiento.getDateEditor();
         editor.setEditable(false);
@@ -383,6 +391,7 @@ public class RegistrarTutor extends javax.swing.JFrame {
                 email = txt_Email.getText();
                 parentesco = txt_parentezco.getText();
                 ocupacion = txt_ocupacion.getText();
+                
                 String fecha[] = new SimpleDateFormat("dd/M/yyyy").format(fecha_nacimiento.getCalendar().getTime()).split("/");
                 dia_nac = Integer.parseInt(fecha[0]);
                 mes_nac = Integer.parseInt(fecha[1]);
@@ -408,10 +417,16 @@ public class RegistrarTutor extends javax.swing.JFrame {
         int numTut = registrartutor.getId();
 
         if (numTut != -1) {
-            txt_no_tutor.setText(Integer.toString(numTut));
+            if(numTut < 10){
+                txt_no_tutor.setText("T170100"+Integer.toString(numTut));
+            }else if(numTut >= 10 && numTut < 100){
+                txt_no_tutor.setText("T17010"+Integer.toString(numTut));
+            }else if(numTut >= 100 && numTut <= 999){
+                txt_no_tutor.setText("T1701"+Integer.toString(numTut));
+            }
 
         } else {
-            txt_no_tutor.setText("1");
+            txt_no_tutor.setText("T1701001");
         }
     }
 

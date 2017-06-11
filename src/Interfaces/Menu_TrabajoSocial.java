@@ -11,44 +11,47 @@ public class Menu_TrabajoSocial extends javax.swing.JFrame {
 
     ImageIcon img, icon;
     Thread tiempo;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public Menu_TrabajoSocial() {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Trabajo social");
-        
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/baja_alumno.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_baja_alum.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/gestion_tutor.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_gestion_tutor.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/inscribir.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_inscribir_alum.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/registrar_tutor.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_registrar_tutor.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/reportes.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_reportes.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/cerrar_sesion.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_cerrar_sesion.setIcon(icon);
-        
+
         tiempo = new Thread(new Runnable() {
             @Override
             public void run() {
                 long start = System.currentTimeMillis();
                 long end = start + (30 * 60 * 1000);
                 System.out.println(start + " " + end);
-                while(System.currentTimeMillis() < end){
+                while (System.currentTimeMillis() < end) {
                 }
                 dispose();
                 tiempo.stop();

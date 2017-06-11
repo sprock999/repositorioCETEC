@@ -8,59 +8,62 @@ import java.awt.Image;
  * @author jose_
  */
 public class Menu_Director extends javax.swing.JFrame {
-    
+
     ImageIcon img, icon;
     Thread tiempo;
-    
+
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public Menu_Director() {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Dirección");
-        
+
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
+
         img = new ImageIcon(getClass().getResource("/Imagenes/despido.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_despido_emp.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/contratacion.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT));
         btn_cont_personal.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/reportes.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_reportes.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/copia_seguridad.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_backup.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/reiniciar.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_reset.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/recuperar_clave.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_restaurar.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/gestion_alumnos.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_gestion_alum.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/gestion_empleados.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_gestion_emp.setIcon(icon);
-        
+
         img = new ImageIcon(getClass().getResource("/Imagenes/cerrar_sesion.png"));
         icon = new ImageIcon(img.getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT));
         btn_cerrar_sesion.setIcon(icon);
-        
+
         tiempo = new Thread(new Runnable() {
             @Override
             public void run() {
                 long start = System.currentTimeMillis();
                 long end = start + (30 * 60 * 1000);
                 System.out.println(start + " " + end);
-                while(System.currentTimeMillis() < end){
+                while (System.currentTimeMillis() < end) {
                 }
                 dispose();
                 tiempo.stop();
