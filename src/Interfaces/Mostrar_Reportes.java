@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +31,7 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
     DefaultTableModel modelo;
     String noEmpleado = "";
     Boolean seleccionado = false;
+    ImageIcon img;
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public Mostrar_Reportes(JFrame ventana) {
@@ -44,6 +46,9 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
                 setVisible(false);
             }
         });
+        
+        img = new ImageIcon(getClass().getResource("/Imagenes/icono.png"));
+        this.setIconImage(img.getImage());
 
         modelo = (DefaultTableModel) tabla_reportes.getModel();
 
