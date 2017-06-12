@@ -458,6 +458,9 @@ public class InscribirAlumnos extends javax.swing.JFrame {
         if (!inscribirAlumno.buscarTutor(dato)) {
             txt_no_tutor.setText("");
             JOptionPane.showMessageDialog(null, "Tutor No Encontrado", "No encontrado!",
+                    JOptionPane.WARNING_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, "Tutor Encontrado", "Encontrado",
                     JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btn_buscarActionPerformed

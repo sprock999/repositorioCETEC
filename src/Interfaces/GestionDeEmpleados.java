@@ -21,7 +21,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
             ctrlApellMaterno, ctrlFechaNac, ctrlCurp, ctrlSalrio;
 
     JTextFieldDateEditor editorFecha;
-    JFrame control;
+    private final JFrame control;
 
     DefaultTableModel modelo;
 
@@ -33,6 +33,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
     ImageIcon img, icon;
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public GestionDeEmpleados(JFrame ventana) {
         initComponents();
         this.setTitle("Gestion De Empleados");
@@ -130,7 +131,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         txt_salario = new javax.swing.JTextField();
         combo_estudios = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);

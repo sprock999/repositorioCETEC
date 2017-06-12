@@ -26,11 +26,12 @@ import javax.swing.table.TableModel;
 public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
 
     Conexion baseDatos = new Conexion().conectar();
-    JFrame control;
+    private final JFrame control;
     DefaultTableModel modelo;
     String noEmpleado = "";
     Boolean seleccionado = false;
 
+    @SuppressWarnings("OverridableMethodCallInConstructor")
     public Mostrar_Reportes(JFrame ventana) {
         initComponents();
         setLocationRelativeTo(null);
@@ -55,7 +56,6 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
         jPanel1 = new javax.swing.JPanel();
         panel_reporte = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txt_direccion = new javax.swing.JTextArea();
         jLabel141 = new javax.swing.JLabel();
         txt_fecha = new javax.swing.JTextField();
         jLabel138 = new javax.swing.JLabel();
@@ -63,6 +63,7 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
         jLabel140 = new javax.swing.JLabel();
         txt_num_empleado = new javax.swing.JTextField();
         txt_actividad = new javax.swing.JTextArea();
+        txt_direccion = new javax.swing.JTextArea();
         jPanel4 = new javax.swing.JPanel();
         btn_imprimir = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
@@ -70,7 +71,7 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla_reportes = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -83,17 +84,6 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
         panel_reporte.setBorder(null);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icono.png"))); // NOI18N
-
-        txt_direccion.setEditable(false);
-        txt_direccion.setColumns(20);
-        txt_direccion.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
-        txt_direccion.setForeground(new java.awt.Color(102, 0, 0));
-        txt_direccion.setRows(5);
-        txt_direccion.setText("Centro De Estudios Técnicos\nEn Computación E Inglés\nAv. Juárez No. 6 Col Centro\nChilpancingo, Guerrero");
-        txt_direccion.setAutoscrolls(false);
-        txt_direccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 0));
-        txt_direccion.setCaretColor(new java.awt.Color(255, 255, 255));
-        txt_direccion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
         jLabel141.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel141.setText("Fecha:");
@@ -127,6 +117,17 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
         txt_actividad.setCaretColor(new java.awt.Color(255, 255, 255));
         txt_actividad.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
+        txt_direccion.setEditable(false);
+        txt_direccion.setColumns(20);
+        txt_direccion.setFont(new java.awt.Font("Tw Cen MT", 0, 16)); // NOI18N
+        txt_direccion.setForeground(new java.awt.Color(102, 0, 0));
+        txt_direccion.setRows(5);
+        txt_direccion.setText("Centro De Estudios Técnicos\nEn Computación E Inglés\nAv. Juárez No. 6 Col Centro\nChilpancingo, Guerrero");
+        txt_direccion.setAutoscrolls(false);
+        txt_direccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 0));
+        txt_direccion.setCaretColor(new java.awt.Color(255, 255, 255));
+        txt_direccion.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout panel_reporteLayout = new javax.swing.GroupLayout(panel_reporte);
         panel_reporte.setLayout(panel_reporteLayout);
         panel_reporteLayout.setHorizontalGroup(
@@ -140,22 +141,24 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
                     .addGroup(panel_reporteLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(panel_reporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_actividad, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panel_reporteLayout.createSequentialGroup()
-                                .addGroup(panel_reporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel138)
-                                    .addComponent(jLabel140))
-                                .addGap(32, 32, 32)
-                                .addGroup(panel_reporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_num_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(panel_reporteLayout.createSequentialGroup()
-                                .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 370, Short.MAX_VALUE)
                                 .addComponent(jLabel141)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                                .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel140)
+                            .addComponent(txt_actividad, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panel_reporteLayout.createSequentialGroup()
+                                .addGap(129, 129, 129)
+                                .addGroup(panel_reporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txt_num_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel138))
+                        .addContainerGap(8, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_reporteLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(135, 135, 135))
         );
         panel_reporteLayout.setVerticalGroup(
             panel_reporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,9 +167,8 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
                 .addGap(18, 18, 18)
                 .addGroup(panel_reporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel141)
-                    .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                    .addComponent(txt_fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
                 .addGroup(panel_reporteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel140)
                     .addComponent(txt_num_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -176,6 +178,8 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
                     .addComponent(txt_empleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(txt_actividad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -258,11 +262,8 @@ public class Mostrar_Reportes extends javax.swing.JFrame implements Printable {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panel_reporte, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 38, Short.MAX_VALUE)))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
