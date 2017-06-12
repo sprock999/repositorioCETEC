@@ -27,7 +27,8 @@ public class ManejadorReportes{
     public void Registrar(){
         try{
             String sentenciaReporte = "";
-            Reporte reporte = new Reporte(no_reporte, no_reporte, no_reporte, no_reporte, no_profesor, actividad);
+            Reporte reporte = new Reporte(no_reporte, Integer.toString(dia_reporte), Integer.toString(mes_reporte), 
+                    Integer.toString(año_reporte), no_profesor, actividad);
             
             sentenciaReporte = "insert into reporte values("
                     + "'" + reporte.getNo_reporte() + "',"

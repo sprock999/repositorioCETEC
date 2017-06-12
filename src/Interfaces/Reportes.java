@@ -277,6 +277,7 @@ public class Reportes extends javax.swing.JFrame {
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             if (resp == 0) {
                 reporte.asignarDatos(no_reporte, no_profesor, actividad, dia_reporte, mes_reporte, año_reporte);
+                System.out.println(dia_reporte + " - " + mes_reporte + " - " + año_reporte);
                 reporte.Registrar();
                 JOptionPane.showMessageDialog(null, "Reporte Registrado", "Informacion.",
                         JOptionPane.INFORMATION_MESSAGE);

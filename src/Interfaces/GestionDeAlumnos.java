@@ -102,10 +102,7 @@ public class GestionDeAlumnos extends javax.swing.JFrame {
 
         int indice = 0;
         DefaultTableModel modelo = (DefaultTableModel) tabla_alumnos.getModel();
-
-        modelo = modificarAlumno.getAlumnos(modelo);
-
-        tabla_alumnos.setModel(modelo);
+        tabla_alumnos.setModel(modificarAlumno.getAlumnos(modelo));
     }
 
     @SuppressWarnings("unchecked")

@@ -26,7 +26,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     DefaultTableModel modelo;
 
     String no_empleado, primer_nom, segundo_nom, apellido_pat,
-            apellido_mat, curp, grado_estudios;
+            apellido_mat, curp, grado_estudios, numero_empleado = "";
     int salario, dia_nac, mes_nac, año_nac;
 
     int correcto = 0;
@@ -93,10 +93,7 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         ctrlSalrio.getDocument(txt_salario, "\\d+");
 
         DefaultTableModel modelo = (DefaultTableModel) tabla_empleados.getModel();
-
-        modelo = gestionEmpleados.getEmpleados(modelo);
-
-        tabla_empleados.setModel(modelo);
+        tabla_empleados.setModel(gestionEmpleados.getEmpleados(modelo));
     }
 
     @SuppressWarnings("unchecked")
@@ -318,6 +315,11 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
 
         btn_imprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reportes.png"))); // NOI18N
         btn_imprimir.setText("Ver Reportes");
+        btn_imprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_imprimirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -444,11 +446,13 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
         TableModel model = tabla_empleados.getModel();
 
         //modificarAlumno.getDatos();
-        String[] datos = gestionEmpleados.getDatos(model.getValueAt(row, 0).toString());
+        numero_empleado = model.getValueAt(row, 0).toString();
+        String[] datos = gestionEmpleados.getDatos(numero_empleado);
 
         if (datos[0] == null) {
             JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "No Encontrado!",
                     JOptionPane.INFORMATION_MESSAGE);
+            numero_empleado = "";
             correcto = 2;
         } else {
             habilitarComponentes();
@@ -587,6 +591,28 @@ public class GestionDeEmpleados extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         control.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void btn_imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_imprimirActionPerformed
+        if (numero_empleado.equals("")) {
+            JOptionPane.showMessageDialog(null, "Seleccione Un Empleado", "Advertencia!",
+                    JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (gestionEmpleados.buscarEmpleado(numero_empleado)) {
+                if (gestionEmpleados.getReportes(numero_empleado) > 0) {
+                    Mostrar_Reportes mr = new Mostrar_Reportes(this);
+                    mr.asignarEmpleado(numero_empleado);
+                    mr.setVisible(true);
+                    setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "El Empleado No Contiene Reportes", "Información",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Empleado No Encontrado", "Advertencia!",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btn_imprimirActionPerformed
 
     public void limpiarCampos() {
         txt_no_empleado.setText("");

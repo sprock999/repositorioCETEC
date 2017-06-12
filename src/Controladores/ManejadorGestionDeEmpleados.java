@@ -108,6 +108,44 @@ public class ManejadorGestionDeEmpleados {
         return salida;
     }
     
+    public boolean buscarEmpleado(String noEmpleado) {
+        String salida = "";
+        String consulta = "SELECT * FROM profesor "
+                + "WHERE No_Profesor = '" + noEmpleado + "' && Estado = 1;";
+        ResultSet res = baseDatos.consultar(consulta);
+        try {
+            while (res.next()) {
+                Vector v = new Vector();
+                salida = res.getString(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+             return  false;
+        }
+        if (salida.equals("")) {
+            return  false;
+        }else{
+            return true;
+        }
+    }
+    
+    public int getReportes(String no_empleado) {
+        int numRegistros = 0;
+        String consulta = "SELECT * "
+                + " FROM reporte INNER JOIN profesor on reporte.No_Profesor = profesor.No_Profesor "
+                + " WHERE reporte.No_Profesor = '" + no_empleado + "' && Estado = 1;";
+        ResultSet res = baseDatos.consultar(consulta);
+        try {
+            while (res.next()) {
+                numRegistros++;
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            return 0;
+        }
+        return numRegistros;
+    }
+    
     public void actualizar(){
         try{
             String sentenciaPer = "", sentenciaProfe = "";

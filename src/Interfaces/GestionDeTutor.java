@@ -103,18 +103,8 @@ public class GestionDeTutor extends javax.swing.JFrame {
         ctrlParentezco.getDocument(txt_parentezco, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
         ctrlOcupacion.getDocument(txt_ocupacion, "[a-zñáéíóúA-ZÑÁÉÍÓÚ\\s]+");
 
-        int indice = 0;
         DefaultTableModel modelo = (DefaultTableModel) tabla_tutor.getModel();
-        do {
-            indice += 1;
-            try {
-                modelo = gestionTutor.getTutor(modelo, Integer.toString(indice));
-                modelo.getValueAt(indice - 1, 0);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                break;
-            }
-        } while (true);
-        tabla_tutor.setModel(modelo);
+        tabla_tutor.setModel(gestionTutor.getTutores(modelo));
     }
 
     @SuppressWarnings("unchecked")
